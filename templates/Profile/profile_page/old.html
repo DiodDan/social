@@ -1,0 +1,74 @@
+{% load static %}
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{%static 'profile_page/css/profile_page.css'%}">
+    <title>Profile</title>
+</head>
+
+
+
+
+
+
+
+<body>
+    <button onclick="window.location.href = /login/">Выход</button>
+
+    <table class="table">
+        <tr>
+            <td>
+                Лента
+            </td>
+
+            <td>
+                Мессенджер
+            </td>
+
+            <td>
+                Профиль
+            </td>
+        </tr>
+    </table>
+
+    <br>
+
+    <div class="container">
+
+        <p>
+            <img class="profile_photo" src="/media/{{ obj.profile_photo }}" width="200" height="200">
+        </p>
+            {% if is_owner %}
+            <button onclick="window.location.href = '{{ change_page }}'" class="align-centre">Редактировать</button>
+
+    </div>
+    <br>
+    <div class="acc_info_container">
+        <font color="white" size="6"> Моя страница:</font>
+        <p><font color="white">Ваше имя:  {{ obj.name }}</font></p>
+        <p><font color="white">Ваш Email:  {{ obj.email }}</font>></p>
+        <p><font color="white">описание аккаунта:  {{ obj.description }}</font>></p>
+
+    </div>
+    {% endif %}
+
+
+    {% if is_owner is False %}
+    </div>
+    <br>
+    <div class="acc_info_container">
+        <font color="white" size="6"> Cтраница поьзователя {{ obj.name }}:</font>
+        <p><font color="white">Email:  {{ obj.email }}</font>></p>
+        <p><font color="white">описание аккаунта:  {{ obj.description }}</font>></p>
+
+    </div>
+    {% endif %}
+
+
+    <footer>
+        <img src="{%static 'profile_page/images/Diod_full_white.png'%}" class="full_logo">
+    </footer>
+</body>
+</html>

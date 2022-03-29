@@ -1,0 +1,80 @@
+body{
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background: #2f3136;
+}
+table {
+    background-color: black;
+    overflow: hidden;
+    min-width: 600px;
+    width: 100%;
+}
+table a {
+    float: left;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px;
+    margin-left: 13%;
+    font-size: 17px;
+    width: 200px;
+    border: 2px solid white;
+}
+table a:hover {
+    background-color: white;
+    color: black;
+}
+table a.active {
+    background-color: #4CAF50;
+    color: white;
+}
+.container {
+  background-color: #36393f;
+  width: 250px;
+  height: 300px;
+  border-radius: 12px;
+  position: absolute;
+  top:80px;
+  left:50px;
+  text-align: center;
+}
+
+.profile_info_conteiner {
+  background-color: #36393f;
+  width: 600px;
+  height: 800px;
+  border-radius: 12px;
+  text-align: left;
+  position: absolute;
+  top:80px;
+  left:320px;
+}
+.profile_info_conteiner font {
+    position: relative;
+    top: 30px;
+    left: 20px;
+}
+.profile_photo {
+    margin: 6%;
+    border-radius: 100px;
+    background-position: center center;
+    background-size: cover;
+    width: 200px;
+    height: 200px;
+}
+.redakt{
+  border:0;
+  background: none;
+  display: block;
+  margin: 20px auto;
+  text-align: center;
+  border: 2px solid white;
+  padding: 9px 50px;
+  outline: none;
+  color: white;
+  border-radius: 24px;
+  cursor: pointer;
+}
+.redakt:hover{
+background: #4CAF50;
+}
