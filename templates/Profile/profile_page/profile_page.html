@@ -1,43 +1,36 @@
-{% load static %}
-<html lang="en">
+<!-- {% load static %} -->
+<html lang="en" dir="ltr">
+  <head>
+      <meta charset="UTF-8">
+      <link rel="stylesheet" href="../../../static/css/style.css">
+      <title>diod — your profile</title>
+  </head>
 
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="{%static 'Profile/profile_page/css/profile_page.css'%}">
-    <title>Profile</title>
-</head>
-
-<body>
-  <table>
-    <tr>
-      <td><a>Posts</a></td>
-      <td><a href="/messenger/{{ obj.login }}/1">Messenger</a></td>
-      <td><a class="active">Profile</a></td>
-        <td><a href="login/">sign out</a></td>
-    </tr>
-
-  <div class="container">
-    <img class="profile_photo" src="/media/{{ obj.profile_photo }}" alt='logo'>
-      {% if is_owner %}
-    <button onclick="window.location.href = '{{ change_page }}'" class="redakt">Редактировать</button>
-  </div>
-
-  <div class="profile_info_conteiner">
-    <font color="white" size="6"> Моя страница:</font>
-        <p><font color="white">Ваше имя:  {{ obj.name }}</font></p>
-        <p><font color="white">Ваш Email:  {{ obj.email }}</font></p>
-        <p><font color="white">описание аккаунта:  {{ obj.description }}</font></p>
-  </div>
-      {% endif %}
-
-      {% if is_owner is False %}
-    <div class="profile_info_conteiner">
-        <font color="white" size="6"> Cтраница поьзователя {{ obj.name }}:</font>
-        <p><font color="white">Email:  {{ obj.email }}</font></p>
-        <p><font color="white">описание аккаунта:  {{ obj.description }}</font></p>
-
-    </div>
-    {% endif %}
-</table>
-</body>
+  <body>
+    <div class="main">
+      <div class="container">
+        <header>
+          <object data="../../../static/img/diod.svg" type="image/svg+xml" class="logo"></object>
+        </header>
+        <div class="block profile head">
+          <div class="photo">
+            <img src="../../../media/photos/profile_photos/defoult.png" alt="Image Not Found">
+          </div>
+          <div class="info">
+            <h2>@dioddan</h2>
+            <h3>e-mail: dioddan@gmail.com</h3>
+            <h4>i'm jinja2 junior developer</h4>
+          </div>
+        </div>
+        <div class="block profile posts">
+          <div class="post">
+            <img src="../../../media/photos/profile_photos/defoult.png" alt="Image Not Found">
+            <div class="description">
+              <h4>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> 
+  </body>
 </html>

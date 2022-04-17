@@ -1,0 +1,160 @@
+@import "fonts.css";
+@import "nullstyle.css";
+
+* {
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 300
+}
+
+html {
+    font-size: 1.2vw;
+    color: #ccc
+}
+
+body {
+    font-size: 1rem;
+    background: #202225;
+}
+
+div.main {
+    width: 100%
+}
+
+div.container {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+header {
+    width: fit-content;
+    margin: 0 auto 0 auto;
+}
+
+object.logo_main {
+    width: 9rem;
+}
+
+object.logo {
+    width: 6rem;
+}
+
+.disabled {
+    pointer-events: none;
+    opacity: .5;
+}
+
+div.block {
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #2B2E32;
+    padding: 2rem;
+    border-radius: 1rem;
+}
+
+div.login {
+    width: 30rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+button {
+    padding: .5rem;
+    background: #34373C;
+    border-radius: .5rem;
+    border: solid .1rem #202225;
+    align-self: center;
+}
+
+button:hover {
+    background-color: #3E4248;
+}
+
+div.headbuts {
+    width: 21rem;
+}
+
+div.headbuts button.tab {
+    border: 0;
+    padding: .5rem 0 .5rem 0;
+}
+
+div.headbuts button.tab.one {
+    margin-left: 3rem;
+}
+
+div.headbuts button.tab.two {
+    margin-left: 6rem;
+}
+
+div.headbuts label {
+    padding: .5rem;
+    cursor: pointer;
+    color: #F0E68C;
+}
+
+div.headbuts input[type=radio]:checked + button {
+    pointer-events: none;
+    opacity: .5;
+}
+
+div.headbuts input[type=radio][id$="1"]:checked ~ div.tab#one {
+    display: block;
+}
+
+div.headbuts input[type=radio][id$="2"]:checked ~ div.tab#two {
+    display: block;
+}
+
+div.headbuts input[type=radio] {
+    display: none;
+}
+
+div.tab {
+    display: none;
+}
+
+div.login form {
+    width: 21rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center
+}
+
+div.login form div.input {
+    margin-top: 1rem;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+div.login form div.input input {
+    width: 15rem;
+}
+
+input {
+    padding: .5rem;
+    background: #34373C;
+    border-radius: 1.5rem;
+    border: solid .1rem #202225;
+    color: #ccc
+}
+
+input:focus {
+    border: solid .1rem #ccc;
+}
+
+div.login form button {
+    margin-top: 1rem;
+}
+
+a {
+    color: #F0E68C;
+}
+
+a:visited {
+    color: #F0E68C;
+}

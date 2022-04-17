@@ -2,8 +2,8 @@ from django import forms
 from .models import *
 class login_form(forms.Form):
     name = "signin"
-    email = forms.EmailField(max_length=40, label="Username", widget=forms.TextInput(attrs={'placeholder': 'Login', "class": "text"}))
-    password = forms.CharField(max_length=30, label="Password", widget=forms.TextInput(attrs={'placeholder': 'Password', "class": "text"}))
+    email = forms.EmailField(max_length=40, label="Username", widget=forms.TextInput(attrs={'placeholder': 'Login', "typr": "text"}))
+    password = forms.CharField(max_length=30, label="Password", widget=forms.TextInput(attrs={'placeholder': 'Password', "type": "password"}))
 
 class register_form(forms.Form):
     name = "signup"
