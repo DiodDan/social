@@ -1,0 +1,34 @@
+{% load static %}
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - Daily UI #013: Direct Messaging</title>
+  <link rel="stylesheet"
+          href="{%static 'messenger/main/css/style.css'%}">
+</head>
+<body>
+
+    {% for message in messages %}
+        <p>{% if message.autor == obj.id %}from me:{% endif %}{{ message.text }}</p>
+    {% endfor %}
+    <form method="post" action="/messenger/{{ obj.login }}">
+    {% csrf_token %}
+      <textarea type="text" class="message-input" placeholder="Type message..." name="message"></textarea>
+        <button type="submit" class="message-submit">Send</button>
+        <p><font size=3 color="red">{{ ERR }}</font></p>
+
+    </form>
+
+    <script type="text/javascript">
+        let url = `ws://${window.location.host}/ws/socket-server/`
+
+        const chatSocket = new WebSocket(url)
+
+        chatSocket.onmessage = function(e){
+            let data = JSON.parse(e.data)
+            console.log('Data:', data)
+        }
+
+    </script>
+</body>
+</html>

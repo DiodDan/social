@@ -19,14 +19,18 @@ ALLOWED_HOSTS = ["192.168.1.73", "127.0.0.1"]
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'Profile.apps.ProfileConfig'
+    'Profile.apps.ProfileConfig',
+    'messenger.apps.MessengerConfig'
 ]
+
+ASGI_APPLICATION = "coolsite.asgi.application"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
