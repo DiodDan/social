@@ -1,0 +1,342 @@
+@import "fonts.css";
+@import "nullstyle.css";
+
+* {
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 300
+}
+
+html {
+    font-size: 1.2vw;
+    color: #ccc
+}
+
+body {
+    font-size: 1rem;
+    background: #202225;
+}
+
+div.main {
+    width: 100%
+}
+
+div.container {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+header {
+    width: fit-content;
+    margin: 0 auto 0 auto;
+}
+
+object.logo_main {
+    width: 9rem;
+}
+
+object.logo {
+    width: 6rem;
+}
+
+.disabled {
+    pointer-events: none;
+    opacity: .5;
+}
+
+div.block {
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #2B2E32;
+    padding: 2rem;
+    border-radius: 1rem;
+}
+
+div.login {
+    width: 30rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+button {
+    padding: .5rem;
+    background: #34373C;
+    border-radius: .5rem;
+    border: solid .1rem #202225;
+    align-self: center;
+}
+
+button:hover {
+    background-color: #3E4248;
+}
+
+div.headbuts {
+    width: 21rem;
+}
+
+div.headbuts button.tab {
+    border: 0;
+    padding: .5rem 0 .5rem 0;
+}
+
+div.headbuts button.tab.one {
+    margin-left: 3rem;
+}
+
+div.headbuts button.tab.two {
+    margin-left: 6rem;
+}
+
+div.headbuts label {
+    padding: .5rem;
+    cursor: pointer;
+    color: #F0E68C;
+}
+
+div.headbuts input[type=radio]:checked + button {
+    pointer-events: none;
+    opacity: .5;
+}
+
+div.headbuts input[type=radio][id$="1"]:checked ~ div.tab#one {
+    display: block;
+}
+
+div.headbuts input[type=radio][id$="2"]:checked ~ div.tab#two {
+    display: block;
+}
+
+div.headbuts input[type=radio] {
+    display: none;
+}
+
+div.tab {
+    display: none;
+}
+
+div.login form {
+    width: 21rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center
+}
+
+div.login form div.input {
+    margin-top: 1rem;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+div.login form div.input input {
+    width: 15rem;
+}
+
+input {
+    padding: .5rem;
+    background: #34373C;
+    border-radius: 1.5rem;
+    border: solid .1rem #202225;
+    color: #ccc
+}
+
+input:focus {
+    border: solid .1rem #ccc;
+}
+
+div.login form button {
+    margin-top: 1rem;
+}
+
+a {
+    color: #F0E68C;
+}
+
+a:visited {
+    color: #F0E68C;
+}
+
+div.block.profile.head {
+    display: flex;
+    justify-content: space-between;
+    width: 48rem;
+    margin-bottom: 3rem;
+}
+
+div.block.profile.head div.photo {
+    width: 12rem;
+    height: 12rem;
+    border-radius: 6rem;
+    overflow: hidden;
+    border: solid .25rem;
+}
+
+div.block.profile.head div.photo img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+div.block.profile.head div.info {
+    width: 30rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    
+}
+
+h2 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    font-style: italic;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+    text-align: center;
+}
+
+h3 {
+    font-size: 1.2rem;
+    margin-bottom: .5rem;
+    margin-top: .5rem;
+}
+
+h4 {
+    font-size: .9rem;
+}
+
+h5 {
+    font-size: .7rem;
+}
+
+div.followers {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+div.followers div.number {
+    margin: 0 1rem 0 1rem;
+}
+
+div.followers div.number h2, div.followers div.number h5 {
+    margin: 0;
+}
+
+div.block.profile.head div.info h4 {
+    text-align: center;
+}
+
+div.block.profile.head div.additional {
+    align-self: flex-end;
+}
+
+div.block.profile.head div.additional h5 {
+    font-weight: 500;
+    color: #666;
+    font-style: italic;
+    margin: .25rem 0 .25rem 0;
+}
+
+div.block.profile.posts div.block.post {
+    background: #34373C;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2rem;
+}
+
+div.block.profile.posts div.block.post:first-child {
+    margin-top: 0;
+}
+
+div.block.profile.posts div.block.post div.photo_block {
+    width: 12rem;
+}
+
+div.block.profile.posts div.block.post div.photo {
+    width: 100%;
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
+div.block.profile.posts div.block.post div.photo img {
+    width: 100%;
+}
+
+div.block.profile.posts div.block.post div.photo_block div.action {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    margin-top: 1rem;
+}
+
+div.block.profile.posts div.block.post div.photo_block div.action div.like {
+    color: #F08C8C;
+    display: flex;
+    align-items: center;
+}
+
+div.block.profile.posts div.block.post div.photo_block div.action div.like svg {
+    height: 1.5rem;
+    width: 1.5rem;
+    margin-right: .25rem;
+}
+
+div.block.profile.posts div.block.post div.photo_block div.action div.like svg path {
+    fill: #F08C8C;
+}
+
+div.block.profile.posts div.block.post div.photo_block div.action div.like.normal {
+    color: #ccc;
+}
+
+div.block.profile.posts div.block.post div.photo_block div.action div.like.normal svg path {
+    fill: #ccc;
+}
+
+div.block.profile.posts div.block.post div.photo_block div.action div.comment {
+    color: #ccc;
+    display: flex;
+    align-items: center;
+}
+
+div.block.profile.posts div.block.post div.photo_block div.action div.comment svg {
+    height: 1.5rem;
+    width: 1.5rem;
+    margin-right: .25rem;
+}
+
+div.block.profile.posts div.block.post div.photo_block div.action div.comment svg path {
+    fill: #ccc;
+}
+
+div.block.profile.posts div.block.post div.photo_block div.action div.share {
+    color: #F0E68C;
+    display: flex;
+    align-items: center;
+}
+
+div.block.profile.posts div.block.post div.photo_block div.action div.share svg {
+    transform: translateY(-.25rem);
+    height: 2rem;
+    width: 2rem;
+    margin-right: .25rem;
+}
+
+div.block.profile.posts div.block.post div.description {
+    width: 42rem;
+}
+
+div.block.profile.posts div.block.post div.description h4 {
+    line-height: 1.2rem;
+}
+
+footer {
+    margin-top: 3rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    line-height: 0.9rem;
+}

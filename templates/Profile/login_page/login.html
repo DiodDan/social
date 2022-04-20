@@ -1,34 +1,77 @@
-{% load static %}
+<!-- {% load static %} -->
 <html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet"
-          href="{%static 'profile/login_page/css/login.css'%}">
-    <title>НеВК</title>
+    <link rel="stylesheet" href="../../../static/css/style.css">
+    <title>diod — login</title>
 </head>
 
 <body>
+    <div class="main">
+        <div class="container">
+            <header>
+                <object data="../../../static/img/diod_main.svg" type="image/svg+xml" class="logo_main"></object>
+            </header>
+            <div class="block login">
+                <div class="headbuts">
+                    <input type="radio" name="tab" id="tab1" checked>
+                    <button class="tab one"><label for="tab1">login</label></button>
 
-<link href='https://fonts.googleapis.com/css?family=Montserrat'
-      rel='stylesheet' type='text/css'>
-
-<div class="login">
-    {% if form.name == 'signup' %}
-    <a class="active" href='{% url "login_page" %}'> sign in </a>
-    <a class=nonactive"> sign up </a>
-    {% else %}
-    <a class=nonactive"> sign in </a>
-    <a class=active" href='{% url "signup_page" %}'> sign up </a>
-    {% endif %}
-
-    <form method="post" action="{% if form.name == 'signin' %}{% url 'login_page' %}{% else %}{% url 'signup_page' %}{% endif %}">
-    {% csrf_token %}
-    {{ form.as_p }}
-   <input type="submit" value="Login" class="signin">
-        <p><font size=3 color="red">{{ ERR }}</font></p>
-
-    </form>
-</div>
-
+                    <input type="radio" name="tab" id="tab2">
+                    <button class="tab two"><label for="tab2">sign up</label></button>
+                
+                    <div class="tab" id="one">
+                        <form method="post" action="login">
+                            <div class="input">
+                                <span>username</span>
+                                <input type="text" name="username" placeholder="enter your username/email">
+                            </div>
+                            <div class="input">
+                                <span>password</span>
+                                <input type="password" name="password" placeholder="enter your password">
+                            </div>
+                            <!-- {% csrf_token %} -->
+                            <div class="submit">
+                                <button type="submit">
+                                    <span>login</span>
+                                </button>
+                            </div>
+                            <!-- <span style="color:red">{{ ERR }}</span> -->
+                        </form>
+                    </div>
+                    
+                    <div class="tab" id="two">
+                        <form method="post" action="signup">
+                            <div class="input">
+                                <span>username</span>
+                                <input type="text" name="username" placeholder="enter your username/email">
+                            </div>
+                            <div class="input">
+                                <span>password</span>
+                                <input type="password" name="password" placeholder="enter your password">
+                            </div>
+                            <div class="input">
+                                <span>password</span>
+                                <input type="password" name="password" placeholder="repeat your password">
+                            </div>
+                            <!-- {% csrf_token %} -->
+                            <div class="submit">
+                                <button type="submit">
+                                    <span>login</span>
+                                </button>
+                            </div>
+                            <!-- <span style="color:red">{{ ERR }}</span> -->
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <footer>
+                <h4>contact with us!</h4>
+                <br>
+                <h5><span style="font-weight:500">e-mail: </span>diod@diod.com</h5>
+                <h5><span style="font-weight:500">phone number: </span>8 (800) 555-35-35</h5>
+            </footer>
+        </div>
+    </div>
 </body>
 </html>
