@@ -13,6 +13,7 @@ class ChatConsumer(WebsocketConsumer):
             self.channel_name
         )
         self.accept()
+
     def receive(self, text_data):
         text_data_json = json.loads(text_data)
         message, login = text_data_json["message"], text_data_json["url"].split("/")[-1]
@@ -25,14 +26,16 @@ class ChatConsumer(WebsocketConsumer):
             self.room_group_name,
             {
                 "type": "chat_message",
-                "message": message
+                "message": message,
+                "login": login,
+                "img": obj.profile_photo
             }
         )
 
     def chat_message(self, e):
-        message = e["message"]
-
         self.send(text_data=json.dumps({
             "type": "message",
-            "message": message
+            "message": e["message"],
+            "login": e["login"],
+            "img": e["img"],
             }))
