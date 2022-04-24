@@ -10,6 +10,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("", redir.as_view(), name="login_page"),
     path('profile/', include("Profile.urls")),
+    path('messenger/', include("messenger.urls")),
 ]
 
 if settings.DEBUG:

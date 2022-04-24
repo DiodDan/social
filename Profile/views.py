@@ -15,7 +15,7 @@ class login(TemplateView):
         post = request.POST
         db = User.objects
         form = login_form(request.POST)
-        user_data = db.filter(email=post["email"])
+        user_data = db.filter(email=post["username"])
 
         if len(user_data) != 0 and str(user_data[0].password) == str(post["password"]):
             request.session["logedacc"] = str(user_data[0].login)
@@ -35,20 +35,20 @@ class signup(TemplateView):
         post = request.POST
         db = User.objects
         form = register_form(request.POST)
-        if len(db.filter(email=post["email"])) == 0:
+        if len(db.filter(email=post["username"])) == 0:
 
             if post["password"] == post["repit_password"]:
-                db.create(email=post["email"], password=post["password"],
+                db.create(email=post["username"], password=post["password"],
                           profile_photo="photos/profile_photos/defoult.png",
                           description="Я простой рабочий диод")
-                obj = db.get(email=post['email'])
+                obj = db.get(email=post['username'])
                 obj.login = obj.pk
                 obj.name = "Диод"
                 obj.save()
 
                 request.session["logedacc"] = str(obj.login)
                 return redirect(
-                    f"/profile/{db.get(email=post['email']).login}")
+                    f"/profile/{db.get(email=post['username']).login}")
             else:
                 return render(request, self.template_name,
                                   context={"form": form,

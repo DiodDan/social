@@ -1,0 +1,64 @@
+{% load static %}
+{% if is_owner%}
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+          <title>messenger</title>
+          <link rel="stylesheet" href="{%static 'messenger/main/css/messenger_page.css'%}">
+    </head>
+
+
+    <body>
+        <button class="active">chat1</button>
+        <button>chat2</button>
+        <button>chat3</button>
+        <button>chat4</button>
+        <button>chat5</button>
+        <button>chat6</button>
+        <button>chat7</button>
+        <button>chat8</button>
+    </body>
+    <div id="messeges" class="container">
+
+    {% for message in messages %}
+        <p class="{% if message.autor == obj.id %}my{% else %}other{% endif %}">{{ message.text }}</p>
+    {% endfor %}
+    </div>
+    <form id="form">
+    <textarea type="text" class="message-input" placeholder="Type message..." name="message"></textarea>
+    <button class="send" type="submit"></button>
+    </form>
+    <script type="text/javascript">
+        let url = `ws://${window.location.host}/ws/socket-server/`
+
+        const chatSocket = new WebSocket(url)
+
+        chatSocket.onmessage = function(e){
+            let data = JSON.parse(e.data)
+            if(data.type === 'message'){
+
+                let messages = document.getElementById('messeges');
+                let my_class = window.location.href.split("/");
+                my_class = my_class[my_class.length - 1] == data.login ? "my" : "other";
+                messages.insertAdjacentHTML('beforeend', `<p class="${my_class}">${data.message}</p>`);
+            }
+        }
+
+        let form = document.getElementById('form')
+        form.addEventListener('submit', (e)=> {
+            e.preventDefault()
+            let message = e.target.message.value
+            let url = window.location.href
+            chatSocket.send(JSON.stringify({
+                'message':message,
+                'url': url
+            }))
+            form.reset()
+        })
+        </script>
+</html>
+{% endif %}
+{% if not is_owner %}
+<h1>Это не ваша страницаю.(найс хуй)</h1>
+{% endif %}

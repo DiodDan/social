@@ -1,4 +1,4 @@
-<!-- {% load static %} -->
+{% load static %}
 <html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
@@ -21,7 +21,8 @@
                     <button class="tab two"><label for="tab2">sign up</label></button>
                 
                     <div class="tab" id="one">
-                        <form method="post" action="login">
+                        <form method="post" action="{% url 'login_page' %}">
+                            {% csrf_token %}
                             <div class="input">
                                 <span>username</span>
                                 <input type="text" name="username" placeholder="enter your username/email">
@@ -30,18 +31,19 @@
                                 <span>password</span>
                                 <input type="password" name="password" placeholder="enter your password">
                             </div>
-                            <!-- {% csrf_token %} -->
+
                             <div class="submit">
                                 <button type="submit">
                                     <span>login</span>
                                 </button>
                             </div>
-                            <!-- <span style="color:red">{{ ERR }}</span> -->
+                            <span style="color:red">{{ ERR }}</span>
                         </form>
                     </div>
                     
                     <div class="tab" id="two">
-                        <form method="post" action="signup">
+                        <form method="post" action="{% url 'signup_page' %}">
+                            {% csrf_token %}
                             <div class="input">
                                 <span>username</span>
                                 <input type="text" name="username" placeholder="enter your username/email">
@@ -52,15 +54,15 @@
                             </div>
                             <div class="input">
                                 <span>password</span>
-                                <input type="password" name="password" placeholder="repeat your password">
+                                <input type="password" name="repit_password" placeholder="repeat your password">
                             </div>
-                            <!-- {% csrf_token %} -->
+
                             <div class="submit">
                                 <button type="submit">
                                     <span>login</span>
                                 </button>
                             </div>
-                            <!-- <span style="color:red">{{ ERR }}</span> -->
+                            <span style="color:red">{{ ERR }}</span>
                         </form>
                     </div>
                 </div>

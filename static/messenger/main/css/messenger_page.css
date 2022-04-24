@@ -1,0 +1,181 @@
+Skip to content
+Search or jump to…
+Pull requests
+Issues
+Marketplace
+Explore
+
+@danila12315454
+danila12315454
+/
+Diod
+Public
+Code
+Issues
+Pull requests
+Actions
+Projects
+Wiki
+Security
+2
+Insights
+Settings
+We found potential security vulnerabilities in your dependencies.
+Only the owner of this repository can see this message.
+
+Diod/static/messenger_page/css/messenger_page.css
+@danila12315454
+danila12315454 Вроде щас всё поправил
+Latest commit 67f74ea on 28 Aug 2021
+ History
+ 1 contributor
+135 lines (123 sloc)  2.05 KB
+
+body{
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background: #2f3136;
+}
+.chat_image{
+float: left;
+}
+
+table {
+    background-color: black;
+    overflow: hidden;
+    min-width: 600px;
+    width: 100%;
+}
+table a {
+    float: left;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px;
+    margin-left: 13%;
+    font-size: 17px;
+    width: 200px;
+    border: 2px solid white;
+}
+table a:hover {
+    background-color: white;
+    color: black;
+}
+table a.active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+
+button {
+    color: #808080;
+    text-align: left;
+    padding-bottom: 15px;
+    padding-top: 15px;
+    font-size: 17px;
+    width: 200px;
+    border: none;
+    display: block;
+    background: #191919;
+    border: 1px solid #2c2c2c;
+    position: relative;
+    left: 49px;
+}
+
+button:hover {
+    background: #2c2c2c;
+}
+button:focus{
+    background: #3f3f3f;
+    border: 1px solid #2c2c2c;
+}
+button.active{
+    background: #4CAF50;
+    border: 1px solid #2c2c2c;
+    color: black;
+}
+
+.container {
+  float: left;
+  background-color: #191919;
+  width: 750px;
+  height: 800px;
+  position: absolute;
+  top: 60px;
+  left: 250px;
+  text-align: center;
+  overflow-y: scroll;
+}
+.container p.other{
+  color: white;
+  background: #545454;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: left;
+  margin-left: 10px;
+  max-width: 740px
+}
+.container p.my{
+  color: white;
+  background: #545454;
+  margin-right: 10px;
+  border-radius: 12px;
+  padding: 20px;
+  max-width: 740;
+  text-align: left;
+  float: right;
+  display: block;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: green;
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #5cbc7c;
+}
+
+
+textarea{
+    width: 690px;
+    height: 60px;
+    position: absolute;
+    top: 860px;
+    left: 250px;
+
+}
+.send{
+  background: red;
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  top: 860px;
+  left: 940px;
+}
+© 2022 GitHub, Inc.
+Terms
+Privacy
+Security
+Status
+Docs
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
+Loading complete
