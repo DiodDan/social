@@ -164,7 +164,7 @@ div.login form div.input input {
     width: 15rem;
 }
 
-input {
+input, textarea {
     padding: .5rem;
     background: #34373C;
     border-radius: 1.5rem;
@@ -172,7 +172,7 @@ input {
     color: #ccc
 }
 
-input:focus {
+input:focus, textarea:focus {
     border: solid .1rem #ccc;
 }
 
@@ -368,4 +368,160 @@ footer {
     margin-bottom: 1.5rem;
     text-align: center;
     line-height: 0.9rem;
+}
+
+div.chat {
+    display: flex;
+}
+
+div.chat div.dialog_block {
+    display: none;
+}
+
+div.chat input[type=radio] {
+    display: none;
+}
+
+div.chat button.chat {
+    border: none;
+    width: 18rem;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: .5rem;
+}
+
+div.chat div.photo {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 1.5rem;
+    overflow: hidden;
+}
+
+div.chat div.photo img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+div.chat button.chat div.name_message {
+    width: 13.5rem;
+    height: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+div.chat button.chat div.name_message h4 {
+    text-align: center;
+}
+
+div.chat button.chat div.name_message h5 {
+    text-align: left;
+}
+
+div.chat button.chat div.name_message div.message {
+    display: flex;
+    justify-content: space-between;
+}
+
+div.chat input[type=radio]:checked + button.chat {
+    background: #3E4248;
+}
+
+div.chat input[type=radio]:checked + button.chat + div.dialog_block {
+    display: inline;
+}
+
+div.chat div.dialog_block {
+    height: 24rem;
+    width: 42rem;
+    position: absolute;
+    left: 30rem;
+    top: 11.25rem;
+}
+
+.transparent {
+    opacity: .5;
+}
+
+div.chat div.dialog_block div.person {
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    margin-bottom: 1rem;
+}
+
+div.chat div.dialog_block div.person div.name_online {
+    margin-left: .5rem;
+}
+
+div.block.messenger {
+    height: 37.5rem;
+}
+
+div.block.messenger div.search {
+    margin-bottom: 1.5rem;
+}
+
+div.chat div.dialog_block div.dialog {
+    background: #34373C;
+    padding: 1rem;
+    border-radius: 1rem;
+    height: 25.5rem;
+    margin-bottom: 1rem;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+}
+
+div.chat div.dialog_block div.input {
+    width: 42rem;
+    height: 3.5rem;
+    display: flex;
+    justify-content: space-around;
+}
+
+div.chat div.dialog_block div.input textarea {
+    resize: none;
+    width: 36rem;
+    height: 100%;
+    padding-left: 1rem;
+}
+
+div.chat div.dialog_block div.input button.send {
+    border: 0;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 50%;
+}
+
+div.chats {
+    height: 30rem;
+    width: 19.25rem;
+    overflow-y: scroll;
+}
+
+div.chat div.dialog_block div.dialog div.message {
+    background: #2B2E32;
+    width: fit-content;
+    height: fit-content;
+    max-width: 27rem;
+    padding: .5rem;
+    border-radius: .5rem;
+    margin-top: .5rem;
+    align-self: flex-start;
+}
+
+div.chat div.dialog_block div.dialog div.message h5 {
+    text-align: end;
+}
+
+div.chat div.dialog_block div.dialog div.message.received {
+    background: #2B2E32;
+    align-self: flex-start;
+}
+
+div.chat div.dialog_block div.dialog div.message.sent {
+    background: #3E4248;
+    align-self: flex-end;
 }

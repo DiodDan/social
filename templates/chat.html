@@ -10,14 +10,9 @@
 
 
     <body>
-        <button class="active">chat1</button>
-        <button>chat2</button>
-        <button>chat3</button>
-        <button>chat4</button>
-        <button>chat5</button>
-        <button>chat6</button>
-        <button>chat7</button>
-        <button>chat8</button>
+    {% for chat_id in chat_ids %}
+        <button onclick="window.location.href='http://127.0.0.1:8000/messenger/{{ obj.login }}/{{ chat_id }}'">button + {{ chat_id }}</button>
+    {% endfor %}
     </body>
     <div id="messeges" class="container">
 
@@ -27,23 +22,26 @@
     </div>
     <form id="form">
     <textarea type="text" class="message-input" placeholder="Type message..." name="message"></textarea>
-    <button class="send" type="submit"></button>
+    <button class="send" type="submit">sent</button>
     </form>
     <script type="text/javascript">
-        let url = `ws://${window.location.host}/ws/socket-server/`
+                let my_url = window.location.href.split("/");
+                login = my_url[my_url.length - 2]
+                chat_id = my_url[my_url.length - 1]
+        let url = `ws://${window.location.host}/ws/socket-server/${login}/${chat_id}`
 
         const chatSocket = new WebSocket(url)
 
         chatSocket.onmessage = function(e){
             let data = JSON.parse(e.data)
             if(data.type === 'message'){
-
                 let messages = document.getElementById('messeges');
                 let my_class = window.location.href.split("/");
                 my_class = my_class[my_class.length - 1] == data.login ? "my" : "other";
                 messages.insertAdjacentHTML('beforeend', `<p class="${my_class}">${data.message}</p>`);
             }
         }
+
 
         let form = document.getElementById('form')
         form.addEventListener('submit', (e)=> {

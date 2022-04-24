@@ -3,13 +3,13 @@ from django.contrib import admin
 from django.urls import path
 
 from coolsite import settings
-from Profile.views import *
+from profile.views import *
 from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", redir.as_view(), name="login_page"),
-    path('profile/', include("Profile.urls")),
+    path('profile/', include("profile.urls")),
     path('messenger/', include("messenger.urls")),
 ]
 

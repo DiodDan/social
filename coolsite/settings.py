@@ -26,7 +26,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'Profile.apps.ProfileConfig',
+    'profile.apps.ProfileConfig',
     'messenger.apps.MessengerConfig'
 ]
 

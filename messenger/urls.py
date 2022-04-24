@@ -3,7 +3,7 @@ from .views import *
 
 
 urlpatterns = [
-    path("<str:login>", messenger.as_view(), name="messenger_page"),
+    path("<str:login>", chat.as_view(), name="chat"),
 ]
 
 handler404 = pagenotfound

@@ -5,7 +5,7 @@ from .forms import *
 
 
 class login(TemplateView):
-    template_name = "Profile/login_page/login.html"
+    template_name = "login.html"
 
     def get(self, request):
         form = login_form()
@@ -24,7 +24,7 @@ class login(TemplateView):
             return render(request, self.template_name, context={"form": form, "ERR": "Неверный пароль или логин"})
 
 class signup(TemplateView):
-    template_name = "Profile/login_page/login.html"
+    template_name = "login.html"
 
     def get(self, request):
         form = register_form()
@@ -57,7 +57,7 @@ class signup(TemplateView):
             return render(request, self.template_name,
                           context={"form": form, "ERR": "Пользователь с такой почтой уже существует!!!"})
 class profile(TemplateView):
-    template_name = "Profile/profile_page/profile_page.html"
+    template_name = "profile.html"
 
     def get(self, request, login):
         obj = User.objects.get(login=login)
@@ -71,7 +71,7 @@ class profile(TemplateView):
 
 
 class changedata(TemplateView):
-    template_name = "Profile/changedata_page/changedata_page.html"
+    template_name = "changedata.html"
 
     def get(self, request, login):
 
