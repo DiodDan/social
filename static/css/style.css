@@ -29,15 +29,44 @@ div.container {
 
 header {
     width: fit-content;
-    margin: 0 auto 0 auto;
+    margin: 0 auto 1.5rem auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
 }
 
-object.logo_main {
+header a {
+    width: inherit;
+    padding: 1rem;
+    border-radius: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 8rem;
+}
+
+header svg {
+    width: 2.5rem;
+    height: 2.5rem;
+}
+
+.yellow {
+    fill: #F0E68C;
+}
+
+header a:hover {
+    background: #34373C;
+}
+
+.logo_main {
     width: 9rem;
+    height: 9rem;
 }
 
-object.logo {
+.logo {
     width: 6rem;
+    height: 6rem;
 }
 
 .disabled {
