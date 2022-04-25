@@ -6,29 +6,30 @@ from profile.models import User, Message, Chat
 
 
 class chat(TemplateView):
+
     template_name = "messenger.html"
 
     def get(self, request, login):
         db = User.objects
-        obj = db.get(login=login)
+        user = db.get(login=login)
         messages = Message.objects
         chats = Chat.objects
-        chat_obj = chats.get(id=chat_id)
         chats_for_user = []
         for chat in chats.all():
-            if str(obj.id) in chat.users.split(","):
+            if str(user.id) in chat.users.split(","):
                 chats_for_user.append(chat)
         chat_messages = []
-        for message in messages.all():
-            if str(message.id) in chat_obj.message_ids.split(","):
-                chat_messages.append(message)
-        return render(request, self.template_name, context={"obj": obj,
+        for chat_obj in chats_for_user:
+            chat_messages.append([])
+            for message in messages.all():
+                if str(message.id) in chat_obj.message_ids.split(","):
+                    chat_messages[-1].append(message)
+        return render(request, self.template_name, context={"user": user,
                                                             "messages": chat_messages,
-                                                            "is_owner": True,
-                                                            "chat_obj": chat_obj,
+                                                            "is_owner": request.session["logedacc"] == login,
                                                             "chats": chats_for_user,
-                                                            "chat_ids": obj.chat_ids.split(","),
-                                                            "last_message": chat_messages[-1]})
+                                                            "chat_ids": user.chat_ids.split(","),
+                                                            "last_message": [i[-1] for i in chat_messages]})
 
 
 
