@@ -24,6 +24,11 @@ class ChatConsumer(WebsocketConsumer):
         chat_obj = chats.get(id=chat_id)
         chat_obj.message_ids = str(chat_obj.message_ids) + "," + str(message_obj.id) if str(chat_obj.message_ids) != "" else str(message_obj.id)
         chat_obj.save()
+        user_id = User.objects.get(login=login).id
+        chat_users = {}
+        for chat in chats.all():
+            for u in chat.users.split(","):
+                chat_users[int(u)] = User.objects.get(id=u).name
 
         async_to_sync(self.channel_layer.group_send)(
             self.room_group_name,
@@ -33,7 +38,10 @@ class ChatConsumer(WebsocketConsumer):
                 "login": login,
                 "img": str(self.user.profile_photo),
                 "time_sent": message_obj.time_sent,
-                "is_read": str(message_obj.is_read)
+                "is_read": str(message_obj.is_read),
+                "chat_users": chat_users,
+                "user_id": user_id,
+                "chat": str(int(self.room_group_name) - 1)
             }
         )
 
@@ -44,5 +52,8 @@ class ChatConsumer(WebsocketConsumer):
             "login": e["login"],
             "img": e["img"],
             "time_sent": e["time_sent"],
-            "is_read": e["is_read"]
+            "is_read": e["is_read"],
+            "chat_users": e["chat_users"],
+            "user_id": e["user_id"],
+            "chat": e["chat"]
             }))

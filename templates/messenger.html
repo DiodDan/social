@@ -22,7 +22,7 @@
             </div>
             <div class="chats">
                 {% for i in range(chats_len) %}
-                <div class="chat">
+                <div class="chat" id="chat_{{ i }}">
                     <input type="radio" name="chat">
                     <button class="chat">
                         <div class="photo">
@@ -30,8 +30,8 @@
                         </div>
                         <div class="name_message">
                             <h4>{{ chats[i].name }}</h4>
-                            <div class="message">
-                                <h5>{{ last_message[i] }}</h5><h5 class="transparent">{{ last_message[i].time_sent }}</h5>
+                            <div class="message" id="last_message_of_chatid_{{ i }}">
+                                <h5>{{ last_message[i][0] }}</h5><h5 class="transparent">{{ last_message[i][1] }}</h5>
                             </div>
                         </div>
                     </button>
@@ -42,13 +42,13 @@
                             </div>
                             <div class="name_online">
                                 <h4>{{ chats[i].name }}</h4>
-                                <h5 class="transparent">13:32</h5>
+                                <h5 class="transparent" id="last_message_of_chatidu_{{ i }}">{{ last_message[i][1] }}</h5>
                             </div>
                         </div>
                         <div class="dialog" id="messeges_{{ i }}">
                             {% for message in messages[i] %}
                                 <div class="{% if message.autor == user.id %}message sent{% else %}message received{% endif %}">
-                                    <a href="/profile/{{ message.autor }}">{{ message.autor }}</a>
+                                    <a href="/profile/{{ message.autor }}">{{ chat_users[message.autor] }}</a>
                                     <h4>{{ message.text }}</h4>
                                     <h5 class="transparent">{{ message.time_sent }}</h5>
                                 </div>
@@ -56,7 +56,7 @@
                         </div>
                         <div class="input">
                         <form id="form_{{ i }}">
-                            <textarea type="text" class="message-input" placeholder="Type message..." name="message"></textarea>
+                            <textarea type="text" class="message-input" placeholder="Type message..." name="message" id="textarea"></textarea>
                             <button class="send" type="submit"><svg class="yellow" xmlns="http://www.w3.org/2000/svg" viewBox="128 0 1024 1024"><polygon points="1024.27 512 933.76 602.51 752.75 783.51 571.73 783.51 843.24 512 571.73 240.49 752.75 240.49 1024.27 512"/><rect x="256" y="448" width="640" height="128"/></svg></button>
                         </form>
                         </div>
@@ -73,67 +73,7 @@
         </footer>
         </div>
     </div>
-    <script>
-        var radios = Array.from(document.querySelectorAll("input[type=radio][name=chat]"));
-        var btns = Array.from(document.querySelectorAll("button.chat"));
-        document.addEventListener("click", changeRadio);
-        let arr = [];
-        function changeRadio(event) {
-            if (event.target.closest("button.chat")) {
-                for (radio of radios) {
-                    radio.checked = false;
-                }
-                let idBtn = btns.indexOf(event.target.closest("button.chat"));
-                radios[idBtn].checked = true;
-                let my_url = window.location.href.split("/");
-                login = my_url[my_url.length - 1];
-                let chats = [{% for chat in chats %}'{{ chat.id }}', {% endfor %}];
-                chat_id = chats[idBtn];
-                let url = `ws://${window.location.host}/ws/socket-server/${login}/${chat_id}`;
-                arr.push(new WebSocket(url));
-
-                if (arr.length > 1){
-                    arr[0].close("1000", "Пользователь переключил чаты");
-                    arr = [arr[1]]
-                }
-
-                arr[arr.length - 1].onmessage = function(e){
-
-            let data = JSON.parse(e.data);
-            if(data.type === 'message'){
-                let messages = document.getElementById(`messeges_${idBtn}`);
-                let my_class = window.location.href.split("/");
-                my_class = my_class[my_class.length - 1] == data.login ? "message sent" : "message received";
-                messages.insertAdjacentHTML('beforeend', `
-                <div class="${my_class}">
-                    <a href="/profile/${data.login}">${data.login}</a>
-                    <h4>${data.message}</h4>
-                    <h5 class="transparent">${data.time_sent}</h5>
-                </div>`);
-            }
-        }
-
-        let form = document.getElementById(`form_${idBtn}`);
-
-        let form_clone = form.parentNode.cloneNode(true);
-        form.parentNode.insertAdjacentHTML('beforeend', form_clone.innerHTML);
-        form.parentNode.removeChild(form);
-        form = document.getElementById(`form_${idBtn}`);
-        delete form_clone;
-
-        form.addEventListener('submit', (e)=> {
-            e.preventDefault();
-            let message = e.target.message.value;
-            let u = window.location.href;
-            arr[arr.length - 1].send(JSON.stringify({
-                'message':message,
-                'url': u
-            }))
-            form.reset();
-        })
-            }
-        }
-    </script>
+    <script src="../static/js/messenger.js" chats="{% for chat in chats %}'{{ chat.id }}',{% endfor %}"></script>
     </body>
 </html>
 {% endif %}
