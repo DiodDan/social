@@ -39,7 +39,7 @@ class signup(TemplateView):
 
             if post["password"] == post["repit_password"]:
                 db.create(email=post["username"], password=post["password"],
-                          profile_photo="photos/profile_photos/defoult.png",
+                          profile_photo="photos/profile_photos/default.png",
                           description="", followers=0, followed=0)
                 obj = db.get(email=post['username'])
                 obj.login = obj.pk
