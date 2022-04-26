@@ -100,7 +100,6 @@
                 arr[arr.length - 1].onmessage = function(e){
 
             let data = JSON.parse(e.data);
-            console.log(data)
             if(data.type === 'message'){
                 let messages = document.getElementById(`messeges_${idBtn}`);
                 let my_class = window.location.href.split("/");
@@ -123,7 +122,6 @@
         delete form_clone;
 
         form.addEventListener('submit', (e)=> {
-        console.log(1);
             e.preventDefault();
             let message = e.target.message.value;
             let u = window.location.href;
