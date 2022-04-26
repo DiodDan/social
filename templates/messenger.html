@@ -1,4 +1,3 @@
-{% load static %}
 {% if is_owner%}
 <html lang="en" dir="ltr">
     <head>
@@ -22,43 +21,41 @@
                 <input type="text">
             </div>
             <div class="chats">
-                {% for i in chats %}
+                {% for i in range(chats_len) %}
                 <div class="chat">
                     <input type="radio" name="chat">
                     <button class="chat">
                         <div class="photo">
-                            <img src="{{ chat.image }}" alt="Image Not Found">
+                            <img src="../media/{{ chats[i].image }}" alt="Image Not Found">
                         </div>
                         <div class="name_message">
-                            <h4>{{ chats.forloop.counter.name }}</h4>
+                            <h4>{{ chats[i].name }}</h4>
                             <div class="message">
-                                <h5>{{ last_message.forloop.counter.text }}</h5><h5 class="transparent">{{ last_message.forloop.counter.time_sent }}</h5>
+                                <h5>{{ last_message[i] }}</h5><h5 class="transparent">{{ last_message[i].time_sent }}</h5>
                             </div>
                         </div>
                     </button>
                     <div class="dialog_block">
                         <div class="person">
                             <div class="photo">
-                                <img src="{{ chat_obj.img }}" alt="Image Not Found">
+                                <img src="../media/{{ chats[i].image }}" alt="Image Not Found">
                             </div>
                             <div class="name_online">
-                                <h4>name</h4>
+                                <h4>{{ chats[i].name }}</h4>
                                 <h5 class="transparent">13:32</h5>
                             </div>
                         </div>
-                        <div class="dialog" id="messeges">
-                            {% for message_list in messages %}
-                                {% for message in message_list %}
+                        <div class="dialog" id="messeges_{{ i }}">
+                            {% for message in messages[i] %}
                                 <div class="{% if message.autor == user.id %}message sent{% else %}message received{% endif %}">
                                     <a href="/profile/{{ message.autor }}">{{ message.autor }}</a>
                                     <h4>{{ message.text }}</h4>
                                     <h5 class="transparent">{{ message.time_sent }}</h5>
                                 </div>
-                                {% endfor %}
                             {% endfor %}
                         </div>
                         <div class="input">
-                        <form id="form">
+                        <form id="form_{{ i }}">
                             <textarea type="text" class="message-input" placeholder="Type message..." name="message"></textarea>
                             <button class="send" type="submit"><svg class="yellow" xmlns="http://www.w3.org/2000/svg" viewBox="128 0 1024 1024"><polygon points="1024.27 512 933.76 602.51 752.75 783.51 571.73 783.51 843.24 512 571.73 240.49 752.75 240.49 1024.27 512"/><rect x="256" y="448" width="640" height="128"/></svg></button>
                         </form>
@@ -80,7 +77,7 @@
         var radios = Array.from(document.querySelectorAll("input[type=radio][name=chat]"));
         var btns = Array.from(document.querySelectorAll("button.chat"));
         document.addEventListener("click", changeRadio);
-        let idBtn = '0'
+        let arr = [];
         function changeRadio(event) {
             if (event.target.closest("button.chat")) {
                 for (radio of radios) {
@@ -89,22 +86,23 @@
                 let idBtn = btns.indexOf(event.target.closest("button.chat"));
                 radios[idBtn].checked = true;
                 let my_url = window.location.href.split("/");
-                login = my_url[my_url.length - 1]
-                let chats = [{% for chat in chats %}'{{ chat.id }}', {% endfor %}]
-                chat_id = chats[idBtn]
-                let url = `ws://${window.location.host}/ws/socket-server/${login}/${chat_id}`
-                const chatSocket = new WebSocket(url)
-            }
-        }
+                login = my_url[my_url.length - 1];
+                let chats = [{% for chat in chats %}'{{ chat.id }}', {% endfor %}];
+                chat_id = chats[idBtn];
+                let url = `ws://${window.location.host}/ws/socket-server/${login}/${chat_id}`;
+                arr.push(new WebSocket(url));
 
+                if (arr.length > 1){
+                    arr[0].close("1000", "Пользователь переключил чаты");
+                    arr = [arr[1]]
+                }
 
+                arr[arr.length - 1].onmessage = function(e){
 
-
-
-        chatSocket.onmessage = function(e){
-            let data = JSON.parse(e.data)
+            let data = JSON.parse(e.data);
+            console.log(data)
             if(data.type === 'message'){
-                let messages = document.getElementById('messeges');
+                let messages = document.getElementById(`messeges_${idBtn}`);
                 let my_class = window.location.href.split("/");
                 my_class = my_class[my_class.length - 1] == data.login ? "message sent" : "message received";
                 messages.insertAdjacentHTML('beforeend', `
@@ -116,18 +114,27 @@
             }
         }
 
+        let form = document.getElementById(`form_${idBtn}`);
 
-        let form = document.getElementById('form')
+        let form_clone = form.parentNode.cloneNode(true);
+        form.parentNode.insertAdjacentHTML('beforeend', form_clone.innerHTML);
+        form.parentNode.removeChild(form);
+        form = document.getElementById(`form_${idBtn}`);
+        delete form_clone;
+
         form.addEventListener('submit', (e)=> {
-            e.preventDefault()
-            let message = e.target.message.value
-            let url = window.location.href
-            chatSocket.send(JSON.stringify({
+        console.log(1);
+            e.preventDefault();
+            let message = e.target.message.value;
+            let u = window.location.href;
+            arr[arr.length - 1].send(JSON.stringify({
                 'message':message,
-                'url': url
+                'url': u
             }))
-            form.reset()
+            form.reset();
         })
+            }
+        }
     </script>
     </body>
 </html>

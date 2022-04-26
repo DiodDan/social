@@ -13,7 +13,7 @@ class User(models.Model):
 
 
 class Message(models.Model):
-    time_sent = models.DateTimeField(auto_now=True, verbose_name="time_sent")
+    time_sent = models.CharField(max_length=10, verbose_name="time_sent")
     autor = models.IntegerField(verbose_name="autor")
     is_read = models.BooleanField(verbose_name="is_read")
     read_by = models.CharField(max_length=150, verbose_name="read_by")

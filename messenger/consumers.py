@@ -2,8 +2,7 @@ import json
 from channels.generic.websocket import WebsocketConsumer
 from profile.models import User, Message, Chat
 from asgiref.sync import async_to_sync
-
-
+from datetime import datetime
 class ChatConsumer(WebsocketConsumer):
     def connect(self):
         users = User.objects
@@ -17,9 +16,10 @@ class ChatConsumer(WebsocketConsumer):
 
     def receive(self, text_data):
         text_data_json = json.loads(text_data)
-        message, login, chat_id = text_data_json["message"], text_data_json["url"].split("/")[-2], text_data_json["url"].split("/")[-1]
+        message, login, chat_id = text_data_json["message"], text_data_json["url"].split("/")[-1], self.scope["path"].split("/")[-1]
         messages = Message.objects
-        message_obj = messages.create(autor=self.user.id, is_read=False, read_by="", image="", text=message)
+        t = str(datetime.now()).split()[1].split(":")[:2]
+        message_obj = messages.create(autor=self.user.id, is_read=False, read_by="", image="", text=message, time_sent=":".join(t))
         chats = Chat.objects
         chat_obj = chats.get(id=chat_id)
         chat_obj.message_ids = str(chat_obj.message_ids) + "," + str(message_obj.id) if str(chat_obj.message_ids) != "" else str(message_obj.id)
@@ -32,7 +32,7 @@ class ChatConsumer(WebsocketConsumer):
                 "message": message,
                 "login": login,
                 "img": str(self.user.profile_photo),
-                "time_sent": str(str(message_obj.time_sent).split()[1].split(".")[0]),
+                "time_sent": message_obj.time_sent,
                 "is_read": str(message_obj.is_read)
             }
         )
