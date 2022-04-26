@@ -6,7 +6,6 @@
     <title>НеВК</title>
 </head>
 <body>
-
     <form class="box" action="/profile/changedata/{{ obj.login }}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <img src="{%static 'Profile/login_page/images/Diod_white.png'%}" alt="logo" width="200px" high="200px">

@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
 from .forms import *
-
+from profile.models import User, Message, Chat
 
 class login(TemplateView):
     template_name = "login.html"
@@ -40,7 +40,7 @@ class signup(TemplateView):
             if post["password"] == post["repit_password"]:
                 db.create(email=post["username"], password=post["password"],
                           profile_photo="photos/profile_photos/defoult.png",
-                          description="Я простой рабочий диод")
+                          description="", followers=0, followed=0)
                 obj = db.get(email=post['username'])
                 obj.login = obj.pk
                 obj.name = "Диод"
@@ -56,10 +56,12 @@ class signup(TemplateView):
         else:
             return render(request, self.template_name,
                           context={"form": form, "ERR": "Пользователь с такой почтой уже существует!!!"})
+
 class profile(TemplateView):
     template_name = "profile.html"
 
     def get(self, request, login):
+
         obj = User.objects.get(login=login)
         if login == request.session["logedacc"]:
             return render(request, self.template_name,

@@ -9,7 +9,6 @@ class chat(TemplateView):
     template_name = "messenger.html"
     template = Environment(loader=FileSystemLoader('templates')).get_template(template_name)
 
-
     def get(self, request, login):
         db = User.objects
         user = db.get(login=login)
