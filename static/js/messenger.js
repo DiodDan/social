@@ -9,13 +9,13 @@ function load_data()
 }
 var arr = [];
 var idBtn = 0
+var unreadmessages = []
 
 function connect_to_socket()
 {
     let my_url = window.location.href.split("/");
     login = my_url[my_url.length - 1];
     let url = `ws://${window.location.host}/ws/socket-server/${login}`;
-
     let urls = []
     for (i of arr)
     {
@@ -57,6 +57,7 @@ function connect_to_socket()
             let message = e.target.message.value;
             let u = window.location.href;
             arr[idBtn].send(JSON.stringify({
+                'type': 'message',
                 'message':message,
                 'url': u
             }))
@@ -83,5 +84,9 @@ var radios = Array.from(document.querySelectorAll("input[type=radio][name=chat]"
                 }
                 idBtn = btns.indexOf(event.target.closest("button.chat"));
                 radios[idBtn].checked = true;
+                arr[idBtn].send(JSON.stringify({
+                'type': 'messages_read',
+                'url': window.location.href
+            }))
             }
         }
