@@ -3,10 +3,14 @@ from channels.generic.websocket import WebsocketConsumer
 from profile.models import User, Message, Chat
 from asgiref.sync import async_to_sync
 from datetime import datetime
+
 class ChatConsumer(WebsocketConsumer):
+    group_members = []
     def connect(self):
         users = User.objects
         self.user = users.get(login=self.scope["path"].split("/")[-2])
+        self.group_members.append(self.user.id)
+        self.group_members = list(set(self.group_members))
         self.room_group_name = self.scope["path"].split("/")[-1]
         async_to_sync(self.channel_layer.group_add)(
             self.room_group_name,
@@ -17,7 +21,7 @@ class ChatConsumer(WebsocketConsumer):
     def receive(self, text_data):
         text_data_json = json.loads(text_data)
         if text_data_json["type"] == "message":
-            message, login, chat_id = text_data_json["message"], text_data_json["url"].split("/")[-1], self.scope["path"].split("/")[-1]
+            message, login, chat_id = text_data_json["message"], text_data_json["login"], self.scope["path"].split("/")[-1]
             messages = Message.objects
             t = str(datetime.now()).split()[1].split(":")[:2]
             user_id = User.objects.get(login=login).id
@@ -30,7 +34,19 @@ class ChatConsumer(WebsocketConsumer):
             for chat in chats.all():
                 for u in chat.users.split(","):
                     chat_users[int(u)] = User.objects.get(id=u).name
-
+            chat_messages = []
+            for msg in messages.all():
+                if str(msg.id) in chat_obj.message_ids.split(","):
+                    chat_messages.append(msg)
+            unread_messages = []
+            for member in self.group_members:
+                unread_messages.append([])
+                for msg in chat_messages:
+                    if str(member) not in msg.read_by.split(','):
+                        unread_messages[-1].append(msg)
+            for i in range(len(unread_messages)):
+                unread_messages[i] = ",".join([str(self.group_members[i]), str(len(unread_messages[i]))])
+            unread_messages = ":".join(unread_messages)
             async_to_sync(self.channel_layer.group_send)(
                 self.room_group_name,
                 {
@@ -46,11 +62,12 @@ class ChatConsumer(WebsocketConsumer):
                 }
             )
         elif text_data_json["type"] == "messages_read":
-            login, chat_id = text_data_json["url"].split("/")[-1], self.scope["path"].split("/")[-1]
+            login, chat_id = text_data_json["login"], self.scope["path"].split("/")[-1]
             chats = Chat.objects
             messages = Message.objects
             users = User.objects
             chat_obj = chats.get(id=chat_id)
+
             user_id = users.get(login=login).id
             for message in messages.all():
                 if str(message.id) in chat_obj.message_ids.split(","):
@@ -67,5 +84,34 @@ class ChatConsumer(WebsocketConsumer):
             "is_read": e["is_read"],
             "chat_users": e["chat_users"],
             "user_id": e["user_id"],
-            "chat": e["chat"]
+            "chat": e["chat"],
+            "unread_messages": e["unread_messages"]
+            }))
+
+
+class ProfileConsumer(WebsocketConsumer):
+    def connect(self):
+        self.accept()
+        users = User.objects
+        self.self_user = users.get(login=self.scope["path"].split("/")[-2])
+        self.other_user = users.get(login=self.scope["path"].split("/")[-1])
+
+
+    def receive(self, text_data):
+        text_data_json = json.loads(text_data)
+
+        self.other_user.followers = ",".join(set([i for i in self.other_user.followers.split(",") if i != ''] + [str(self.self_user.id)]))
+        self.self_user.followed = ",".join(set([i for i in self.self_user.followed.split(",") if i != ''] + [str(self.other_user.id)]))
+        #button_text = "Подписан" if
+        self.other_user.save()
+        self.self_user.save()
+        self.send(text_data=json.dumps({
+            "type": "follow",
+            'followers': len(self.other_user.followers.split(",")),
+            #'button_text': button_text
+        }))
+    def follow(self, e):
+        self.send(text_data=json.dumps({
+            "followers": e['followers'],
+            #"button_text": e['button_text']
             }))

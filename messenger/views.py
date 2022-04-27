@@ -9,7 +9,8 @@ class chat(TemplateView):
     template_name = "messenger.html"
     template = Environment(loader=FileSystemLoader('templates')).get_template(template_name)
 
-    def get(self, request, login):
+    def get(self, request):
+        login = request.session["logedacc"]
         db = User.objects
         user = db.get(login=login)
         messages = Message.objects
@@ -28,7 +29,6 @@ class chat(TemplateView):
         for chat in chats.all():
             for u in chat.users.split(","):
                 chat_users[int(u)] = db.get(id=u).name
-
         return HttpResponse(self.template.render(user=user,
                                     messages=chat_messages,
                                     is_owner=(request.session["logedacc"] == login),
@@ -36,7 +36,9 @@ class chat(TemplateView):
                                     chat_ids=user.chat_ids.split(","),
                                     last_message=[[i[-1].text, i[-1].time_sent] if len(i) > 0 else "Нет сообщений" for i in chat_messages],
                                     chats_len=len(chats_for_user),
-                                    chat_users=chat_users))
+                                    chat_users=chat_users,
+                                    logedacc=request.session["logedacc"],
+                                    unread_messages=list(map(len, unread_messages))))
 
 
 def pagenotfound(reqest, exception):

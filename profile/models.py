@@ -8,8 +8,8 @@ class User(models.Model):
     name = models.CharField(max_length=30, verbose_name="Имя")
     description = models.CharField(max_length=300, verbose_name="Описание")
     chat_ids = models.CharField(max_length=300)
-    followers = models.IntegerField()
-    followed = models.IntegerField()
+    followers = models.TextField(verbose_name="followers", blank=True)
+    followed = models.TextField(verbose_name="followed", blank=True)
     profile_photo = models.ImageField(upload_to="photos/profile_photos", verbose_name="Фото аккаунта", blank=True)
 
 

@@ -40,7 +40,7 @@ class signup(TemplateView):
             if post["password"] == post["repit_password"]:
                 db.create(email=post["username"], password=post["password"],
                           profile_photo="photos/profile_photos/default.png",
-                          description="", followers=0, followed=0)
+                          description="")
                 obj = db.get(email=post['username'])
                 obj.login = obj.pk
                 obj.name = "Диод"
@@ -63,13 +63,22 @@ class profile(TemplateView):
     def get(self, request, login):
 
         obj = User.objects.get(login=login)
+        obj.followers = len([i for i in obj.followers.split(",") if i != ''])
+        obj.followed = len([i for i in obj.followed.split(",") if i != ''])
+
+
+        # unread_messages = [i for i in msgs if i.]
         if login == request.session["logedacc"]:
             return render(request, self.template_name,
                           context={"is_owner": True, "obj": obj,
-                                   "change_page": f"/profile/changedata/{obj.login}"})
+                                   "change_page": f"/profile/changedata/{obj.login}",
+                                   "logedacc": request.session["logedacc"],
+                                   "is_subscribed": False})
         else:
             return render(request, self.template_name,
-                          context={"is_owner": False, "obj": obj})
+                          context={"is_owner": False, "obj": obj,
+                                   "logedacc": request.session["logedacc"],
+                                   "is_subscribed": False}) # Тут хз че писать хелп пжпжпж
 
 
 class changedata(TemplateView):
