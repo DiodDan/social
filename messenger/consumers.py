@@ -58,7 +58,8 @@ class ChatConsumer(WebsocketConsumer):
                     "is_read": str(message_obj.is_read),
                     "chat_users": chat_users,
                     "user_id": user_id,
-                    "chat": str(int(self.room_group_name) - 1)
+                    "chat": str(int(self.room_group_name)),
+                    "unread_messages": unread_messages
                 }
             )
         elif text_data_json["type"] == "messages_read":
@@ -74,6 +75,7 @@ class ChatConsumer(WebsocketConsumer):
                     message.is_read = True
                     message.read_by = ",".join(set([i for i in message.read_by.split(",") if i != ''] + [str(user_id)]))
                     message.save()
+
     def chat_message(self, e):
         self.send(text_data=json.dumps({
             "type": "message",

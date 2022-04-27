@@ -25,7 +25,7 @@
               <h2>{{ obj.name }}</h2>
               <div class="followers">
                 <div class="number">
-                  <h2>{{ obj.followers }}</h2>
+                  <h2 id="amount_of_followers">{{ obj.followers }}</h2>
                   <h5>followers</h5>
                 </div>
                 <div class="number">
@@ -39,7 +39,12 @@
               <h5>e-mail: dioddan@gmail.com</h5>
               <h5>website: <a href="https://google.com">google.com</a></h5>
             </div>
+            {% if is_owner %}
             <button onclick="window.location.href = '{{ change_page }}'" >Изменить описание</button>
+            {% endif %}
+            {% if not is_owner %}
+            <button id="subscribe_button">{% if is_subscribed %}Подписан{% else %}Подписаться{% endif %}</button>
+            {% endif %}
           </div>
         </div>
         <div class="block profile posts">
@@ -112,5 +117,6 @@
       </footer>
       </div>
     </div>
+  <script src="../static/js/profile.js" user_id="{{ logedacc }}"></script>
   </body>
 </html>

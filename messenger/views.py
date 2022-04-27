@@ -25,6 +25,13 @@ class chat(TemplateView):
             for message in messages.all():
                 if str(message.id) in chat_obj.message_ids.split(","):
                     chat_messages[-1].append(message)
+        unread_messages = []
+        for chat_obj in chat_messages:
+            unread_messages.append([])
+            for message in chat_obj:
+                if str(user.id) not in message.read_by.split(','):
+                    unread_messages[-1].append(message)
+
         chat_users = {}
         for chat in chats.all():
             for u in chat.users.split(","):
