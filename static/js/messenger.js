@@ -12,6 +12,7 @@ function load_data()
 var arr = [];
 var idBtn = -1
 var unreadmessages = []
+var sliders = Array.from(document.querySelectorAll("div.dialog"));
 
 function connect_to_socket()
 {
@@ -46,6 +47,31 @@ function connect_to_socket()
                 </div>`);
                 last_message.innerHTML = `<h5>${data.message}</h5><h5 class="transparent">${data.time_sent}</h5>`;
                 chat_time.innerHTML = `${data.time_sent}`
+                let unread_messages_html = document.getElementById(`unread_messages_${id}`)
+                let unread_messages = data.unread_messages.split(":")
+                let ans = 0
+                for(kl of Array(unread_messages.length).keys())
+                {
+                    unread_messages[kl] = unread_messages[kl].split(",")
+                    if(unread_messages[kl][0] == user_id)
+                    {
+                        ans = unread_messages[kl][1]
+                    }
+                }
+                unread_messages_html.innerHTML = ans
+                if(!(idBtn == -1))
+                {
+                    unread_messages_html = document.getElementById(`unread_messages_${idBtn}`)
+                    unread_messages_html.innerHTML = "0"
+                    sliders[idBtn].scrollTop = sliders[idBtn].scrollHeight;
+                    arr[idBtn].send(JSON.stringify({
+                        'type': 'messages_read',
+                        'login': user_id
+                        }))
+                }
+
+
+
             }
         }
         var form = document.getElementById(`form_${i}`)
