@@ -11,6 +11,8 @@ class User(models.Model):
     followers = models.TextField(verbose_name="followers", blank=True)
     follows = models.TextField(verbose_name="follows", blank=True)
     profile_photo = models.ImageField(upload_to="photos/profile_photos", verbose_name="Фото аккаунта", blank=True)
+    flags_found = models.TextField(verbose_name="flags_found", blank=True)
+    used_theme = models.IntegerField(verbose_name="used_theme", default="0")
 
 
 class Message(models.Model):

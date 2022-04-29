@@ -13,9 +13,9 @@ class chat(TemplateView):
     def get(self, request):
         login = request.session["logedacc"]
         if login == '':
-            return redirect(f"/")
-        db = User.objects
-        user = db.get(login=login)
+            return redirect("/")
+        users = User.objects
+        user = users.get(login=login)
         messages = Message.objects
         chats = Chat.objects
         chats_for_user = []
@@ -38,7 +38,7 @@ class chat(TemplateView):
         chat_users = {}
         for chat in chats.all():
             for u in chat.users.split(","):
-                chat_users[int(u)] = db.get(id=u).name
+                chat_users[int(u)] = [users.get(id=u).name, users.get(id=u).login]
         return HttpResponse(self.template.render(user=user,
                                     messages=chat_messages,
                                     is_owner=(request.session["logedacc"] == login),

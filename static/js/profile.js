@@ -1,11 +1,13 @@
+var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
 let scripts = document.getElementsByTagName('script');
 let lastScript = scripts[scripts.length-1];
 let scriptName = lastScript;
 var user_id = scriptName.getAttribute('user_id');
+var user_login = scriptName.getAttribute('user_login');
 
 let my_url = window.location.href.split("/");
-login = my_url[my_url.length - 1];
-let url = `ws://${window.location.host}/ws/profile/${user_id}/${login}`;
+let login = my_url[my_url.length - 1];
+let url = `${ws_scheme}://${window.location.host}/ws/profile/${user_login}/${login}`;
 var websocket = new WebSocket(url);
 function print(arg)
 {
@@ -35,6 +37,7 @@ websocket.onmessage = function(e)
             let button = document.getElementById('subscribe_button');
             followers.innerHTML = data.followers;
             button.innerHTML = data.follows ? "Отписаться" : "Подписаться";
+
         }
         if(data.type == "error")
         {

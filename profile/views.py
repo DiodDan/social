@@ -93,19 +93,18 @@ class profile(TemplateView):
         user = users.get(login=login)
         user.followers = len([i for i in user.followers.split(",") if i != ''])
         user.follows = len([i for i in user.follows.split(",") if i != ''])
-
-        # unread_messages = [i for i in msgs if i.]
         if login == request.session["logedacc"]:
             return render(request, self.template_name,
                           context={"is_owner": True, "user": user,
                                    "change_page": f"/profile/changedata/{user.login}",
                                    "logedacc": request.session["logedacc"],
-                                   "is_subscribed": False})
+                                   "is_subscribed": False, "theme_color": self.themes[user.used_theme]['color']})
         else:
             return render(request, self.template_name,
                           context={"is_owner": False, "user": user,
                                    "logedacc": request.session["logedacc"],
-                                   "is_subscribed": (str(login) in users.get(login=request.session["logedacc"]).follows.split(","))})
+                                   "is_subscribed": (str(user.id) in users.get(login=request.session["logedacc"]).follows.split(",")),
+                                   "theme_color": self.themes[user.used_theme]['color']})
 
 
 class changedata(TemplateView):
@@ -129,7 +128,6 @@ class changedata(TemplateView):
         if len(User.objects.filter(
                 login=post["login"])) >= 1 and User.objects.get(
                 login=post["login"]) != obj:
-            print(request.POST)
             return render(request, self.template_name,
                           context={"form": form, "obj": obj,
                                    "ERR": "Не уникальный логин"})
@@ -142,6 +140,7 @@ class changedata(TemplateView):
             if request.FILES.get("profile_photo"):
                 obj.profile_photo = request.FILES["profile_photo"]
             obj.save()
+            request.session["logedacc"] = str(obj.login)
             return redirect(f"/profile/{obj.login}")
 
 
