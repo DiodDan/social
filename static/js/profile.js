@@ -7,6 +7,10 @@ let my_url = window.location.href.split("/");
 login = my_url[my_url.length - 1];
 let url = `ws://${window.location.host}/ws/profile/${user_id}/${login}`;
 var websocket = new WebSocket(url);
+function print(arg)
+{
+    console.log(arg);
+}
 try
 {
     var button = document.getElementById('subscribe_button')
@@ -25,8 +29,16 @@ try
 websocket.onmessage = function(e)
     {
         let data = JSON.parse(e.data);
-        let followers = document.getElementById('amount_of_followers');
-        let button = document.getElementById('subscribe_button');
-        followers.innerHTML = data.followers;
-        followers.innerHTML = data.button_text;
+        if(data.type == "follow")
+        {
+            let followers = document.getElementById('amount_of_followers');
+            let button = document.getElementById('subscribe_button');
+            followers.innerHTML = data.followers;
+            button.innerHTML = data.follows ? "Отписаться" : "Подписаться";
+        }
+        if(data.type == "error")
+        {
+            let error_handler = document.getElementById('error_handler');
+            error_handler.innerHTML = data.msg;
+        }
     }
