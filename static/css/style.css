@@ -395,6 +395,8 @@ div.chat div.photo {
     height: 3rem;
     border-radius: 1.5rem;
     overflow: hidden;
+    display: inline;
+    margin-right: 1rem;
 }
 
 div.chat div.photo img {
@@ -499,31 +501,6 @@ div.chats {
     height: 30rem;
     width: 19.25rem;
     overflow-y: scroll;
-}
-
-div.chat div.dialog_block div.dialog div.message {
-    background: #2B2E32;
-    width: fit-content;
-    height: fit-content;
-    max-width: 27rem;
-    padding: .5rem;
-    border-radius: .5rem;
-    margin-top: .5rem;
-    align-self: flex-start;
-}
-
-div.chat div.dialog_block div.dialog div.message h5 {
-    text-align: end;
-}
-
-div.chat div.dialog_block div.dialog div.message.received {
-    background: #2B2E32;
-    align-self: flex-start;
-}
-
-div.chat div.dialog_block div.dialog div.message.sent {
-    background: #3E4248;
-    align-self: flex-end;
 }
 
 div.chat {
@@ -546,19 +523,6 @@ div.chat button.chat {
     margin-bottom: .5rem;
 }
 
-div.chat div.photo {
-    width: 3rem;
-    height: 3rem;
-    border-radius: 1.5rem;
-    overflow: hidden;
-}
-
-div.chat div.photo img {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-}
-
 div.chat button.chat div.name_message {
     width: 13.5rem;
     height: 3rem;
@@ -658,26 +622,32 @@ div.chats {
 }
 
 div.chat div.dialog_block div.dialog div.message {
-    background: #2B2E32;
+    margin-top: .5rem;
+    align-self: flex-start;
+    display: flex;
+    align-items: center;
+}
+
+div.chat div.dialog_block div.dialog div.message div.message_block {
+    background: #3E4248;
     width: fit-content;
     height: fit-content;
+    overflow-wrap: break-word;
     max-width: 27rem;
     padding: .5rem;
     border-radius: .5rem;
-    margin-top: .5rem;
-    align-self: flex-start;
 }
 
-div.chat div.dialog_block div.dialog div.message h5 {
+div.chat div.dialog_block div.dialog div.message div.message_block h5 {
     text-align: end;
 }
 
-div.chat div.dialog_block div.dialog div.message.received {
+div.chat div.dialog_block div.dialog div.message div.message_block.received {
     background: #2B2E32;
     align-self: flex-start;
 }
 
-div.chat div.dialog_block div.dialog div.message.sent {
+div.chat div.dialog_block div.dialog div.message div.message_block.sent {
     background: #3E4248;
     align-self: flex-end;
 }

@@ -40,13 +40,19 @@
                                 <h4>{{ chats[i].name }}</h4>
                                 <h5 class="transparent" id="last_message_of_chatidu_{{ i }}">{{ last_message[i][1] }}</h5>
                             </div>
+                            <button id="edt_chat_{{ chats[i].id }}"></button>
                         </div>
                         <div class="dialog" id="messeges_{{ i }}">
                             {% for message in messages[i] %}
-                                <div class="{% if message.autor == user.id %}message sent{% else %}message received{% endif %}">
-                                    <a href="/profile/{{ chat_users[message.autor][1] }}">{{ chat_users[message.autor][0] }}</a>
-                                    <h4>{{ message.text }}</h4>
-                                    <h5 class="transparent">{{ message.time_sent }}</h5>
+                                <div class="message">
+                                    <div class="photo">
+                                        <img src="../media/{{ chat_users[message.autor][2] }}" alt="Image Not Found">
+                                    </div>
+                                    <div class="message_block {% if message.autor == user.id %}sent{% else %}received{% endif %}">
+                                        <a href="/profile/{{ chat_users[message.autor][1] }}">{{ chat_users[message.autor][0] }}</a>
+                                        <h4>{{ message.text }}</h4>
+                                        <h5 class="transparent">{{ message.time_sent }}</h5>
+                                    </div>
                                 </div>
                             {% endfor %}
                         </div>
