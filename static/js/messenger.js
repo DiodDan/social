@@ -69,9 +69,6 @@ function connect_to_socket()
                         'login': user_login
                         }))
                 }
-
-
-
             }
         }
         var form = document.getElementById(`form_${i}`)

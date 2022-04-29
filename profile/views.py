@@ -87,6 +87,8 @@ class submit_email(TemplateView):
 
 class profile(TemplateView):
     template_name = "profile.html"
+    themes = [{"color": "", },
+              {"color": "red", "pic_path": "media/theme_photos/anonymous-cyber-crime-criminal-hack-hacker-svgrepo-com.svg"}]
 
     def get(self, request, login):
         users = User.objects
