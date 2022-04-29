@@ -25,7 +25,7 @@
                             <img src="../media/{{ chats[i].image }}" alt="Image Not Found">
                         </div>
                         <div class="name_message">
-                            <h4>{{ chats[i].name }} <font color="red" id="unread_messages_{{ i }}">{{ unread_messages[i] }} </font> </h4>
+                            <h4>{{ chats[i].name }}  <font color="red" id="unread_messages_{{ i }}">{% if unread_messages[i] != 0 %} {{ unread_messages[i] }}{% endif %}</font>  </h4>
                             <div class="message" id="last_message_of_chatid_{{ i }}">
                                 <h5>{{ last_message[i][0] }}</h5><h5 class="transparent">{{ last_message[i][1] }}</h5>
                             </div>

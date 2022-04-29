@@ -32,7 +32,7 @@ function connect_to_socket()
         arr[i].onmessage = function(e)
         {
             let data = JSON.parse(e.data);
-            var id = chats.indexOf("'" + String(data.chat) + "'")
+            var id = chats.indexOf("'" + String(data.chat) + "'");
             if(data.type === 'message')
             {
                 let messages = document.getElementById(`messeges_${id}`);
@@ -82,7 +82,7 @@ function connect_to_socket()
             }))
             form.reset();
         }
-        form.addEventListener('submit', s)
+        form.addEventListener('submit', s);
     }
 }
 

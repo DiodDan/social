@@ -3,6 +3,8 @@ from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
 from .forms import *
 from profile.models import User, Message, Chat
+from .email_sender import send_submit_email
+
 
 class login(TemplateView):
     template_name = "login.html"
@@ -23,6 +25,7 @@ class login(TemplateView):
             return redirect(f"/profile/{user_data[0].login}")
         else:
             return render(request, self.template_name, context={"form": form, "ERR": "Неверный пароль или логин"})
+
 
 class signup(TemplateView):
     template_name = "login.html"
@@ -100,9 +103,9 @@ class profile(TemplateView):
                                    "is_subscribed": False})
         else:
             return render(request, self.template_name,
-                          context={"is_owner": False, "obj": obj,
+                          context={"is_owner": False, "user": user,
                                    "logedacc": request.session["logedacc"],
-                                   "is_subscribed": False}) # Тут хз че писать хелп пжпжпж
+                                   "is_subscribed": (str(login) in users.get(login=request.session["logedacc"]).follows.split(","))})
 
 
 class changedata(TemplateView):

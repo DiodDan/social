@@ -21,6 +21,7 @@ class Message(models.Model):
     text = models.CharField(max_length=1000, verbose_name="text")
     image = models.ImageField(upload_to="photos/chat_images", verbose_name="image", blank=True)
 
+
 class Chat(models.Model):
     name = models.CharField(max_length=40, verbose_name="name")
     users = models.CharField(max_length=150, verbose_name="users")

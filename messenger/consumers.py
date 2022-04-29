@@ -102,6 +102,7 @@ class ProfileConsumer(WebsocketConsumer):
         self.other_user = users.get(login=self.scope["path"].split("/")[-1])
 
 
+
     def receive(self, text_data):
 
         text_data_json = json.loads(text_data)
