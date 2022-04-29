@@ -105,7 +105,7 @@
             <button type="submit">create chat</button>
         </form>
     </div>
-    <script src="../static/js/messenger.js" chats="{% for chat in chats %}'{{ chat.id }}',{% endfor %}" user_id="{{ logedacc }}"></script>
+    <script src="../static/js/messenger.js" chats="{% for chat in chats %}'{{ chat.id }}',{% endfor %}" user_id="{{ user.id }}" user_login="{{ logedacc }}"></script>
     </body>
 </html>
 {% endif %}
