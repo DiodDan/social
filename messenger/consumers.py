@@ -109,9 +109,9 @@ class ProfileConsumer(WebsocketConsumer):
         if self.self_user_login != "":
             users = User.objects
             self.self_user = users.get(login=self.self_user_login)
-            if self.other_user.login in self.self_user.follows.split(","):
-                self.other_user.followers = self.other_user.followers.replace(self.self_user.login, "").replace(",,", ",").lstrip(",").rstrip(",")
-                self.self_user.follows = self.self_user.follows.replace(self.other_user.login, "").replace(",,", ",").lstrip(",").rstrip(",")
+            if str(self.other_user.id) in self.self_user.follows.split(","):
+                self.other_user.followers = self.other_user.followers.replace(str(self.self_user.id), "").replace(",,", ",").lstrip(",").rstrip(",")
+                self.self_user.follows = self.self_user.follows.replace(str(self.other_user.id), "").replace(",,", ",").lstrip(",").rstrip(",")
                 self.other_user.save()
                 self.self_user.save()
             else:
@@ -122,7 +122,7 @@ class ProfileConsumer(WebsocketConsumer):
             self.send(text_data=json.dumps({
                 "type": "follow",
                 'followers': len([i for i in self.other_user.followers.split(",") if i != '']),
-                'follows': (str(self.other_user.login) in users.get(login=self.self_user.login).follows.split(","))
+                'follows': (str(self.other_user.id) in users.get(login=self.self_user.login).follows.split(","))
             }))
         else:
             self.send(text_data=json.dumps({

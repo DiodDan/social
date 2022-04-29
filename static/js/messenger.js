@@ -1,5 +1,11 @@
 var chats = []
 var user_id = ''
+var user_login = ''
+var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
+function print(arg)
+{
+    console.log(arg);
+}
 function load_data()
 {
     let scripts = document.getElementsByTagName('script');
@@ -7,6 +13,7 @@ function load_data()
     let scriptName = lastScript;
     chats = scriptName.getAttribute('chats').split(",");
     user_id = scriptName.getAttribute('user_id');
+    user_login = scriptName.getAttribute('user_login');
     chats.pop();
 }
 var arr = [];
@@ -16,7 +23,7 @@ var sliders = Array.from(document.querySelectorAll("div.dialog"));
 
 function connect_to_socket()
 {
-    let url = `ws://${window.location.host}/ws/messenger/${user_id}`;
+    let url = `${ws_scheme}://${window.location.host}/ws/messenger/${user_login}`;
     let urls = []
     for (i of arr)
     {
@@ -24,7 +31,7 @@ function connect_to_socket()
     }
     for(i of Array(chats.length).keys())
     {
-        url = `ws://${window.location.host}/ws/messenger/${user_id}/${chats[i].split("'")[1]}`;
+        url = `${ws_scheme}://${window.location.host}/ws/messenger/${user_login}/${chats[i].split("'")[1]}`;
         if (!(urls.includes(url)))
         {
            arr.push(new WebSocket(url));
@@ -38,7 +45,7 @@ function connect_to_socket()
                 let messages = document.getElementById(`messeges_${id}`);
                 let last_message = document.getElementById(`last_message_of_chatid_${id}`);
                 let chat_time = document.getElementById(`last_message_of_chatidu_${id}`);
-                my_class = user_id == data.login ? "message sent" : "message received";
+                my_class = user_login == data.login ? "message sent" : "message received";
                 messages.insertAdjacentHTML('beforeend', `
                 <div class="${my_class}">
                     <a href="/profile/${data.login}">${data.chat_users[data.user_id]}</a>
@@ -51,7 +58,6 @@ function connect_to_socket()
                 let unread_messages = data.unread_messages;
                 let ans = 0;
                 ans = unread_messages[user_id];
-                console.log(unread_messages, user_id, ans)
                 unread_messages_html.innerHTML = ans;
                 if(!(idBtn == -1))
                 {
@@ -60,12 +66,9 @@ function connect_to_socket()
                     sliders[idBtn].scrollTop = sliders[idBtn].scrollHeight;
                     arr[idBtn].send(JSON.stringify({
                         'type': 'messages_read',
-                        'login': user_id
+                        'login': user_login
                         }))
                 }
-
-
-
             }
         }
         var form = document.getElementById(`form_${i}`)
@@ -78,7 +81,7 @@ function connect_to_socket()
             arr[idBtn].send(JSON.stringify({
                 'type': 'message',
                 'message':message,
-                'login': user_id
+                'login': user_login
             }))
             form.reset();
         }
@@ -106,7 +109,7 @@ function changeRadio(event)
 
         arr[idBtn].send(JSON.stringify({
         'type': 'messages_read',
-        'login': user_id
+        'login': user_login
         }))
 
         let unread_messages = document.getElementById(`unread_messages_${idBtn}`)

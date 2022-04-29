@@ -12,6 +12,12 @@
         <h1>Изменение профиля</h1>
         <br>
         {{ form.as_p }}
+        {% if found_flags %}
+        <select>
+            <option value="1">Нуб</option>
+            <option value="2">Хацкер</option>
+        </select>
+        {% endif %}
         <input type="submit" value="apply">
         <p><font size=3 color="red">{{ ERR }}</font></p>
     </form>

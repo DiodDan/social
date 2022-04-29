@@ -17,7 +17,7 @@
           </div>
           <div class="info">
             <div>
-              <h2>{{ user.name }}</h2>
+              <h2><font size="7" color="{{ theme_color }}">{{ user.name }}</font></h2>
               <div class="followers">
                 <div class="number">
                   <h2 id="amount_of_followers">{{ user.followers }}</h2>
@@ -113,6 +113,6 @@
       </footer>
       </div>
     </div>
-  <script src="../static/js/profile.js" user_id="{{ logedacc }}"></script>
+  <script src="../static/js/profile.js" user_id="{{ user.id }}" user_login="{{ logedacc }}"></script>
   </body>
 </html>
