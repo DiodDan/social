@@ -60,8 +60,8 @@ header a:hover {
 }
 
 .logo_main {
-    width: 9rem;
-    height: 9rem;
+    width: 12rem;
+    height: 12rem;
 }
 
 .logo {
@@ -681,3 +681,91 @@ div.chat div.dialog_block div.dialog div.message.sent {
     background: #3E4248;
     align-self: flex-end;
 }
+
+div.add_chat {
+    margin-bottom: 1.6rem;
+    margin-left: 6rem;
+}
+
+div.add_chat_block {
+    background: #202225;
+    width: 36rem;
+    height: 24rem;
+    padding: 1rem;
+    border-radius: 1rem;
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    top: 12rem;
+    left: 24rem;
+    display: none;
+}
+
+div.add_chat_block form {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+div.add_chat_block form div.info  {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 9rem;
+}
+
+div.add_chat_block form div.info h4 {
+    margin-bottom: .5rem;
+}
+
+div.add_chat_block form div.info div.name input {
+    width: 24rem;
+}
+
+div.add_chat_block form div.info div.choose_photo input {
+    width: 24rem;
+}
+
+div.add_chat_block form div.add_users {
+    height: 9rem;
+    overflow-y: scroll;
+}
+
+div.add_chat_block form div.add_users div.user {
+    background: #34373C;
+    border-radius: 1.5rem;
+    display: flex;
+    align-items: center;
+    margin-bottom: .5rem;
+}
+
+div.add_chat_block form div.add_users div.user:hover {
+    background: #3E4248;
+}
+
+div.add_chat_block form div.add_users div.user div.photo {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 1.5rem;
+    overflow: hidden;
+}
+
+div.add_chat_block form div.add_users div.user div.photo img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+div.add_chat_block form div.add_users div.user h4 {
+    display: inline-block;
+    width: 27rem;
+    margin-left: 1rem;
+}
+
+input[type=checkbox]{
+    width: 1rem;
+    height: 1rem;
+    accent-color: #666;
+}
+

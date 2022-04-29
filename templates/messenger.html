@@ -17,8 +17,8 @@
             <a href="logout"><svg class="yellow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><polygon points="128 128 128 896 768 896 768 1024 0 1024 0 0 768 0 768 128 128 128"/><polygon points="1024.27 512 933.76 602.51 752.75 783.51 571.73 783.51 843.24 512 571.73 240.49 752.75 240.49 1024.27 512"/><rect x="256" y="448" width="640" height="128"/></svg></a>
         </header>
         <div class="block messenger">
-            <div class="search">
-                <input type="text">
+            <div class="add_chat">
+                <button>create chat</button>
             </div>
             <div class="chats">
                 {% for i in range(chats_len) %}
@@ -73,10 +73,46 @@
         </footer>
         </div>
     </div>
+    <div class="add_chat_block">
+        <form action="add_chat">
+            <div class="info">
+                <div class="name">
+                    <h4>enter chat name</h4><input type="text" name="chat_name">
+                </div>
+                <div class="choose_photo">
+                    <h4>choose chat photo</h4><input type="file" accept="image/jpg,image/jpeg,image/png,image/webp" name="chat_image">
+                </div>
+            </div>
+            <div class="add_users">
+                <div class="user">
+                    <div class="photo">
+                        <img src="../media/photos/profile_photos/default.png" alt="Image Not Found">
+                    </div>
+                    <h4>user1</h4>
+                    <input type="checkbox" name="add_users">
+                </div>
+                <div class="user">
+                    <div class="photo">
+                        <img src="../media/photos/profile_photos/default.png" alt="Image Not Found">
+                    </div>
+                    <h4>user1</h4>
+                    <input type="checkbox" name="add_users">
+                </div>
+                <div class="user">
+                    <div class="photo">
+                        <img src="../media/photos/profile_photos/default.png" alt="Image Not Found">
+                    </div>
+                    <h4>user1</h4>
+                    <input type="checkbox" name="add_users">
+                </div>
+            </div>
+            <button type="submit">create chat</button>
+        </form>
+    </div>
     <script src="../static/js/messenger.js" chats="{% for chat in chats %}'{{ chat.id }}',{% endfor %}" user_id="{{ logedacc }}"></script>
     </body>
 </html>
 {% endif %}
 {% if not is_owner %}
-<h1>Это не ваша страницаю.(найс хуй)</h1>
+<h1>Это не ваша страницаю.(найс)</h1>
 {% endif %}

@@ -109,14 +109,44 @@ function changeRadio(event)
         }
         idBtn = btns.indexOf(event.target.closest("button.chat"));
         radios[idBtn].checked = true;
+
         arr[idBtn].send(JSON.stringify({
         'type': 'messages_read',
         'login': user_id
         }))
+
         let unread_messages = document.getElementById(`unread_messages_${idBtn}`)
         unread_messages.innerHTML = "0"
 
-
         sliders[idBtn].scrollTop = sliders[idBtn].scrollHeight;
+    }
+}
+
+var checkboxes = Array.from(document.querySelectorAll("input[type=checkbox][name=add_users]"));
+var divs = Array.from(document.querySelectorAll("div.add_users div.user"));
+document.addEventListener("click", putCheckboxes);
+
+function putCheckboxes(event) {
+    if (event.target.closest("div.add_users div.user")) {
+        idDiv = divs.indexOf(event.target.closest("div.add_users div.user"));
+        checkboxes[idDiv].checked = (checkboxes[idDiv].checked + 1) % 2;
+    }
+}
+
+document.addEventListener("click", openAddChat);
+
+function openAddChat(event) {
+    if (event.target.closest("div.add_chat button")) {
+        document.querySelector("div.add_chat_block").style.display = "block";
+        document.querySelector("div.main").setAttribute("class", "main disabled")
+    }
+    else if (!event.target.closest("div.add_chat_block") && document.querySelector("div.add_chat_block").style.display == "block") {
+        document.querySelector("div.add_chat_block").style.display = "none";
+        document.querySelector("div.main").setAttribute("class", "main")
+        for (checkbox of checkboxes) {
+            checkbox.checked = false;
+        }
+        document.querySelector("div.add_chat_block div.info input[type=text]").value = "";
+        document.querySelector("div.add_chat_block div.info input[type=file]").value = "";
     }
 }
