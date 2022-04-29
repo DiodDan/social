@@ -1,0 +1,16 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <h1>Введите, пожалуйста, код</h1>
+    <form method="post" action="/profile/submit_email/{{ email }}">
+        {% csrf_token %}
+        <input type="text" size="40" name="token">
+        <p><input type="submit" value="Отправить"></p>
+    </form>
+    <font color="red">{{ ERR }}</font>
+</body>
+</html>
