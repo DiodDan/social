@@ -3,15 +3,17 @@ from channels.generic.websocket import WebsocketConsumer
 from profile.models import User, Message, Chat
 from asgiref.sync import async_to_sync
 from datetime import datetime
+group_members = []
 
 class ChatConsumer(WebsocketConsumer):
-    group_members = []
+
 
     def connect(self):
+        global group_members
         users = User.objects
         self.user = users.get(login=self.scope["path"].split("/")[-2])
-        self.group_members.append(self.user.id)
-        self.group_members = list(set(self.group_members))
+        group_members.append(self.user.id)
+        group_members = list(set(group_members))
         self.room_group_name = self.scope["path"].split("/")[-1]
         async_to_sync(self.channel_layer.group_add)(
             self.room_group_name,
@@ -20,6 +22,7 @@ class ChatConsumer(WebsocketConsumer):
         self.accept()
 
     def receive(self, text_data):
+        global group_members
         text_data_json = json.loads(text_data)
         if text_data_json["type"] == "message":
             message, login, chat_id = text_data_json["message"], text_data_json["login"], self.scope["path"].split("/")[-1]
@@ -40,14 +43,14 @@ class ChatConsumer(WebsocketConsumer):
                 if str(msg.id) in chat_obj.message_ids.split(","):
                     chat_messages.append(msg)
             unread_messages = []
-            for member in self.group_members:
+            for member in group_members:
                 unread_messages.append([])
                 for msg in chat_messages:
                     if str(member) not in msg.read_by.split(','):
                         unread_messages[-1].append(msg)
             temp = {}
             for i in range(len(unread_messages)):
-                temp[str(self.group_members[i])] = str(len(unread_messages[i]))
+                temp[str(group_members[i])] = str(len(unread_messages[i]))
             unread_messages = temp
             del temp
             async_to_sync(self.channel_layer.group_send)(
@@ -65,6 +68,7 @@ class ChatConsumer(WebsocketConsumer):
                     "unread_messages": unread_messages
                 }
             )
+
         elif text_data_json["type"] == "messages_read":
             login, chat_id = text_data_json["login"], self.scope["path"].split("/")[-1]
             chats = Chat.objects
@@ -92,14 +96,24 @@ class ChatConsumer(WebsocketConsumer):
             "chat": e["chat"],
             "unread_messages": e["unread_messages"]
             }))
-
+    def disconnect(self, close_code):
+        global group_members
+        try:
+            users = User.objects
+            group_members.remove(users.get(login=self.scope["path"].split("/")[-2]).id)
+        except:
+            pass
 
 class ProfileConsumer(WebsocketConsumer):
     def connect(self):
+        global group_members
+
         self.accept()
         users = User.objects
         self.self_user_login = self.scope["path"].split("/")[-2]
         self.other_user = users.get(login=self.scope["path"].split("/")[-1])
+        group_members.append(users.get(login=self.self_user_login).id)
+        group_members = list(set(group_members))
 
 
 
@@ -135,3 +149,7 @@ class ProfileConsumer(WebsocketConsumer):
             "followers": e['followers'],
             "follows": e['follows']
             }))
+    def disconnect(self, close_code):
+        global group_members
+        users = User.objects
+        group_members.remove(users.get(login=self.scope["path"].split("/")[-2]).id)

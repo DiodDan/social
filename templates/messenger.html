@@ -70,7 +70,9 @@
         </div>
     </div>
     <div class="add_chat_block">
-        <form action="add_chat">
+        <form action="/messenger/" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf }}">
+
             <div class="info">
                 <div class="name">
                     <h4>enter chat name</h4><input type="text" name="chat_name">
@@ -80,27 +82,15 @@
                 </div>
             </div>
             <div class="add_users">
+                {% for user_from_list in users_list %}
                 <div class="user">
                     <div class="photo">
-                        <img src="../media/photos/profile_photos/default.png" alt="Image Not Found">
+                        <img src="/media/{{ user_from_list.profile_photo }}" alt="Image Not Found">
                     </div>
-                    <h4>user1</h4>
-                    <input type="checkbox" name="add_users">
+                    <h4>{{ user_from_list.name }}</h4>
+                    <input type="checkbox" name="add_users" value="{{ user_from_list.id }}">
                 </div>
-                <div class="user">
-                    <div class="photo">
-                        <img src="../media/photos/profile_photos/default.png" alt="Image Not Found">
-                    </div>
-                    <h4>user1</h4>
-                    <input type="checkbox" name="add_users">
-                </div>
-                <div class="user">
-                    <div class="photo">
-                        <img src="../media/photos/profile_photos/default.png" alt="Image Not Found">
-                    </div>
-                    <h4>user1</h4>
-                    <input type="checkbox" name="add_users">
-                </div>
+                {% endfor %}
             </div>
             <button type="submit">create chat</button>
         </form>
