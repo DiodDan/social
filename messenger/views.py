@@ -3,6 +3,7 @@ from django.views.generic import TemplateView
 # from .forms import *
 from profile.models import User, Message, Chat
 from jinja2 import Environment, FileSystemLoader
+from django.shortcuts import redirect
 
 
 class chat(TemplateView):
@@ -11,6 +12,8 @@ class chat(TemplateView):
 
     def get(self, request):
         login = request.session["logedacc"]
+        if login == '':
+            return redirect(f"/")
         db = User.objects
         user = db.get(login=login)
         messages = Message.objects

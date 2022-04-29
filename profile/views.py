@@ -9,6 +9,7 @@ class login(TemplateView):
 
     def get(self, request):
         form = login_form()
+        request.session["logedacc"] = ""
         return render(request, self.template_name, context={"form": form, "ERR": ""})
 
     def post(self, request):
@@ -28,6 +29,7 @@ class signup(TemplateView):
 
     def get(self, request):
         form = register_form()
+        request.session["logedacc"] = ""
         return render(request, self.template_name,
                       context={"form": form, "ERR": ""})
 
@@ -38,17 +40,12 @@ class signup(TemplateView):
         if len(db.filter(email=post["username"])) == 0:
 
             if post["password"] == post["repit_password"]:
-                db.create(email=post["username"], password=post["password"],
-                          profile_photo="photos/profile_photos/default.png",
-                          description="")
-                obj = db.get(email=post['username'])
-                obj.login = obj.pk
-                obj.name = "Диод"
-                obj.save()
+                request.session["password"] = post["password"]
+                request.session["repit_password"] = post["repit_password"]
+                request.session["email"] = post["username"]
 
-                request.session["logedacc"] = str(obj.login)
                 return redirect(
-                    f"/profile/{db.get(email=post['username']).login}")
+                    f"/profile/submit_email/{post['username']}")
             else:
                 return render(request, self.template_name,
                                   context={"form": form,
@@ -57,21 +54,48 @@ class signup(TemplateView):
             return render(request, self.template_name,
                           context={"form": form, "ERR": "Пользователь с такой почтой уже существует!!!"})
 
+
+class submit_email(TemplateView):
+    template_name = "email_submittion.html"
+    token = {}
+
+    def get(self, request, login):
+        if login not in self.token.keys():
+            self.token[login] = send_submit_email(login)
+        return render(request, self.template_name, context={"ERR": "", "email": login})
+
+    def post(self, request, login):
+        post = request.POST
+        users = User.objects
+        if str(self.token[login]) == post["token"]:
+            users.create(email=request.session["email"], password=request.session["password"],
+                  profile_photo="photos/profile_photos/default.png",
+                  description="")
+            user = users.get(email=request.session["email"])
+            user.login = user.pk
+            user.name = "Диод"
+            user.save()
+            request.session["logedacc"] = str(user.login)
+            del self.token[login]
+            return redirect(f"/profile/{str(user.login)}")
+        else:
+            return render(request, self.template_name, context={"ERR": "Пароли не совпадают", "email": login})
+
+
 class profile(TemplateView):
     template_name = "profile.html"
 
     def get(self, request, login):
-
-        obj = User.objects.get(login=login)
-        obj.followers = len([i for i in obj.followers.split(",") if i != ''])
-        obj.followed = len([i for i in obj.followed.split(",") if i != ''])
-
+        users = User.objects
+        user = users.get(login=login)
+        user.followers = len([i for i in user.followers.split(",") if i != ''])
+        user.follows = len([i for i in user.follows.split(",") if i != ''])
 
         # unread_messages = [i for i in msgs if i.]
         if login == request.session["logedacc"]:
             return render(request, self.template_name,
-                          context={"is_owner": True, "obj": obj,
-                                   "change_page": f"/profile/changedata/{obj.login}",
+                          context={"is_owner": True, "user": user,
+                                   "change_page": f"/profile/changedata/{user.login}",
                                    "logedacc": request.session["logedacc"],
                                    "is_subscribed": False})
         else:

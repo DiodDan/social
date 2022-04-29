@@ -6,6 +6,7 @@ from datetime import datetime
 
 class ChatConsumer(WebsocketConsumer):
     group_members = []
+
     def connect(self):
         users = User.objects
         self.user = users.get(login=self.scope["path"].split("/")[-2])
@@ -44,9 +45,11 @@ class ChatConsumer(WebsocketConsumer):
                 for msg in chat_messages:
                     if str(member) not in msg.read_by.split(','):
                         unread_messages[-1].append(msg)
+            temp = {}
             for i in range(len(unread_messages)):
-                unread_messages[i] = ",".join([str(self.group_members[i]), str(len(unread_messages[i]))])
-            unread_messages = ":".join(unread_messages)
+                temp[str(self.group_members[i])] = str(len(unread_messages[i]))
+            unread_messages = temp
+            del temp
             async_to_sync(self.channel_layer.group_send)(
                 self.room_group_name,
                 {
@@ -95,25 +98,39 @@ class ProfileConsumer(WebsocketConsumer):
     def connect(self):
         self.accept()
         users = User.objects
-        self.self_user = users.get(login=self.scope["path"].split("/")[-2])
+        self.self_user_login = self.scope["path"].split("/")[-2]
         self.other_user = users.get(login=self.scope["path"].split("/")[-1])
 
 
     def receive(self, text_data):
-        text_data_json = json.loads(text_data)
 
-        self.other_user.followers = ",".join(set([i for i in self.other_user.followers.split(",") if i != ''] + [str(self.self_user.id)]))
-        self.self_user.followed = ",".join(set([i for i in self.self_user.followed.split(",") if i != ''] + [str(self.other_user.id)]))
-        #button_text = "Подписан" if
-        self.other_user.save()
-        self.self_user.save()
-        self.send(text_data=json.dumps({
-            "type": "follow",
-            'followers': len(self.other_user.followers.split(",")),
-            #'button_text': button_text
-        }))
+        text_data_json = json.loads(text_data)
+        if self.self_user_login != "":
+            users = User.objects
+            self.self_user = users.get(login=self.self_user_login)
+            if self.other_user.login in self.self_user.follows.split(","):
+                self.other_user.followers = self.other_user.followers.replace(self.self_user.login, "").replace(",,", ",").lstrip(",").rstrip(",")
+                self.self_user.follows = self.self_user.follows.replace(self.other_user.login, "").replace(",,", ",").lstrip(",").rstrip(",")
+                self.other_user.save()
+                self.self_user.save()
+            else:
+                self.other_user.followers = ",".join(set([i for i in self.other_user.followers.split(",") if i != ''] + [str(self.self_user.id)]))
+                self.self_user.follows = ",".join(set([i for i in self.self_user.follows.split(",") if i != ''] + [str(self.other_user.id)]))
+                self.other_user.save()
+                self.self_user.save()
+            self.send(text_data=json.dumps({
+                "type": "follow",
+                'followers': len([i for i in self.other_user.followers.split(",") if i != '']),
+                'follows': (str(self.other_user.login) in users.get(login=self.self_user.login).follows.split(","))
+            }))
+        else:
+            self.send(text_data=json.dumps({
+                "type": "error",
+                "msg": "Вы должны войти в аккаунт!!!"
+            }))
+
     def follow(self, e):
         self.send(text_data=json.dumps({
             "followers": e['followers'],
-            #"button_text": e['button_text']
+            "follows": e['follows']
             }))
