@@ -57,7 +57,10 @@ function connect_to_socket()
                         <h5 class="transparent">${data.time_sent}</h5>
                     </div>
                 </div>`);
-                let last_message_text = data.message.length > 27 ? data.message.slice(0, 27) + "..." : data.message;
+                var last_message_text = data.message.split("<br>")[0];
+                print(last_message_text);
+                last_message_text = last_message_text.length > 27 ? last_message_text.slice(0, 27) + "..." : last_message_text;
+                print(last_message_text);
                 last_message.innerHTML = `<h5>${last_message_text}</h5><h5 class="transparent">${data.time_sent}</h5>`;
                 chat_time.innerHTML = `${data.time_sent}`
                 let unread_messages_html = document.getElementById(`unread_messages_${id}`);
@@ -88,7 +91,6 @@ function connect_to_socket()
                     count += 1
                 }
             }
-            print(count);
             if (message && count > 0)
             {
                 form = document.getElementById(`form_${idBtn}`)

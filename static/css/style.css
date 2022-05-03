@@ -254,6 +254,16 @@ div.followers div.number h2, div.followers div.number h5 {
     margin: 0;
 }
 
+div.block.profile.head div.info div.name {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+div.block.profile.head div.info div.name svg {
+    margin-left: .5rem;
+}
+
 div.block.profile.head div.info h4 {
     text-align: center;
 }
