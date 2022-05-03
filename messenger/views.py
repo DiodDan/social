@@ -52,8 +52,7 @@ class chat(TemplateView):
                                                  messages=chat_messages,
                                                  is_owner=(request.session["logedacc"] == login),
                                                  chats=chats_for_user,
-                                                 chat_ids=user.chat_ids.split(","),
-                                                 last_message=[[i[-1].text if len(i[-1].text) < 27 else i[-1].text[0:27] + "...", i[-1].time_sent] if len(i) > 0 else ["", "Нет сообщений"] for i in chat_messages],
+                                                 last_message=[[i[-1].text.split('<br>')[0] if len(i[-1].text.split('<br>')[0]) < 27 else i[-1].text[0:27].split('<br>')[0] + "...", i[-1].time_sent] if len(i) > 0 else ["", "Нет сообщений"] for i in chat_messages],
                                                  chats_len=len(chats_for_user),
                                                  chat_users=chat_users,
                                                  logedacc=request.session["logedacc"],
@@ -69,7 +68,16 @@ class chat(TemplateView):
         user = users.get(login=login)
         chats = Chat.objects
         if post["type"] == "create_chat":
-            chats.create(name=post["chat_name"], users=",".join(post.getlist("add_users") + [str(user.id)]), image=request.FILES["chat_image"])
+            try:
+                if post["chat_name"] == 'flags_chat':
+                    chats.create(name=post["chat_name"], users=",".join(post.getlist("add_users") + [str(user.id)]), image=request.FILES["chat_image"], message_ids="17")
+                else:
+                    chats.create(name=post["chat_name"], users=",".join(post.getlist("add_users") + [str(user.id)]), image=request.FILES["chat_image"])
+            except KeyError:
+                if post["chat_name"] == 'flags_chat':
+                    chats.create(name=post["chat_name"], users=",".join(post.getlist("add_users") + [str(user.id)]), image="../media/photos/profile_photos/default.png", message_ids="17")
+                else:
+                    chats.create(name=post["chat_name"], users=",".join(post.getlist("add_users") + [str(user.id)]), image="../media/photos/profile_photos/default.png")
         elif post["type"] == "edit_chat":
             chat = chats.get(id=post["chat_id"])
             chat.name = post["chat_name"]
