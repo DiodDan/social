@@ -45,3 +45,16 @@ websocket.onmessage = function(e)
             error_handler.innerHTML = data.msg;
         }
     }
+
+document.addEventListener("click", openChangeProfile);
+
+function openChangeProfile(event) {
+    if (event.target.closest("button#change_data")) {
+        document.querySelector("div.change_data").style.display = "block";
+        document.querySelector("div.main").setAttribute("class", "main disabled");
+    }
+    else if (!event.target.closest("div.change_data") && document.querySelector("div.change_data").style.display == "block") {
+        document.querySelector("div.change_data").style.display = "none";
+        document.querySelector("div.main").setAttribute("class", "main");
+    }
+}

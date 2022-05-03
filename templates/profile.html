@@ -17,7 +17,7 @@
           </div>
           <div class="info">
             <div>
-              <h2><font size="7" color="{{ theme_color }}">{{ user.name }}</font></h2>
+              <h2 style="color={{ theme_color }}">{{ user.name }}</h2>
               <div class="followers">
                 <div class="number">
                   <h2 id="amount_of_followers">{{ user.followers }}</h2>
@@ -35,7 +35,7 @@
               <h5>website: <a href="https://google.com">google.com</a></h5>
             </div>
             {% if is_owner %}
-            <button onclick="window.location.href = '{{ change_page }}'" >Изменить описание</button>
+            <button id="change_data">Изменить описание</button>
             {% endif %}
             {% if not is_owner %}
             <button id="subscribe_button">{% if is_subscribed %}Отписаться{% else %}Подписаться{% endif %}</button>
@@ -113,6 +113,49 @@
       </footer>
       </div>
     </div>
+    {% if is_owner %}
+    <div class="change_data">
+      <form action="/profile/changedata/{{ user.login }}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h3>change profile</h3>
+        <div class="email">
+          <h4>e-mail</h4>
+          <input type="text" value="{{ user.email }}" name="email">
+        </div>
+        <div class="login_name">
+          <h4>login</h4>
+          <input type="text" value="{{ user.login }}" name="login">
+        </div>
+        <div class="name">
+          <h4>name</h4>
+          <input type="text" value="{{ user.name }}" name="name">
+        </div>
+        <div class="password">
+          <h4>password</h4>
+          <input type="password" value="{{ user.password }}" name="password">
+        </div>
+        <div class="photo">
+          <h4>photo</h4>
+          <input type="file" accept="image/jpg,image/jpeg,image/png,image/webp" name="profile_photo" value="{{ user.profile_photo }}">
+        </div>
+        <div class="description">
+          <h4>description</h4>
+          <input type="text" value="{{ user.description }}" name="description">
+        </div>
+        {% if flags_found %}
+        <div class="select_theme">
+          <h4>choose theme</h4>
+          <select name="themes">
+            <option value="noob">noob</option>
+            <option value="pro">pro</option>
+          </select>
+        </div>
+        {% endif %}
+        <button type="submit">save changes</button>
+        <p><font size=3 color="red">{{ ERR }}</font></p>
+      </form>
+    </div>
+    {% endif %}
   <script src="../static/js/profile.js" user_id="{{ user.id }}" user_login="{{ logedacc }}"></script>
   </body>
 </html>

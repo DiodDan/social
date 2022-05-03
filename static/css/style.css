@@ -8,7 +8,7 @@
 }
 
 html {
-    font-size: 1.2vw;
+    font-size: 0.8vw;
     color: #ccc
 }
 
@@ -553,10 +553,10 @@ div.chat input[type=radio]:checked + button.chat + div.dialog_block {
 }
 
 div.chat div.dialog_block {
-    height: 24rem;
-    width: 42rem;
+    height: 27rem;
+    width: 76.5rem;
     position: absolute;
-    left: 30rem;
+    left: 34.5rem;
     top: 11.25rem;
 }
 
@@ -572,6 +572,10 @@ div.chat div.dialog_block div.person {
 }
 
 div.chat div.dialog_block div.person div.name_online {
+    margin-left: .5rem;
+}
+
+div.chat div.dialog_block div.person button {
     margin-left: .5rem;
 }
 
@@ -642,14 +646,20 @@ div.chat div.dialog_block div.dialog div.message div.message_block h5 {
     text-align: end;
 }
 
-div.chat div.dialog_block div.dialog div.message div.message_block.received {
-    background: #2B2E32;
+div.chat div.dialog_block div.dialog div.message.received {
     align-self: flex-start;
 }
 
-div.chat div.dialog_block div.dialog div.message div.message_block.sent {
-    background: #3E4248;
+div.chat div.dialog_block div.dialog div.message.received div.message_block {
+    background: #2B2E32;
+}
+
+div.chat div.dialog_block div.dialog div.message.sent {
     align-self: flex-end;
+}
+
+div.chat div.dialog_block div.dialog div.message.sent div.message_block {
+    background: #3E4248;
 }
 
 div.add_chat {
@@ -660,19 +670,19 @@ div.add_chat {
 div.add_chat_block {
     background: #202225;
     width: 36rem;
-    height: 24rem;
+    height: 30rem;
     padding: 1rem;
     border-radius: 1rem;
     position: absolute;
     margin-left: auto;
     margin-right: auto;
-    top: 12rem;
-    left: 24rem;
+    top: 9rem;
+    left: 48rem;
     display: none;
 }
 
 div.add_chat_block form {
-    height: 100%;
+    height: 90%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -739,3 +749,43 @@ input[type=checkbox]{
     accent-color: #666;
 }
 
+div.change_data {
+    background: #202225;
+    width: 36rem;
+    height: 33rem;
+    padding: 1rem;
+    border-radius: 1rem;
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    top: 6rem;
+    left: 45rem;
+    display: none;
+}
+
+div.change_data form {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+div.change_data form div input, div.change_data form div select {
+    width: 18rem;
+}
+
+div.change_data form div select {
+    background: #34373C;
+    color: #ccc;
+}
+
+div.change_data form div.photo input {
+    width: 24rem;
+}
+
+div.change_data form div {
+    height: 3.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
