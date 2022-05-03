@@ -35,7 +35,7 @@
             </div>
             <h4> {{ user.description }} </h4>
             <div class="additional">
-              <h5>e-mail: dioddan@gmail.com</h5>
+              <h5>e-mail: {{ user.email }}</h5>
               <h5>website: <a href="https://google.com">google.com</a></h5>
             </div>
             {% if is_owner %}
@@ -140,6 +140,10 @@
         <div class="description">
           <h4>description</h4>
           <input type="text" value="{{ user.description }}" name="description">
+        </div>
+        <div class="flag_submit">
+          <h4>secret</h4>
+          <input type="text" name="flag_submit">
         </div>
         {% if flags_found %}
         <div class="select_theme">

@@ -6,6 +6,8 @@ from profile.models import User, Message, Chat
 from .email_sender import send_submit_email
 
 
+FLAG = "1h2j45jlk?>gb;3445m5_+3"
+
 class login(TemplateView):
     template_name = "login.html"
 
@@ -127,6 +129,10 @@ class changedata(TemplateView):
         post = request.POST
         obj = User.objects.get(login=login)
         form = change_data_form(request.POST, request.FILES)
+        print("in")
+        if FLAG == post["flag_submit"]:
+            obj.flags_found = "1"
+            obj.save()
         if len(User.objects.filter(
                 login=post["login"])) >= 1 and User.objects.get(
                 login=post["login"]) != obj:
