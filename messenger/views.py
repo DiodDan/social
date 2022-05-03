@@ -36,36 +36,53 @@ class chat(TemplateView):
                     unread_messages[-1].append(message)
 
         chat_users = {}
+        users_for_chats = []
         for chat in chats.all():
+            users_for_chats.append([])
             for u in chat.users.split(","):
-                chat_users[int(u)] = [users.get(id=u).name, users.get(id=u).login, users.get(id=u).profile_photo]
+                t = users.get(id=u)
+                chat_users[int(u)] = [t.name, t.login, t.profile_photo]
+                users_for_chats[-1].append(t)
 
         follows = user.follows.split(',')
         followers = user.followers.split(',')
         friends = set(follows) & set(followers)
-
-        friends = [users.get(id=i) for i in friends]
+        friends = [users.get(id=i) for i in friends if i]
         return HttpResponse(self.template.render(user=user,
                                                  messages=chat_messages,
                                                  is_owner=(request.session["logedacc"] == login),
                                                  chats=chats_for_user,
                                                  chat_ids=user.chat_ids.split(","),
-                                                 last_message=[[i[-1].text, i[-1].time_sent] if len(i) > 0 else "Нет сообщений" for i in chat_messages],
+                                                 last_message=[[i[-1].text if len(i[-1].text) < 27 else i[-1].text[0:27] + "...", i[-1].time_sent] if len(i) > 0 else ["", "Нет сообщений"] for i in chat_messages],
                                                  chats_len=len(chats_for_user),
                                                  chat_users=chat_users,
                                                  logedacc=request.session["logedacc"],
                                                  unread_messages=list(map(len, unread_messages)),
                                                  csrf=request.COOKIES["csrftoken"],
-                                                 users_list=friends))
+                                                 users_list=set(friends),
+                                                 users_for_chats=list(map(set, users_for_chats))))
 
     def post(self, request):
+        post = request.POST
         login = request.session["logedacc"]
         users = User.objects
         user = users.get(login=login)
-        post = request.POST
-
         chats = Chat.objects
-        chats.create(name=post["chat_name"], users=",".join(post.getlist("add_users") + [str(user.id)]), image=request.FILES["chat_image"])
+        if post["type"] == "create_chat":
+            chats.create(name=post["chat_name"], users=",".join(post.getlist("add_users") + [str(user.id)]), image=request.FILES["chat_image"])
+        elif post["type"] == "edit_chat":
+            chat = chats.get(id=post["chat_id"])
+            chat.name = post["chat_name"]
+            if request.FILES.get("chat_image"):
+                chat.image = request.FILES["chat_image"]
+            chat.users = ",".join(post.getlist("add_users"))
+            if chat.users == "":
+                chat.delete()
+            else:
+                chat.save()
+        elif post["type"] == "delete_chat":
+            chat = chats.get(id=post["chat_id"])
+            chat.delete()
         return redirect("/messenger/")
 
 

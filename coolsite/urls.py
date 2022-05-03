@@ -11,6 +11,7 @@ urlpatterns = [
     path("", redir.as_view(), name="login_page"),
     path('profile/', include("profile.urls")),
     path('messenger/', include("messenger.urls")),
+    path('api/', include("api.urls")),
 ]
 
 if settings.DEBUG:
