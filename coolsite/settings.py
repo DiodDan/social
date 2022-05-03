@@ -13,7 +13,7 @@ SECRET_KEY = 'django-insecure-58l(*i7b66=mez2(5vb7-e7ku&@xgu@_be#!=%eas^eg1e!=5!
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ngr = "ae9c-109-252-146-127.eu.ngrok.io"
+ngr = "cc69-109-252-146-127.eu.ngrok.io"
 
 ALLOWED_HOSTS = ["192.168.1.73", "127.0.0.1", ngr]
 CSRF_TRUSTED_ORIGINS = [f"https://{ngr}"]
@@ -29,7 +29,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'profile.apps.ProfileConfig',
-    'messenger.apps.MessengerConfig'
+    'messenger.apps.MessengerConfig',
+    'api.apps.ApiConfig'
 ]
 
 ASGI_APPLICATION = "coolsite.asgi.application"

@@ -14,6 +14,23 @@ class User(models.Model):
     flags_found = models.TextField(verbose_name="flags_found", blank=True)
     used_theme = models.IntegerField(verbose_name="used_theme", default="0")
 
+    def get_list(self, lst):
+        if lst == '':
+            return list()
+        lst = lst.split(',')
+        return sorted(list(map(int, lst)))
+
+    def json_data(self):
+        return {"login": self.login,
+                "email": self.email,
+                "name": self.name,
+                "description": self.description,
+                "chat_ids": self.get_list(self.chat_ids),
+                "followers": self.get_list(self.followers),
+                "follows": self.get_list(self.follows),
+                "flags_found": self.get_list(self.flags_found),
+                "used_theme": self.used_theme}
+
 
 class Message(models.Model):
     time_sent = models.CharField(max_length=10, verbose_name="time_sent")
@@ -22,7 +39,6 @@ class Message(models.Model):
     read_by = models.CharField(max_length=150, verbose_name="read_by")
     text = models.CharField(max_length=1000, verbose_name="text")
     image = models.ImageField(upload_to="photos/chat_images", verbose_name="image", blank=True)
-
 
 class Chat(models.Model):
     name = models.CharField(max_length=40, verbose_name="name")

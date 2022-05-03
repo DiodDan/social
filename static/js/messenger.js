@@ -48,11 +48,17 @@ function connect_to_socket()
                 my_class = user_login == data.login ? "message sent" : "message received";
                 messages.insertAdjacentHTML('beforeend', `
                 <div class="${my_class}">
-                    <a href="/profile/${data.login}">${data.chat_users[data.user_id]}</a>
-                    <h4>${data.message}</h4>
-                    <h5 class="transparent">${data.time_sent}</h5>
+                    <div class="photo">
+                        <img src="../media/${data.img}" alt="Image Not Found">
+                    </div>
+                    <div class="message_block">
+                        <a href="/profile/${data.login}">${data.chat_users[data.user_id]}</a>
+                        <h4>${data.message}</h4>
+                        <h5 class="transparent">${data.time_sent}</h5>
+                    </div>
                 </div>`);
-                last_message.innerHTML = `<h5>${data.message}</h5><h5 class="transparent">${data.time_sent}</h5>`;
+                let last_message_text = data.message.length > 27 ? data.message.slice(0, 27) + "..." : data.message;
+                last_message.innerHTML = `<h5>${last_message_text}</h5><h5 class="transparent">${data.time_sent}</h5>`;
                 chat_time.innerHTML = `${data.time_sent}`
                 let unread_messages_html = document.getElementById(`unread_messages_${id}`);
                 let unread_messages = data.unread_messages;
@@ -74,18 +80,57 @@ function connect_to_socket()
         var form = document.getElementById(`form_${i}`)
         let s = function(e)
         {
-            form = document.getElementById(`form_${idBtn}`)
-            e.preventDefault();
             let message = e.target.message.value;
-            let u = window.location.href;
-            arr[idBtn].send(JSON.stringify({
-                'type': 'message',
-                'message':message,
-                'login': user_login
-            }))
-            form.reset();
+            let splittedMessage = message.split('\n');
+            var count = 0
+            for (line of splittedMessage) {
+                if (line != '') {
+                    count += 1
+                }
+            }
+            print(count);
+            if (message && count > 0)
+            {
+                form = document.getElementById(`form_${idBtn}`)
+                e.preventDefault();
+                arr[idBtn].send(JSON.stringify({
+                    'type': 'message',
+                    'message':message,
+                    'login': user_login
+                }))
+                form.reset();
+            }
+            else
+            {
+                form = document.getElementById(`form_${idBtn}`)
+                e.preventDefault();
+                arr[idBtn].send(JSON.stringify({
+                    'type': 'not_message',
+                    'message':message,
+                    'login': user_login
+                }))
+                form.reset();
+            }
         }
+        document.addEventListener("keydown", keyDown);
+        document.addEventListener("keyup", keyUp);
         form.addEventListener('submit', s);
+        var shiftPressed = false;
+        function keyDown(event) {
+            if (event.key == "Shift") {
+                shiftPressed = true;
+            }
+        }
+        function keyUp(event) {
+            if (event.key == "Shift") {
+                shiftPressed = false;
+            }
+            else if (event.key == "Enter") {
+                if (!shiftPressed) {
+                    document.querySelector(`form#form_${idBtn} button`).click();
+                }
+            }
+        }
     }
 }
 
@@ -145,5 +190,22 @@ function openAddChat(event) {
         }
         document.querySelector("div.add_chat_block div.info input[type=text]").value = "";
         document.querySelector("div.add_chat_block div.info input[type=file]").value = "";
+    }
+}
+
+document.addEventListener("click", openEditChat);
+var editBtns = Array.from(document.querySelectorAll("div.dialog_block div.person button"));
+var idEditBtn = -1;
+
+function openEditChat(event) {
+    if (event.target.closest("div.dialog_block div.person button")) {
+        idEditBtn = editBtns.indexOf(event.target.closest("div.dialog_block div.person button"));
+        document.querySelectorAll("div.add_chat_block")[idEditBtn + 1].style.display = "block";
+        document.querySelector("div.main").setAttribute("class", "main disabled");
+    }
+    else if (!event.target.closest("div.add_chat_block") && idEditBtn != -1) {
+        document.querySelectorAll("div.add_chat_block")[idEditBtn + 1].style.display = "none";
+        document.querySelector("div.main").setAttribute("class", "main");
+        idEditBtn = -1;
     }
 }

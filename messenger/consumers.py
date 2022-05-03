@@ -29,7 +29,7 @@ class ChatConsumer(WebsocketConsumer):
             messages = Message.objects
             t = str(datetime.now()).split()[1].split(":")[:2]
             user_id = User.objects.get(login=login).id
-            message_obj = messages.create(autor=self.user.id, is_read=False, read_by=user_id, image="", text=message, time_sent=":".join(t))
+            message_obj = messages.create(autor=self.user.id, is_read=False, read_by=user_id, image="", text=message.replace("\n", "<br>"), time_sent=":".join(t))
             chats = Chat.objects
             chat_obj = chats.get(id=chat_id)
             chat_obj.message_ids = str(chat_obj.message_ids) + "," + str(message_obj.id) if str(chat_obj.message_ids) != "" else str(message_obj.id)
@@ -57,7 +57,7 @@ class ChatConsumer(WebsocketConsumer):
                 self.room_group_name,
                 {
                     "type": "chat_message",
-                    "message": message,
+                    "message": message.replace("\n", "<br>"),
                     "login": login,
                     "img": str(self.user.profile_photo),
                     "time_sent": message_obj.time_sent,
