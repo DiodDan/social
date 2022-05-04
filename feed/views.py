@@ -16,7 +16,10 @@ class Feed(TemplateView):
         users = User.objects
         user = users.get(login=login)
         publication = Publication.objects
-        publications = publication.filter(author__in=user.follows.split(','))
+        if user.follows:
+            publications = publication.filter(author__in=user.follows.split(','))
+        else:
+            publications = []
         users_for_publications = []
         for publication in publications:
             users_for_publications.append(users.get(id=publication.author))

@@ -162,7 +162,7 @@ class LikeConsumer(WebsocketConsumer):
     def receive(self, text_data):
         text_data_json = json.loads(text_data)
         if text_data_json["type"] == "like":
-            user_id = text_data_json["user_id"]
+            user_id = User.objects.get(login=text_data_json["user_login"]).id
             post_id = text_data_json["post_id"]
             publications = Publication.objects
             post = publications.get(id=post_id)
