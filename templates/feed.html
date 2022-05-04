@@ -1,0 +1,71 @@
+<html lang="en" dir="ltr">
+  <head>
+      <meta charset="UTF-8">
+      <link rel="stylesheet" href="../static/css/style.css">
+      <title>diod — your feed</title>
+  </head>
+
+  <body>
+    <div class="main">
+      <div class="container">
+        <header>{% include "navigation_bar.html" %}</header>
+        <div class="block main_page head">
+            <div class="photo">
+                <img src="../media/{{ user.profile_photo }}" alt="Image Not Found">
+            </div>
+            <div class="input">
+                <form action="/feed/" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf }}">
+                    <div class="post_info">
+                        <h4>choose photo</h4>
+                        <input type="file" accept="image/jpg,image/jpeg,image/png,image/webp" name="image">
+                        <h4>write your text</h4>
+                        <textarea type="text" class="message-input" placeholder="Type message..." name="message" id="textarea"></textarea>
+                    </div>
+                    <button class="send" type="submit"><svg class="yellow" xmlns="http://www.w3.org/2000/svg" viewBox="128 0 1024 1024"><polygon points="1024.27 512 933.76 602.51 752.75 783.51 571.73 783.51 843.24 512 571.73 240.49 752.75 240.49 1024.27 512"/><rect x="256" y="448" width="640" height="128"/></svg></button>
+                </form>
+            </div>
+        </div>
+        <div class="block main_page posts">
+            {% for post in range(lenpublications) %}
+          <div class="block post">
+            <div class="photo_block">
+                <div class="user_info">
+                    <div class="photo">
+                        <img src="../media/{{ users[post].profile_photo }}" alt="Image Not Found">
+                    </div>
+                    <a href="../profile/{{ users[post].login }}"><h2>{{ users[post].name }}</h2></a>
+                </div>
+                <div class="photo">
+                    <img src="../media/{{ publications[post].image }}" alt="Image Not Found">
+                </div>
+                <div class="action">
+                    {% if user.id in publications[post].like_ids.split(",") %}
+                        <div class="like">
+                        <input type="checkbox" checked>
+                    {% else %}
+                        <div class="like normal">
+                        <input type="checkbox">
+                    {% endif %}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M18 1l-6 4-6-4-6 5v7l12 10 12-10v-7z"/></svg>
+                        <h4>{{ lenlikes[post] }}</h4>
+                    </div>
+                    <div class="comment">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="529.668px" height="529.668px" viewBox="0 0 529.668 529.668"><path d="M45.175,529.668l108.887-117.085h330.431V0H45.894L45.175,529.668z M383.896,173.016c20.527,0,37.164,16.64,37.164,37.164c0,20.527-16.641,37.164-37.164,37.164s-37.164-16.641-37.164-37.164C346.731,189.653,363.372,173.016,383.896,173.016zM265.192,173.016c20.526,0,37.165,16.64,37.165,37.164c0,20.527-16.641,37.164-37.165,37.164c-20.523,0-37.164-16.641-37.164-37.164C228.028,189.653,244.668,173.016,265.192,173.016z M146.488,173.016c20.527,0,37.164,16.64,37.164,37.164c0,20.527-16.641,37.164-37.164,37.164c-20.526,0-37.164-16.641-37.164-37.164C109.325,189.653,125.965,173.016,146.488,173.016z"/></svg>
+                        <h4>{{lencomments[post] }}</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="description">
+              <h4>{{ publications[post].text }}</h4>
+            </div>
+          </div>
+            {% endfor %}
+        </div>
+        {% include "footer.html" %}
+      </div>
+    </div>
+  </div>
+  <script src="../static/js/like.js" post_ids="{% for publo in publications %}{{ publo.id }},{% endfor %}" user_id="{{ user.id }}"></script>
+  </body>
+</html>

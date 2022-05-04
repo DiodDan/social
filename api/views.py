@@ -17,4 +17,4 @@ class get_info(TemplateView):
 
 
 def pagenotfound(reqest, exception):
-    return HttpResponse(f"<h1>Либо ты проебався либо я еблан;(</h1>")
+    return HttpResponse(f"<h1>Либо ты ... либо я ...;(</h1>")
