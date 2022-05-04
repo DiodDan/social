@@ -9,7 +9,6 @@ group_members = []
 
 class ChatConsumer(WebsocketConsumer):
 
-
     def connect(self):
         global group_members
         users = User.objects
@@ -97,7 +96,8 @@ class ChatConsumer(WebsocketConsumer):
             "user_id": e["user_id"],
             "chat": e["chat"],
             "unread_messages": e["unread_messages"]
-            }))
+        }))
+
     def disconnect(self, close_code):
         global group_members
         try:
@@ -105,6 +105,7 @@ class ChatConsumer(WebsocketConsumer):
             group_members.remove(users.get(login=self.scope["path"].split("/")[-2]).id)
         except:
             pass
+
 
 class ProfileConsumer(WebsocketConsumer):
     def connect(self):
@@ -116,8 +117,6 @@ class ProfileConsumer(WebsocketConsumer):
         self.other_user = users.get(login=self.scope["path"].split("/")[-1])
         group_members.append(users.get(login=self.self_user_login).id)
         group_members = list(set(group_members))
-
-
 
     def receive(self, text_data):
 
@@ -150,7 +149,8 @@ class ProfileConsumer(WebsocketConsumer):
         self.send(text_data=json.dumps({
             "followers": e['followers'],
             "follows": e['follows']
-            }))
+        }))
+
     def disconnect(self, close_code):
         global group_members
         users = User.objects
@@ -181,5 +181,3 @@ class LikeConsumer(WebsocketConsumer):
             p.remove(str(user_id))
             post.like_ids = ','.join(p)
             post.save()
-        else:
-            print('ioasdfasdfasdfХУУУУУУУУУУУУЙ')

@@ -120,6 +120,7 @@ class profile(TemplateView):
                 else:
                     lenlikes.append(len(publications[publo].like_ids.split(",")))
             user.id = str(user.id)
+            self_user_id = str(users.get(login=request.session["logedacc"]).id)
             if login == request.session["logedacc"]:
                 return HttpResponse(self.template.render(publications=publications,
                                                          user=user,
@@ -143,8 +144,9 @@ class profile(TemplateView):
                                                          is_owner=False,
                                                          logedacc=request.session["logedacc"],
                                                          is_subscribed=(str(user.id) in users.get(login=request.session["logedacc"]).follows.split(",")),
-                                                         theme_color=self.themes[user.used_theme]['color']))
-        except:
+                                                         theme_color=self.themes[user.used_theme]['color'],
+                                                         self_user_id=self_user_id))
+        except Exception:
             return redirect("/profile/login/")
 
 
