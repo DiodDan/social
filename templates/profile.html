@@ -61,7 +61,7 @@
                     <img src="../media/{{ publications[post].image }}" alt="Image Not Found">
                 </div>
                 <div class="action">
-                    {% if user.id in publications[post].like_ids.split(",") %}
+                    {% if self_user_id in publications[post].like_ids.split(",") %}
                         <div class="like">
                         <input type="checkbox" checked>
                     {% else %}
@@ -138,6 +138,6 @@
     </div>
     {% endif %}
   <script src="../static/js/profile.js" user_id="{{ user.id }}" user_login="{{ logedacc }}"></script>
-  <script src="../static/js/like.js" post_ids="{% for publo in publications %}{{ publo.id }},{% endfor %}" user_id="{{ user.id }}"></script>
+  <script src="../static/js/like.js" post_ids="{% for publo in publications %}{{ publo.id }},{% endfor %}" user_login="{{ logedacc }}"></script>
   </body>
 </html>

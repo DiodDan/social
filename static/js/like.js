@@ -4,7 +4,7 @@ function f()
     let lastScript = scripts[scripts.length-1];
     let scriptName = lastScript;
     let post_ids = scriptName.getAttribute('post_ids').split(",");
-    let user_id = scriptName.getAttribute('user_id');
+    let user_login = scriptName.getAttribute('user_login');
     let ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
     document.addEventListener("click", switchLike);
     let likes = Array.from(document.querySelectorAll("div.block.post div.photo_block div.action div.like"));
@@ -24,7 +24,7 @@ function f()
                 u = window.location.href.split("/")
                 websocket.send(JSON.stringify({
                     'type': 'unlike',
-                    'user_id': user_id,
+                    'user_login': user_login,
                     'post_id': post_ids[likeId]
                 }));
             }
@@ -37,7 +37,7 @@ function f()
                 u = window.location.href.split("/")
                 websocket.send(JSON.stringify({
                     'type': 'like',
-                    'user_id': user_id,
+                    'user_login': user_login,
                     'post_id': post_ids[likeId]
                 }));
             }

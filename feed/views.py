@@ -42,6 +42,7 @@ class Feed(TemplateView):
                                                  lenpublications=len(publications),
                                                  lencomments=lencomments,
                                                  lenlikes=lenlikes,
+                                                 logedacc=request.session["logedacc"],
                                                  csrf=request.COOKIES["csrftoken"]))
 
     def post(self, request):

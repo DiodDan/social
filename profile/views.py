@@ -131,7 +131,8 @@ class profile(TemplateView):
                                                          change_page=f"/profile/changedata/{user.login}",
                                                          logedacc=request.session["logedacc"],
                                                          is_subscribed=False,
-                                                         theme_color=self.themes[user.used_theme]['color']))
+                                                         theme_color=self.themes[user.used_theme]['color'],
+                                                         self_user_id=self_user_id))
             else:
                 return HttpResponse(self.template.render(publications=publications,
                                                          user=user,

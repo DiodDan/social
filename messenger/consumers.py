@@ -3,7 +3,9 @@ from channels.generic.websocket import WebsocketConsumer
 from profile.models import User, Message, Chat, Publication
 from asgiref.sync import async_to_sync
 from datetime import datetime
+
 group_members = []
+
 
 class ChatConsumer(WebsocketConsumer):
 
@@ -171,7 +173,7 @@ class LikeConsumer(WebsocketConsumer):
                 post.like_ids = post.like_ids[1:]
             post.save()
         elif text_data_json["type"] == "unlike":
-            user_id = text_data_json["user_id"]
+            user_id = User.objects.get(login=text_data_json["user_login"]).id
             post_id = text_data_json["post_id"]
             publications = Publication.objects
             post = publications.get(id=post_id)
