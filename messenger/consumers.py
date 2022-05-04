@@ -153,3 +153,30 @@ class ProfileConsumer(WebsocketConsumer):
         global group_members
         users = User.objects
         group_members.remove(users.get(login=self.scope["path"].split("/")[-2]).id)
+
+class LikeConsumer(WebsocketConsumer):
+    def connect(self):
+        self.accept()
+
+    def receive(self, text_data):
+        text_data_json = json.loads(text_data)
+        if text_data_json["type"] == "like":
+            user_id = text_data_json["user_id"]
+            post_id = text_data_json["post_id"]
+            publications = Publication.objects
+            post = publications.get(id=post_id)
+            post.like_ids = post.like_ids + ',' + str(user_id)
+            if post.like_ids[0] == ',':
+                post.like_ids = post.like_ids[1:]
+            post.save()
+        elif text_data_json["type"] == "unlike":
+            user_id = text_data_json["user_id"]
+            post_id = text_data_json["post_id"]
+            publications = Publication.objects
+            post = publications.get(id=post_id)
+            p = post.like_ids.split(',')
+            p.remove(str(user_id))
+            post.like_ids = ','.join(p)
+            post.save()
+        else:
+            print('ioasdfasdfasdfХУУУУУУУУУУУУЙ')

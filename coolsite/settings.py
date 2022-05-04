@@ -30,7 +30,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'profile.apps.ProfileConfig',
     'messenger.apps.MessengerConfig',
-    'api.apps.ApiConfig'
+    'api.apps.ApiConfig',
+    'feed.apps.FeedConfig',
+    'search.apps.SearchConfig',
 ]
 
 ASGI_APPLICATION = "coolsite.asgi.application"

@@ -74,7 +74,7 @@ header a:hover {
     opacity: .5;
 }
 
-div.block {
+.block {
     margin-left: auto;
     margin-right: auto;
     background-color: #2B2E32;
@@ -169,7 +169,8 @@ input, textarea {
     background: #34373C;
     border-radius: 1.5rem;
     border: solid .1rem #202225;
-    color: #ccc
+    color: #ccc;
+    resize: none;
 }
 
 input:focus, textarea:focus {
@@ -215,7 +216,7 @@ div.block.profile.head div.info {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    
+
 }
 
 h2 {
@@ -285,7 +286,7 @@ div.block.profile.head div.additional h5 {
     margin: .25rem 0 .25rem 0;
 }
 
-div.block.profile.posts div.block.post {
+div.block.post {
     background: #34373C;
     display: flex;
     justify-content: space-between;
@@ -293,90 +294,101 @@ div.block.profile.posts div.block.post {
     margin-top: 2rem;
 }
 
-div.block.profile.posts div.block.post:first-child {
+div.block.post:first-child {
     margin-top: 0;
 }
 
-div.block.profile.posts div.block.post div.photo_block {
-    width: 12rem;
+div.block.post div.photo_block {
+    width: 18rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
 }
 
-div.block.profile.posts div.block.post div.photo {
+div.block.post div.photo {
     width: 100%;
     border-radius: 1rem;
     overflow: hidden;
 }
 
-div.block.profile.posts div.block.post div.photo img {
+div.block.post div.photo img {
     width: 100%;
 }
 
-div.block.profile.posts div.block.post div.photo_block div.action {
+div.block.post div.photo_block div.action {
     display: flex;
     width: 100%;
     justify-content: space-around;
     margin-top: 1rem;
 }
 
-div.block.profile.posts div.block.post div.photo_block div.action div.like {
+div.block.post div.photo_block div.action div.like {
     color: #F08C8C;
     display: flex;
     align-items: center;
+    cursor: pointer;
 }
 
-div.block.profile.posts div.block.post div.photo_block div.action div.like svg {
+div.block.post div.photo_block div.action div.like input {
+    display: none;
+}
+
+div.block.post div.photo_block div.action div.like svg {
     height: 1.5rem;
     width: 1.5rem;
     margin-right: .25rem;
 }
 
-div.block.profile.posts div.block.post div.photo_block div.action div.like svg path {
+div.block.post div.photo_block div.action div.like svg path {
     fill: #F08C8C;
 }
 
-div.block.profile.posts div.block.post div.photo_block div.action div.like.normal {
+div.block.post div.photo_block div.action div.like.normal {
     color: #ccc;
 }
 
-div.block.profile.posts div.block.post div.photo_block div.action div.like.normal svg path {
+div.block.post div.photo_block div.action div.like.normal svg path {
     fill: #ccc;
 }
 
-div.block.profile.posts div.block.post div.photo_block div.action div.comment {
+div.block.post div.photo_block div.action div.comment {
     color: #ccc;
     display: flex;
     align-items: center;
+    cursor: pointer;
 }
 
-div.block.profile.posts div.block.post div.photo_block div.action div.comment svg {
+div.block.post div.photo_block div.action div.comment svg {
     height: 1.5rem;
     width: 1.5rem;
     margin-right: .25rem;
 }
 
-div.block.profile.posts div.block.post div.photo_block div.action div.comment svg path {
+div.block.post div.photo_block div.action div.comment svg path {
     fill: #ccc;
 }
 
-div.block.profile.posts div.block.post div.photo_block div.action div.share {
+div.block.post div.photo_block div.action div.share {
     color: #F0E68C;
     display: flex;
     align-items: center;
 }
 
-div.block.profile.posts div.block.post div.photo_block div.action div.share svg {
+div.block.post div.photo_block div.action div.share svg {
     transform: translateY(-.25rem);
     height: 2rem;
     width: 2rem;
     margin-right: .25rem;
 }
 
-div.block.profile.posts div.block.post div.description {
+div.block.post div.description {
     margin-left: 1.5rem;
     width: 100%;
+    height: fit-content;
 }
 
-div.block.profile.posts div.block.post div.description h4 {
+div.block.post div.description h4 {
     line-height: 1.2rem;
 }
 
@@ -507,7 +519,7 @@ div.chat div.dialog_block div.input textarea {
     padding-left: 1rem;
 }
 
-div.chat div.dialog_block div.input button.send {
+div.input button.send {
     border: 0;
     width: 3.5rem;
     height: 3.5rem;
@@ -812,6 +824,134 @@ div.change_data form div {
     justify-content: space-between;
 }
 
+div.block.main_page.head {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+div.block.main_page.head div.input {
+    width: 50%;
+    margin-left: 3rem;
+}
+
+div.block.main_page.head div.input div.post_info {
+    width: 90%;
+}
+
+div.block.main_page.head div.input textarea, input {
+    width: 100%;
+    margin-top: .5rem;
+    margin-bottom: 1rem;
+}
+
+div.block.main_page.head div.input textarea {
+    height: 12rem;
+}
+
+div.block.main_page.head div.input form {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+div.block.post div.photo_block div.user_info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+div.block.post div.photo_block div.user_info div.photo {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 1.5rem;
+    overflow: hidden;
+    display: block;
+    margin-right: .5rem;
+}
+
+div.block.post div.photo_block div.user_info div.photo img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+div.block.main_page.head div.photo {
+    width: 6rem;
+    height: 6rem;
+    border-radius: 3rem;
+    overflow: hidden;
+    display: block;
+}
+
+div.block.main_page.head div.photo img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+div.block.search {
+    width: 60%;
+}
+
+div.block.search div.input {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+div.block.search div.input form {
+    width: 60%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+div.block.search div.input form input {
+    width: 24rem;
+    margin-right: 3rem;
+}
+
+div.block.search div.results {
+    display: flex;
+    flex-direction: column;
+}
+
+div.block.search div.results a {
+    display: flex;
+    align-items: center;
+    background-color: #34373C;
+    margin: 1rem 0 0 0;
+    padding: 1rem;
+    color: #ccc;
+}
+
+div.block.search div.results a div.info {
+    display: flex;
+    flex-direction: column;
+    height: 4rem;
+    justify-content: space-between;
+    margin-left: 1rem;
+}
+
+div.block.search div.results a div.info h3 {
+    margin-top: 0;
+}
+
+div.block.search div.results a div.photo {
+    width: 4.5rem;
+    height: 4.5rem;
+    border-radius: 2.25rem;
+    overflow: hidden;
+}
+
+div.block.search div.results a div.photo img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
 @media (orientation: portrait) {
     html {
         font-size: 0.8vh;
@@ -831,19 +971,19 @@ div.change_data form div {
     div.container {
         width: 90%
     }
-    div.block.profile.posts div.block.post {
+    div.block.post {
         display: flex;
-        flex-flow: column;
+        flex-direction: column;
         align-items: center;
     }
-    div.block.profile.posts div.block.post div.photo_block {
+    div.block.post div.photo_block {
         width: 24rem;
         margin-bottom: 1rem;
     }
-    div.block.profile.posts div.block.post div.description {
+    div.block.post div.description {
         margin-left: 0;
     }
-    div.block.profile.posts div.block.post div.description h4 {
+    div.block.post div.description h4 {
         line-height: 1.5rem;
     }
     div.change_data {

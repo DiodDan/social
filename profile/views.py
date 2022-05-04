@@ -5,6 +5,7 @@ from .forms import *
 from profile.models import User, Message, Chat
 from .email_sender import send_submit_email
 from django.core.exceptions import ObjectDoesNotExist
+from jinja2 import Environment, FileSystemLoader
 
 
 FLAG = "1h2j45jlk?>gb;3445m5_+3"
@@ -90,8 +91,10 @@ class submit_email(TemplateView):
         except:
             return "Ошибка"
 
+
 class profile(TemplateView):
     template_name = "profile.html"
+    template = Environment(loader=FileSystemLoader('templates')).get_template(template_name)
     themes = [{"color": "", },
               {"color": "red", "pic_path": "media/theme_photos/anonymous-cyber-crime-criminal-hack-hacker-svgrepo-com.svg"}]
 
