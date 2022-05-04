@@ -1,6 +1,6 @@
 import json
 from channels.generic.websocket import WebsocketConsumer
-from profile.models import User, Message, Chat
+from profile.models import User, Message, Chat, Publication
 from asgiref.sync import async_to_sync
 from datetime import datetime
 group_members = []
@@ -153,6 +153,7 @@ class ProfileConsumer(WebsocketConsumer):
         global group_members
         users = User.objects
         group_members.remove(users.get(login=self.scope["path"].split("/")[-2]).id)
+
 
 class LikeConsumer(WebsocketConsumer):
     def connect(self):
