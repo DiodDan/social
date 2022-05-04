@@ -24,12 +24,12 @@
                         <form method="post" action="{% url 'login_page' %}">
                             {% csrf_token %}
                             <div class="input">
-                                <span>username</span>
-                                <input type="text" name="username" placeholder="enter your username/email">
+                                <span>e-mail</span>
+                                <input type="text" name="username">
                             </div>
                             <div class="input">
                                 <span>password</span>
-                                <input type="password" name="password" placeholder="enter your password">
+                                <input type="password" name="password">
                             </div>
 
                             <div class="submit">
@@ -45,16 +45,16 @@
                         <form method="post" action="{% url 'signup_page' %}">
                             {% csrf_token %}
                             <div class="input">
-                                <span>username</span>
-                                <input type="text" name="username" placeholder="enter your username/email">
+                                <span>e-mail</span>
+                                <input type="text" name="username">
                             </div>
                             <div class="input">
                                 <span>password</span>
-                                <input type="password" name="password" placeholder="enter your password">
+                                <input type="password" name="password">
                             </div>
                             <div class="input">
-                                <span>password</span>
-                                <input type="password" name="repit_password" placeholder="repeat your password">
+                                <span>repeat</span>
+                                <input type="password" name="repit_password">
                             </div>
 
                             <div class="submit">

@@ -4,6 +4,7 @@ from django.views.generic import TemplateView
 from .forms import *
 from profile.models import User, Message, Chat
 from .email_sender import send_submit_email
+from django.core.exceptions import ObjectDoesNotExist
 
 
 FLAG = "1h2j45jlk?>gb;3445m5_+3"
@@ -72,20 +73,22 @@ class submit_email(TemplateView):
     def post(self, request, login):
         post = request.POST
         users = User.objects
-        if str(self.token[login]) == post["token"]:
-            users.create(email=request.session["email"], password=request.session["password"],
-                  profile_photo="photos/profile_photos/default.png",
-                  description="")
-            user = users.get(email=request.session["email"])
-            user.login = user.pk
-            user.name = "Диод"
-            user.save()
-            request.session["logedacc"] = str(user.login)
-            del self.token[login]
-            return redirect(f"/profile/{str(user.login)}")
-        else:
-            return render(request, self.template_name, context={"ERR": "Пароли не совпадают", "email": login})
-
+        try:
+            if str(self.token[login]) == post["token"]:
+                users.create(email=request.session["email"], password=request.session["password"],
+                      profile_photo="photos/profile_photos/default.png",
+                      description="")
+                user = users.get(email=request.session["email"])
+                user.login = user.pk
+                user.name = "Диод"
+                user.save()
+                request.session["logedacc"] = str(user.login)
+                del self.token[login]
+                return redirect(f"/profile/{str(user.login)}")
+            else:
+                return render(request, self.template_name, context={"ERR": "Пароли не совпадают", "email": login})
+        except:
+            return "Ошибка"
 
 class profile(TemplateView):
     template_name = "profile.html"
@@ -93,23 +96,25 @@ class profile(TemplateView):
               {"color": "red", "pic_path": "media/theme_photos/anonymous-cyber-crime-criminal-hack-hacker-svgrepo-com.svg"}]
 
     def get(self, request, login):
-        users = User.objects
-        user = users.get(login=login)
-        user.followers = len([i for i in user.followers.split(",") if i != ''])
-        user.follows = len([i for i in user.follows.split(",") if i != ''])
-        if login == request.session["logedacc"]:
-            return render(request, self.template_name,
-                          context={"is_owner": True, "user": user,
-                                   "change_page": f"/profile/changedata/{user.login}",
-                                   "logedacc": request.session["logedacc"],
-                                   "is_subscribed": False, "theme_color": self.themes[user.used_theme]['color']})
-        else:
-            return render(request, self.template_name,
-                          context={"is_owner": False, "user": user,
-                                   "logedacc": request.session["logedacc"],
-                                   "is_subscribed": (str(user.id) in users.get(login=request.session["logedacc"]).follows.split(",")),
-                                   "theme_color": self.themes[user.used_theme]['color']})
-
+        try:
+            users = User.objects
+            user = users.get(login=login)
+            user.followers = len([i for i in user.followers.split(",") if i != ''])
+            user.follows = len([i for i in user.follows.split(",") if i != ''])
+            if login == request.session["logedacc"]:
+                return render(request, self.template_name,
+                              context={"is_owner": True, "user": user,
+                                       "change_page": f"/profile/changedata/{user.login}",
+                                       "logedacc": request.session["logedacc"],
+                                       "is_subscribed": False, "theme_color": self.themes[user.used_theme]['color']})
+            else:
+                return render(request, self.template_name,
+                              context={"is_owner": False, "user": user,
+                                       "logedacc": request.session["logedacc"],
+                                       "is_subscribed": (str(user.id) in users.get(login=request.session["logedacc"]).follows.split(",")),
+                                       "theme_color": self.themes[user.used_theme]['color']})
+        except:
+            return redirect("/profile/login/")
 
 class changedata(TemplateView):
     template_name = "changedata.html"

@@ -146,7 +146,7 @@ div.tab {
 }
 
 div.login form {
-    width: 21rem;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center
@@ -191,6 +191,7 @@ a:visited {
 div.block.profile.head {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     width: 48rem;
     margin-bottom: 3rem;
 }
@@ -269,7 +270,12 @@ div.block.profile.head div.info h4 {
 }
 
 div.block.profile.head div.additional {
+    margin: 0 0 .5rem 0;
     align-self: flex-end;
+}
+
+div.block.profile.head div.info h4 {
+    margin: 1rem 0 1rem 0;
 }
 
 div.block.profile.head div.additional h5 {
@@ -366,7 +372,8 @@ div.block.profile.posts div.block.post div.photo_block div.action div.share svg 
 }
 
 div.block.profile.posts div.block.post div.description {
-    width: 42rem;
+    margin-left: 1.5rem;
+    width: 100%;
 }
 
 div.block.profile.posts div.block.post div.description h4 {
@@ -611,13 +618,18 @@ div.chat div.dialog_block div.dialog {
 div.chat div.dialog_block div.input {
     width: 42rem;
     height: 3.5rem;
+}
+
+div.chat div.dialog_block div.input form {
+    width: 100%;
+    height: 100%;
     display: flex;
     justify-content: space-around;
 }
 
 div.chat div.dialog_block div.input textarea {
     resize: none;
-    width: 36rem;
+    width: 80%;
     height: 100%;
     padding-left: 1rem;
 }
@@ -768,7 +780,7 @@ div.change_data {
     position: absolute;
     margin-left: auto;
     margin-right: auto;
-    top: 6rem;
+    top: 12rem;
     left: 45rem;
     display: none;
 }
@@ -798,4 +810,71 @@ div.change_data form div {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+}
+
+@media (orientation: portrait) {
+    html {
+        font-size: 0.8vh;
+    }
+    h2 {
+        font-size: 2rem
+    }
+    h3 {
+        font-size: 1.5rem
+    }
+    h4 {
+        font-size: 1.2rem
+    }
+    h5 {
+        font-size: .9rem
+    }
+    div.container {
+        width: 90%
+    }
+    div.block.profile.posts div.block.post {
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+    }
+    div.block.profile.posts div.block.post div.photo_block {
+        width: 24rem;
+        margin-bottom: 1rem;
+    }
+    div.block.profile.posts div.block.post div.description {
+        margin-left: 0;
+    }
+    div.block.profile.posts div.block.post div.description h4 {
+        line-height: 1.5rem;
+    }
+    div.change_data {
+        background: #202225;
+        width: 36rem;
+        height: 36rem;
+        padding: 1rem;
+        border-radius: 1rem;
+        position: absolute;
+        margin-left: auto;
+        margin-right: auto;
+        top: 24rem;
+        left: 50vw;
+        transform: translateX(-50%);
+        display: none;
+    }
+    div.chat div.dialog_block {
+        width: calc(90% - 24rem);
+        left: 27rem;
+    }
+    div.chat div.dialog_block div.input {
+        width: 42vw;
+    }
+    div.login {
+        width: 80%;
+        font-size: 2rem;
+    }
+    div.headbuts button.tab.one {
+        margin-left: 0;
+    }
+    div.headbuts button.tab.two {
+        margin-left: 4vw;
+    }
 }
