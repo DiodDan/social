@@ -31,19 +31,45 @@ class User(models.Model):
                 "flags_found": self.get_list(self.flags_found),
                 "used_theme": self.used_theme}
 
+    class Meta:
+        verbose_name = 'Пользователь'
+        verbose_name_plural = 'Пользователи'
+
 
 class Message(models.Model):
-    time_sent = models.CharField(max_length=10, verbose_name="time_sent")
-    autor = models.IntegerField(verbose_name="autor")
-    is_read = models.BooleanField(verbose_name="is_read")
-    read_by = models.CharField(max_length=150, verbose_name="read_by")
-    text = models.CharField(max_length=1000, verbose_name="text")
+    time_sent = models.CharField(max_length=10, verbose_name="Время отправки")
+    autor = models.IntegerField(verbose_name="Автор")
+    is_read = models.BooleanField(verbose_name="Прочитано")
+    read_by = models.CharField(max_length=150, verbose_name="Кем прочитано")
+    text = models.CharField(max_length=1000, verbose_name="Сообщение")
     image = models.ImageField(upload_to="photos/chat_images", verbose_name="image", blank=True)
+
+    class Meta:
+        verbose_name = 'Сообщение'
+        verbose_name_plural = 'Сообщения'
 
 
 class Chat(models.Model):
-    name = models.CharField(max_length=40, verbose_name="name")
-    users = models.CharField(max_length=150, verbose_name="users")
+    name = models.CharField(max_length=40, verbose_name="Название")
+    users = models.CharField(max_length=150, verbose_name="Участники")
     image = models.ImageField(upload_to="photos/chat_images",
-                              verbose_name="image", blank=True)
-    message_ids = models.TextField(verbose_name="message_ids")
+                              verbose_name="Фото", blank=True)
+    message_ids = models.TextField(verbose_name="ID сообщений")
+
+    class Meta:
+        verbose_name = 'Чат'
+        verbose_name_plural = 'Чаты'
+
+
+class Publication(models.Model):
+    author = models.IntegerField(verbose_name="Автор")
+    text = models.TextField(verbose_name="Текст")
+    image = models.ImageField(upload_to="photos/publication_images", blank=True, verbose_name="Фото")
+    like_ids = models.TextField(verbose_name="ID лайков")
+    comment_ids = models.TextField(verbose_name="ID сообщений")
+    time_created = models.CharField(max_length=10, verbose_name="Время создания")
+
+    class Meta:
+
+        verbose_name = 'Пост'
+        verbose_name_plural = 'Посты'

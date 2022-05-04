@@ -10,6 +10,7 @@ from jinja2 import Environment, FileSystemLoader
 
 FLAG = "1h2j45jlk?>gb;3445m5_+3"
 
+
 class login(TemplateView):
     template_name = "login.html"
 
@@ -104,20 +105,47 @@ class profile(TemplateView):
             user = users.get(login=login)
             user.followers = len([i for i in user.followers.split(",") if i != ''])
             user.follows = len([i for i in user.follows.split(",") if i != ''])
+            publication = Publication.objects
+            publications = publication.filter(author=user.id)
+            lencomments = []
+            lenlikes = []
+            for publo in range(len(publications)):
+                if publications[publo].comment_ids == '':
+                    lencomments.append(0)
+                else:
+                    lencomments.append(len(publications[publo].comment_ids.split(",")))
+
+                if publications[publo].like_ids == '':
+                    lenlikes.append(0)
+                else:
+                    lenlikes.append(len(publications[publo].like_ids.split(",")))
+            user.id = str(user.id)
             if login == request.session["logedacc"]:
-                return render(request, self.template_name,
-                              context={"is_owner": True, "user": user,
-                                       "change_page": f"/profile/changedata/{user.login}",
-                                       "logedacc": request.session["logedacc"],
-                                       "is_subscribed": False, "theme_color": self.themes[user.used_theme]['color']})
+                return HttpResponse(self.template.render(publications=publications,
+                                                         user=user,
+                                                         lenpublications=len(publications),
+                                                         lencomments=lencomments,
+                                                         lenlikes=lenlikes,
+                                                         csrf=request.COOKIES["csrftoken"],
+                                                         is_owner=True,
+                                                         change_page=f"/profile/changedata/{user.login}",
+                                                         logedacc=request.session["logedacc"],
+                                                         is_subscribed=False,
+                                                         theme_color=self.themes[user.used_theme]['color']))
             else:
-                return render(request, self.template_name,
-                              context={"is_owner": False, "user": user,
-                                       "logedacc": request.session["logedacc"],
-                                       "is_subscribed": (str(user.id) in users.get(login=request.session["logedacc"]).follows.split(",")),
-                                       "theme_color": self.themes[user.used_theme]['color']})
+                return HttpResponse(self.template.render(publications=publications,
+                                                         user=user,
+                                                         lenpublications=len(publications),
+                                                         lencomments=lencomments,
+                                                         lenlikes=lenlikes,
+                                                         csrf=request.COOKIES["csrftoken"],
+                                                         is_owner=False,
+                                                         logedacc=request.session["logedacc"],
+                                                         is_subscribed=(str(user.id) in users.get(login=request.session["logedacc"]).follows.split(",")),
+                                                         theme_color=self.themes[user.used_theme]['color']))
         except:
             return redirect("/profile/login/")
+
 
 class changedata(TemplateView):
     template_name = "changedata.html"
@@ -137,7 +165,6 @@ class changedata(TemplateView):
         post = request.POST
         obj = User.objects.get(login=login)
         form = change_data_form(request.POST, request.FILES)
-        print("in")
         if FLAG == post["flag_submit"]:
             obj.flags_found = "1"
             obj.save()
