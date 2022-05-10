@@ -3,6 +3,10 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -13,15 +17,16 @@ SECRET_KEY = 'django-insecure-58l(*i7b66=mez2(5vb7-e7ku&@xgu@_be#!=%eas^eg1e!=5!
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ngr = "diod.pagekite.me"
+host1 = "diod.cf"
+host2 = "www.diod.cf"
+ip = "195.133.146.115"
 
-ALLOWED_HOSTS = ["192.168.1.73", "127.0.0.1", ngr]
-CSRF_TRUSTED_ORIGINS = [f"https://{ngr}"]
+ALLOWED_HOSTS = [host1, host2, ip]
+CSRF_TRUSTED_ORIGINS = [f"https://{host1}"]
 
 # Application definition
 
 INSTALLED_APPS = [
-    'whitenoise.runserver_nostatic',
     'channels',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -33,20 +38,20 @@ INSTALLED_APPS = [
     'messenger.apps.MessengerConfig',
     'api.apps.ApiConfig',
     'feed.apps.FeedConfig',
-    'search.apps.SearchConfig',
+    'search.apps.SearchConfig'
 ]
 
 ASGI_APPLICATION = "coolsite.asgi.application"
 
 CHANNEL_LAYERS = {
     'default':{
-        'BACKEND':'channels.layers.InMemoryChannelLayer'
+        'BACKEND':'channels.layers.InMemoryChannelLayer',
+        'config': { 'hosts': [('127.0.0.1', 6379)] },
     }
 }
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -123,12 +128,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 STATIC_URL = '/static/'
-
-if DEBUG:
-    STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
-else:
-    STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -138,3 +139,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = "/media/"
+
+EMAIL_HOST = 'mail.diod.cf'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'auth@diod.cf'
+EMAIL_HOST_PASSWORD = 'NotAUsualSocialNetwork3!'
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True

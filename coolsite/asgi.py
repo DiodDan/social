@@ -7,6 +7,9 @@ import messenger.routing
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'coolsite.settings')
 
+import django
+django.setup()
+
 application = ProtocolTypeRouter({
     "http":get_asgi_application(),
     "websocket": AuthMiddlewareStack(

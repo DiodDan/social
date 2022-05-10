@@ -1,24 +1,17 @@
-import smtplib
 import random
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
+
+from django.core.mail import EmailMultiAlternatives
 
 def send_submit_email(to_user):
-    msg = MIMEMultipart()
-
-    password = "diodpasswordis12345"
-    from_user = "SocialNetworkdiod@gmail.com"
-    server = smtplib.SMTP('smtp.gmail.com:587')
-    server.starttls()
-    server.login(from_user, password)
 
     token = random.randint(100000, 999999)
 
-    msg['Subject'] = "Подтверждение почты"
+    subj = "diod    ^`^t email verification"
+    text = f"hi! you received this email because you tried to register on diod.cf. if you didn't, skip this email. your authentification code is: <strong>{str(token)}"
+    html = f"<table style='padding:20px;background:#34373C;color:white;font-size:24px;font-family:Bahnschrift;text-align:center;'><tr><td>hi! you received this email because you tried to register on <a href='https://diod.cf'>diod.cf</a></td></tr><tr><td style='font-size:14px;font-style:italic;color:#888888'>if you didn't, skip this email<br></td></tr><tr><td style='font-size:18px'>your authentification code is: <strong>{str(token)}</strong></td></tr></table>"
 
-    msg.attach(MIMEText(f"Ваш код подтверждения: {str(token)}", 'plain'))
+    msg = EmailMultiAlternatives(subj, text, "auth@diod.cf", [to_user])
+    msg.attach_alternative(html, "text/html")
+    msg.send()
 
-    server.sendmail(from_user, to_user, msg.as_string())
-
-    server.quit()
     return token

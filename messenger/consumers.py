@@ -1,6 +1,14 @@
 import json
 from channels.generic.websocket import WebsocketConsumer
+
+import os
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'coolsite.settings')
+
+import django
+django.setup()
+
 from profile.models import User, Message, Chat, Publication
+
 from asgiref.sync import async_to_sync
 from datetime import datetime
 
@@ -8,7 +16,6 @@ group_members = []
 
 
 class ChatConsumer(WebsocketConsumer):
-
     def connect(self):
         global group_members
         users = User.objects
@@ -28,9 +35,13 @@ class ChatConsumer(WebsocketConsumer):
         if text_data_json["type"] == "message":
             message, login, chat_id = text_data_json["message"], text_data_json["login"], self.scope["path"].split("/")[-1]
             messages = Message.objects
-            t = str(datetime.now()).split()[1].split(":")[:2]
+            hour = str((datetime.now().hour + 3) % 24)
+            hour = hour if len(hour) == 2 else '0' + hour
+            minute = str(datetime.now().minute)
+            minute = minute if len(minute) == 2 else '0' + minute
+            t = hour + ":" + minute
             user_id = User.objects.get(login=login).id
-            message_obj = messages.create(autor=self.user.id, is_read=False, read_by=user_id, image="", text=message.replace("\n", "<br>"), time_sent=":".join(t))
+            message_obj = messages.create(autor=self.user.id, is_read=False, read_by=user_id, image="", text=message.replace("\n", "<br>"), time_sent=t)
             chats = Chat.objects
             chat_obj = chats.get(id=chat_id)
             chat_obj.message_ids = str(chat_obj.message_ids) + "," + str(message_obj.id) if str(chat_obj.message_ids) != "" else str(message_obj.id)
