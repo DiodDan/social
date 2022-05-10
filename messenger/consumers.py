@@ -15,6 +15,30 @@ from datetime import datetime
 group_members = []
 
 
+# def get_online_users(login):
+#     global group_members
+#     users_for_chats = []
+#     chats_for_user = []
+#     users = User.objects
+#     user = users.get(login=login)
+#     chats = Chat.objects
+#     for chat in chats.all():
+#         if str(user.id) in chat.users.split(","):
+#             chats_for_user.append(chat)
+#     for chat in chats_for_user:
+#         users_for_chats.append([chat])
+#         for u in chat.users.split(","):
+#             t = users.get(id=u)
+#             users_for_chats[-1].append(t)
+#     users_for_chats_online = {}
+#     for i in users_for_chats:
+#         users_for_chats_online[i[0].id] = 0
+#         for j in i[1:]:
+#             if j.id in group_members:
+#                 users_for_chats_online[i[0].id] += 1
+#     return users_for_chats_online
+
+
 class ChatConsumer(WebsocketConsumer):
     def connect(self):
         global group_members
@@ -24,6 +48,15 @@ class ChatConsumer(WebsocketConsumer):
         group_members.append(self.user.id)
         group_members = list(set(group_members))
         self.room_group_name = self.scope["path"].split("/")[-1]
+        # users_for_chats_online = get_online_users(self.user.login)
+
+        # async_to_sync(self.channel_layer.group_send)(
+        #     self.room_group_name,
+        #     {
+        #         "type": "online_users_reboot",
+        #         "users_for_chats_online": users_for_chats_online
+        #     }
+        # )
         async_to_sync(self.channel_layer.group_add)(
             self.room_group_name,
             self.channel_name
@@ -118,9 +151,19 @@ class ChatConsumer(WebsocketConsumer):
 
     def disconnect(self, close_code):
         global group_members
+
         try:
             users = User.objects
             group_members.remove(users.get(login=self.scope["path"].split("/")[-2]).id)
+            # login = self.scope["path"].split("/")[-2]
+            # users_for_chats_online = get_online_users(login)
+            # async_to_sync(self.channel_layer.group_send)(
+            #     self.room_group_name,
+            #     {
+            #         "type": "online_users_reboot",
+            #         "users_for_chats_online": users_for_chats_online
+            #     }
+            # )
         except:
             pass
 
@@ -130,10 +173,29 @@ class ProfileConsumer(WebsocketConsumer):
         global group_members
         self.accept()
         users = User.objects
+        chats = Chat.objects
+
         self.self_user_login = self.scope["path"].split("/")[-2]
         self.other_user = users.get(login=self.scope["path"].split("/")[-1])
+        # users_for_chats_online = get_online_users(self.self_user_login)
+        # user = users.get(login=self.self_user_login)
+        # for chat in chats.all():
+        #     if str(user.id) in chat.users.split(','):
+        #         async_to_sync(self.channel_layer.group_send)(
+        #             str(chat.id),
+        #             {
+        #                 "type": "online_users_reboot",
+        #                 "users_for_chats_online": users_for_chats_online
+        #             }
+        #         )
         group_members.append(users.get(login=self.self_user_login).id)
         group_members = list(set(group_members))
+
+    # def online_users_reboot(self, e):
+    #     self.send(text_data=json.dumps({
+    #         "type": "set_users_online",
+    #         "users_for_chats_online": e["users_for_chats_online"],
+    #     }))
 
     def receive(self, text_data):
 
@@ -173,6 +235,18 @@ class ProfileConsumer(WebsocketConsumer):
         users = User.objects
         chats = Chat.objects
         group_members.remove(users.get(login=self.scope["path"].split("/")[-2]).id)
+        # login = self.scope["path"].split("/")[-2]
+        # users_for_chats_online = get_online_users(login)
+        # user = users.get(login=self.self_user_login)
+        # for chat in chats.all():
+        #     if str(user.id) in chat.users.split(','):
+        #         async_to_sync(self.channel_layer.group_send)(
+        #             str(chat.id),
+        #             {
+        #                 "type": "online_users_reboot",
+        #                 "users_for_chats_online": users_for_chats_online
+        #             }
+        #         )
 
 
 class LikeConsumer(WebsocketConsumer):

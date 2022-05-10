@@ -36,9 +36,11 @@
                     </div>
                     <a href="../profile/{{ users[post].login }}"><h2>{{ users[post].name }}</h2></a>
                 </div>
+                {% if publications[post].image %}
                 <div class="photo">
                     <img src="../media/{{ publications[post].image }}" alt="Image Not Found">
                 </div>
+                {% endif %}
                 <div class="action">
                     {% if user.id in publications[post].like_ids.split(",") %}
                         <div class="like">

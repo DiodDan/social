@@ -6,7 +6,7 @@ from profile.models import User, Message, Chat, Publication
 from .email_sender import send_submit_email
 from django.core.exceptions import ObjectDoesNotExist
 from jinja2 import Environment, FileSystemLoader
-
+import hashlib  as hash
 
 FLAG = "1h2j45jlk?>gb;3445m5_+3"
 

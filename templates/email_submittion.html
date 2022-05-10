@@ -2,15 +2,25 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title></title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>diod — submit email</title>
 </head>
 <body>
-    <h1>Введите, пожалуйста, код</h1>
-    <form method="post" action="/profile/submit_email/{{ email }}">
-        {% csrf_token %}
-        <input type="text" size="40" name="token">
-        <p><input type="submit" value="Отправить"></p>
-    </form>
-    <font color="red">{{ ERR }}</font>
+    <header>
+        <object data="{% static 'diod_main.svg' %}" type="image/svg+xml" class="logo_main"></object>
+    </header>
+    <div class="email_submit">
+        <div class="block">
+            <h3>you were sent an email with code to submit</h3>
+            <h4 class="transparent">check spam</h4>
+            <h2>enter it here</h2>
+            <form method="post" action="/profile/submit_email/{{ email }}">
+                {% csrf_token %}
+                <input type="text" size="40" name="token">
+                <input type="submit" value="send">
+            </form>
+            <font color="red">{{ ERR }}</font>
+        </div>
+    </div>
 </body>
 </html>
