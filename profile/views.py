@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
 from .forms import *
-from profile.models import User, Message, Chat
+from profile.models import User, Message, Chat, Publication
 from .email_sender import send_submit_email
 from django.core.exceptions import ObjectDoesNotExist
 from jinja2 import Environment, FileSystemLoader
@@ -25,7 +25,7 @@ class login(TemplateView):
         form = login_form(request.POST)
         user_data = db.filter(email=post["username"])
 
-        if len(user_data) != 0 and str(user_data[0].password) == str(post["password"]):
+        if len(user_data) != 0 and str(user_data[0].password) == str(hash.sha256(post["password"].encode()).hexdigest()):
             request.session["logedacc"] = str(user_data[0].login)
             return redirect(f"/profile/{user_data[0].login}")
         else:
@@ -77,7 +77,7 @@ class submit_email(TemplateView):
         users = User.objects
         try:
             if str(self.token[login]) == post["token"]:
-                users.create(email=request.session["email"], password=request.session["password"],
+                users.create(email=request.session["email"], password=hash.sha256(request.session["password"].encode()).hexdigest(),
                       profile_photo="photos/profile_photos/default.png",
                       description="")
                 user = users.get(email=request.session["email"])
@@ -149,6 +149,12 @@ class profile(TemplateView):
         except Exception:
             return redirect("/profile/login/")
 
+    def post(self, request, login):
+        publications = Publication.objects
+        post = request.POST
+        if post["type"] == "delete_post":
+            publications.get(id=post["post_id"]).delete()
+        return redirect(f"/profile/{login}")
 
 class changedata(TemplateView):
     template_name = "changedata.html"
@@ -182,7 +188,8 @@ class changedata(TemplateView):
             obj.login = post["login"]
             obj.description = post["description"]
             obj.email = post["email"]
-            obj.password = post["password"]
+            if post["password"]:
+                obj.password = hash.sha256(post["password"].encode()).hexdigest()
             if request.FILES.get("profile_photo"):
                 obj.profile_photo = request.FILES["profile_photo"]
             obj.save()

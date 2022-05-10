@@ -58,9 +58,7 @@ function connect_to_socket()
                     </div>
                 </div>`);
                 var last_message_text = data.message.split("<br>")[0];
-                print(last_message_text);
                 last_message_text = last_message_text.length > 27 ? last_message_text.slice(0, 27) + "..." : last_message_text;
-                print(last_message_text);
                 last_message.innerHTML = `<h5>${last_message_text}</h5><h5 class="transparent">${data.time_sent}</h5>`;
                 chat_time.innerHTML = `${data.time_sent}`
                 let unread_messages_html = document.getElementById(`unread_messages_${id}`);
@@ -79,6 +77,17 @@ function connect_to_socket()
                         }))
                 }
             }
+            /*else
+            {
+                if(data.type === 'set_users_online')
+                {
+                    for(i of Array(data.users_for_chats_online.length).keys())
+                    {
+                        let chat_to_set_online = document.getElementById(`users_online_${chats[i].slice(1, -1)}`);
+                        chat_to_set_online.innerHTML = data.users_for_chats_online[chats[i].slice(1, -1)];
+                    }
+                }
+            }*/
         }
         var form = document.getElementById(`form_${i}`)
         let s = function(e)

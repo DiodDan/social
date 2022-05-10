@@ -51,7 +51,14 @@ class Feed(TemplateView):
         users = User.objects
         user = users.get(login=login)
         publication = Publication.objects
-        publication.create(image=request.FILES["image"], text=post["message"], author=user.id, time_created=":".join(str(datetime.now()).split()[1].split(":")[:2]))
+        try:
+            img = request.FILES["image"]
+        except:
+            img = False
+        if img:
+            publication.create(image=img, text=post["message"].replace("\n", "<br>"), author=user.id, time_created=":".join(str(datetime.now()).split()[1].split(":")[:2]))
+        else:
+            publication.create(text=post["message"].replace("\n", "<br>"), author=user.id, time_created=":".join(str(datetime.now()).split()[1].split(":")[:2]))
         return redirect("/feed/")
 
 

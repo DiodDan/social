@@ -4,7 +4,7 @@ from django.views.generic import TemplateView
 from profile.models import User, Message, Chat
 from jinja2 import Environment, FileSystemLoader
 from django.shortcuts import redirect
-
+import messenger.consumers as consumers
 
 class chat(TemplateView):
     template_name = "messenger.html"
@@ -16,6 +16,7 @@ class chat(TemplateView):
             return redirect("/")
         users = User.objects
         user = users.get(login=login)
+        consumers.group_members = list(set(consumers.group_members + [user.id]))
         messages = Message.objects
         chats = Chat.objects
         chats_for_user = []
@@ -37,17 +38,23 @@ class chat(TemplateView):
 
         chat_users = {}
         users_for_chats = []
-        for chat in chats.all():
+        for chat in chats_for_user:
             users_for_chats.append([])
-            for u in chat.users.split(","):
+            users_id_range = chat.users.split(",") + [24] if chat.name == "flags_chat" else chat.users.split(",")
+            for u in users_id_range:
                 t = users.get(id=u)
                 chat_users[int(u)] = [t.name, t.login, t.profile_photo]
                 users_for_chats[-1].append(t)
-
         follows = user.follows.split(',')
         followers = user.followers.split(',')
         friends = set(follows) & set(followers)
         friends = [users.get(id=i) for i in friends if i]
+        users_for_chats_online = []
+        for i in users_for_chats:
+            users_for_chats_online.append(0)
+            for j in i:
+                if j.id in consumers.group_members:
+                    users_for_chats_online[-1] += 1
         return HttpResponse(self.template.render(user=user,
                                                  messages=chat_messages,
                                                  is_owner=(request.session["logedacc"] == login),
@@ -59,7 +66,10 @@ class chat(TemplateView):
                                                  unread_messages=list(map(len, unread_messages)),
                                                  csrf=request.COOKIES["csrftoken"],
                                                  users_list=set(friends),
-                                                 users_for_chats=list(map(set, users_for_chats))))
+                                                 users_for_chats=list(map(set, users_for_chats)),
+                                                 len_users_for_chats=list(map(len, users_for_chats)),
+                                                 users_online=consumers.group_members,
+                                                 users_for_chats_online=users_for_chats_online))
 
     def post(self, request):
         post = request.POST

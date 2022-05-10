@@ -57,9 +57,11 @@
                     </div>
                     <a href="../profile/{{ user.login }}"><h2>{{ user.name }}</h2></a>
                 </div>
+                {% if publications[post].image %}
                 <div class="photo">
                     <img src="../media/{{ publications[post].image }}" alt="Image Not Found">
                 </div>
+                {% endif %}
                 <div class="action">
                     {% if self_user_id in publications[post].like_ids.split(",") %}
                         <div class="like">
@@ -76,11 +78,20 @@
                         <h4>{{lencomments[post] }}</h4>
                     </div>
                 </div>
+                {% if is_owner %}
+                <form action="/profile/{{ user.login }}" method="post" enctype="multipart/form-data">
+                    <input type="hidden" value="{{ publications[post].id }}" name="post_id">
+                    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf }}">
+                    <input name="type" value="delete_post" type="hidden">
+                    <button type="submit">delete post</button>
+                </form>
+                {% endif %}
             </div>
             <div class="description">
               <h4>{{ publications[post].text }}</h4>
             </div>
           </div>
+
             {% endfor %}
         </div>
         
@@ -109,7 +120,7 @@
         </div>
         <div class="password">
           <h4>password</h4>
-          <input type="password" value="{{ user.password }}" name="password">
+          <input type="password" value="" name="password">
         </div>
         <div class="photo">
           <h4>photo</h4>

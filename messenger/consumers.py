@@ -18,6 +18,7 @@ group_members = []
 class ChatConsumer(WebsocketConsumer):
     def connect(self):
         global group_members
+        self.accept()
         users = User.objects
         self.user = users.get(login=self.scope["path"].split("/")[-2])
         group_members.append(self.user.id)
@@ -27,7 +28,12 @@ class ChatConsumer(WebsocketConsumer):
             self.room_group_name,
             self.channel_name
         )
-        self.accept()
+
+    # def online_users_reboot(self, e):
+    #     self.send(text_data=json.dumps({
+    #         "type": "set_users_online",
+    #         "users_for_chats_online": e["users_for_chats_online"],
+    #     }))
 
     def receive(self, text_data):
         global group_members
@@ -65,6 +71,7 @@ class ChatConsumer(WebsocketConsumer):
                 temp[str(group_members[i])] = str(len(unread_messages[i]))
             unread_messages = temp
             del temp
+
             async_to_sync(self.channel_layer.group_send)(
                 self.room_group_name,
                 {
@@ -121,7 +128,6 @@ class ChatConsumer(WebsocketConsumer):
 class ProfileConsumer(WebsocketConsumer):
     def connect(self):
         global group_members
-
         self.accept()
         users = User.objects
         self.self_user_login = self.scope["path"].split("/")[-2]
@@ -165,6 +171,7 @@ class ProfileConsumer(WebsocketConsumer):
     def disconnect(self, close_code):
         global group_members
         users = User.objects
+        chats = Chat.objects
         group_members.remove(users.get(login=self.scope["path"].split("/")[-2]).id)
 
 
@@ -175,6 +182,7 @@ class LikeConsumer(WebsocketConsumer):
     def receive(self, text_data):
         text_data_json = json.loads(text_data)
         if text_data_json["type"] == "like":
+            print(text_data_json["user_login"])
             user_id = User.objects.get(login=text_data_json["user_login"]).id
             post_id = text_data_json["post_id"]
             publications = Publication.objects
