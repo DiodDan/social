@@ -786,13 +786,13 @@ input[type=checkbox]{
 div.change_data {
     background: #202225;
     width: 36rem;
-    height: 36rem;
+    height: 39rem;
     padding: 1rem;
     border-radius: 1rem;
     position: absolute;
     margin-left: auto;
     margin-right: auto;
-    top: 12rem;
+    top: 9rem;
     left: 45rem;
     display: none;
 }
@@ -815,6 +815,7 @@ div.change_data form div select {
 
 div.change_data form div.photo input {
     width: 24rem;
+    margin: 0;
 }
 
 div.change_data form div {
@@ -874,6 +875,16 @@ div.block.post div.photo_block div.user_info div.photo img {
     object-fit: cover;
     width: 100%;
     height: 100%;
+}
+div.block.post div.photo_block form button {
+    background: #34373C;
+    color: #D23E3E;
+    margin-top: 1rem;
+}
+
+div.block.post div.photo_block form button:hover {
+    background: #D23E3E;
+    color: #CCC;
 }
 
 div.block.main_page.head div.photo {
@@ -1017,4 +1028,30 @@ div.block.search div.results a div.photo img {
     div.headbuts button.tab.two {
         margin-left: 4vw;
     }
+}
+
+div.email_submit {
+    width: 60%;
+    margin: 1rem auto 0 auto;
+}
+
+div.email_submit div.block {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+div.email_submit div.block form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+div.email_submit div.block form input[type=text] {
+    width: 40%;
+}
+
+div.email_submit div.block form input[type=submit] {
+    width: 6em;
 }
