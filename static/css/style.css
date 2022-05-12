@@ -486,6 +486,10 @@ div.chat div.dialog_block div.person div.name_online {
     margin-left: .5rem;
 }
 
+div.chat div.dialog_block div.person div.users_in_chat {
+    margin-left: 1rem;
+}
+
 div.block.messenger {
     height: 37.5rem;
 }

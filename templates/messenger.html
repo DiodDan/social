@@ -41,7 +41,7 @@
                                 <h5 class="transparent" id="last_message_of_chatidu_{{ i }}">{{ last_message[i][1] }}</h5>
                             </div>
                             <button id="edt_chat_{{ chats[i].id }}">Edit chat</button>
-                            <div><h4 id="users_all"> {{ len_users_for_chats[i] }} members, </h4> <h4 id="users_online_{{ chats[i].id }}">{{users_for_chats_online[i]}} online</h4></div>
+                            <div class="users_in_chat"><h4 id="users_all">{{ len_users_for_chats[i] }} members</h4> <h4 id="users_online_{{ chats[i].id }}">{{users_for_chats_online[i]}} online</h4></div>
                         </div>
                         <div class="dialog" id="messeges_{{ i }}">
                             {% for message in messages[i] %}
