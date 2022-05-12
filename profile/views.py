@@ -149,7 +149,7 @@ class profile(TemplateView):
                                                          is_subscribed=(str(user.id) in users.get(login=request.session["logedacc"]).follows.split(",")),
                                                          theme_color=self.themes[user.used_theme]['color'],
                                                          self_user_id=self_user_id))
-        except Exception:
+        except:
             return redirect("/profile/login/")
 
     def post(self, request, login):
