@@ -25,7 +25,12 @@ class SessionAdmin(admin.ModelAdmin):
         return obj.get_decoded()
     list_display = ['session_key', '_session_data', 'expire_date']
 
+class PublicationAdmin(admin.ModelAdmin):
+    list_display = ('author', 'text')
+    search_fields = ('author', 'text')
+
 admin.site.register(User, UserAdmin)
 admin.site.register(Chat, ChatAdmin)
 admin.site.register(Message, MessageAdmin)
 admin.site.register(Session, SessionAdmin)
+admin.site.register(Publication, PublicationAdmin)
