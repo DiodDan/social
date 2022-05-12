@@ -146,7 +146,7 @@
     </div>
     {% endfor %}
 
-    <script src="../static/js/messenger.js" chats="{% for chat in chats %}'{{ chat.id }}',{% endfor %}" user_id="{{ user.id }}" user_login="{{ logedacc }}"></script>
+    <script id="messenger_script" src="../static/js/messenger.js" chats="{% for chat in chats %}'{{ chat.id }}',{% endfor %}" user_id="{{ user.id }}" user_login="{{ logedacc }}"></script>
     </body>
 </html>
 {% endif %}

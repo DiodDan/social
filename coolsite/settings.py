@@ -21,9 +21,10 @@ DEBUG = True
 host1 = "diod.cf"
 host2 = "www.diod.cf"
 ip = "195.133.146.115"
+ngr = "a0cb-109-252-146-127.eu.ngrok.io"
 
-ALLOWED_HOSTS = [host1, host2, ip, "28f6-109-252-146-127.eu.ngrok.io"]
-CSRF_TRUSTED_ORIGINS = [f"https://{host1}", "https://28f6-109-252-146-127.eu.ngrok.io"]
+ALLOWED_HOSTS = [host1, host2, ip, ngr]
+CSRF_TRUSTED_ORIGINS = [f"https://{ngr}", f"https://{host1}"]
 
 # Application definition
 

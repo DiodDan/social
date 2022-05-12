@@ -2,13 +2,18 @@ from django.http import HttpResponse
 from django.views.generic import TemplateView
 # from .forms import *
 from profile.models import User, Message, Chat
-from jinja2 import Environment, FileSystemLoader
+from jinja2 import Environment, FileSystemLoader, select_autoescape
 from django.shortcuts import redirect
 import messenger.consumers as consumers
 
+
+autoescape = select_autoescape(enabled_extensions=('html', 'htm', 'xml'),
+                             disabled_extensions=(),
+                             default_for_string=True,
+                             default=False)
 class chat(TemplateView):
     template_name = "messenger.html"
-    template = Environment(loader=FileSystemLoader('templates')).get_template(template_name)
+    template = Environment(loader=FileSystemLoader('templates'), autoescape=autoescape).get_template(template_name)
 
     def get(self, request):
         login = request.session["logedacc"]

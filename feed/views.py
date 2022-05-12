@@ -2,14 +2,17 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
 from profile.models import User, Message, Chat, Publication
-from jinja2 import Environment, FileSystemLoader
+from jinja2 import Environment, FileSystemLoader, select_autoescape
 from datetime import datetime
 from django.shortcuts import redirect
 
-
+autoescape = select_autoescape(enabled_extensions=('html', 'htm', 'xml'),
+                             disabled_extensions=(),
+                             default_for_string=True,
+                             default=False)
 class Feed(TemplateView):
     template_name = "feed.html"
-    template = Environment(loader=FileSystemLoader('templates')).get_template(template_name)
+    template = Environment(loader=FileSystemLoader('templates'), autoescape=autoescape).get_template(template_name)
 
     def get(self, request):
         login = request.session["logedacc"]

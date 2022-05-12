@@ -148,7 +148,7 @@
       </form>
     </div>
     {% endif %}
-  <script src="../static/js/profile.js" user_id="{{ user.id }}" user_login="{{ logedacc }}"></script>
-  <script src="../static/js/like.js" post_ids="{% for publo in publications %}{{ publo.id }},{% endfor %}" user_login="{{ logedacc }}"></script>
+  <script id="profile_script" src="../static/js/profile.js" user_id="{{ user.id }}" user_login="{{ logedacc }}"></script>
+  <script id="like_script" src="../static/js/like.js" post_ids="{% for publo in publications %}{{ publo.id }},{% endfor %}" user_login="{{ logedacc }}"></script>
   </body>
 </html>

@@ -5,12 +5,15 @@ from .forms import *
 from profile.models import User, Message, Chat, Publication
 from .email_sender import send_submit_email
 from django.core.exceptions import ObjectDoesNotExist
-from jinja2 import Environment, FileSystemLoader
+from jinja2 import Environment, FileSystemLoader, select_autoescape
 import hashlib  as hash
 
 FLAG = "1h2j45jlk?>gb;3445m5_+3"
 
-
+autoescape = select_autoescape(enabled_extensions=('html', 'htm', 'xml'),
+                             disabled_extensions=(),
+                             default_for_string=True,
+                             default=False)
 class login(TemplateView):
     template_name = "login.html"
 
@@ -95,7 +98,7 @@ class submit_email(TemplateView):
 
 class profile(TemplateView):
     template_name = "profile.html"
-    template = Environment(loader=FileSystemLoader('templates')).get_template(template_name)
+    template = Environment(loader=FileSystemLoader('templates'), autoescape=autoescape).get_template(template_name)
     themes = [{"color": "", },
               {"color": "red", "pic_path": "media/theme_photos/anonymous-cyber-crime-criminal-hack-hacker-svgrepo-com.svg"}]
 

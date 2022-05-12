@@ -1,10 +1,8 @@
 function f()
 {
-    let scripts = document.getElementsByTagName('script');
-    let lastScript = scripts[scripts.length-1];
-    let scriptName = lastScript;
-    let post_ids = scriptName.getAttribute('post_ids').split(",");
-    let user_login = scriptName.getAttribute('user_login');
+    let script = document.getElementById('like_script');
+    let post_ids = script.getAttribute('post_ids').split(",");
+    let user_login = script.getAttribute('user_login');
     let ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
     document.addEventListener("click", switchLike);
     let likes = Array.from(document.querySelectorAll("div.block.post div.photo_block div.action div.like"));

@@ -8,12 +8,10 @@ function print(arg)
 }
 function load_data()
 {
-    let scripts = document.getElementsByTagName('script');
-    let lastScript = scripts[scripts.length-1];
-    let scriptName = lastScript;
-    chats = scriptName.getAttribute('chats').split(",");
-    user_id = scriptName.getAttribute('user_id');
-    user_login = scriptName.getAttribute('user_login');
+    let script = document.getElementById('messenger_script');
+    chats = script.getAttribute('chats').split(",");
+    user_id = script.getAttribute('user_id');
+    user_login = script.getAttribute('user_login');
     chats.pop();
 }
 var arr = [];

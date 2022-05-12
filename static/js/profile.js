@@ -1,8 +1,7 @@
 var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
-let scripts = document.getElementsByTagName('script');
-let scriptName = scripts[0];
-var user_id = scriptName.getAttribute('user_id');
-var user_login = scriptName.getAttribute('user_login');
+let script = document.getElementById('profile_script');
+var user_id = script.getAttribute('user_id');
+var user_login = script.getAttribute('user_login');
 
 let my_url = window.location.href.split("/");
 let login = my_url[my_url.length - 1];
