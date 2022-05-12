@@ -65,8 +65,8 @@ class Publication(models.Model):
     author = models.IntegerField(verbose_name="Автор")
     text = models.TextField(verbose_name="Текст")
     image = models.ImageField(upload_to="photos/publication_images", blank=True, verbose_name="Фото")
-    like_ids = models.TextField(verbose_name="ID лайков")
-    comment_ids = models.TextField(verbose_name="ID сообщений")
+    like_ids = models.TextField(blank=True, verbose_name="ID лайков")
+    comment_ids = models.TextField(blank=True, verbose_name="ID сообщений")
     time_created = models.CharField(max_length=10, verbose_name="Время создания")
 
     class Meta:

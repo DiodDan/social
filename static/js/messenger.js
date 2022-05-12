@@ -1,6 +1,14 @@
-var chats = []
-var user_id = ''
-var user_login = ''
+function putNewLine() {
+    for (msg of document.querySelectorAll("div.message h4")) {
+        msg.innerHTML = msg.innerHTML.split("\n").join("<br>");
+    }
+}
+
+putNewLine();
+
+var chats = [];
+var user_id = '';
+var user_login = '';
 var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
 function print(arg)
 {
@@ -55,7 +63,7 @@ function connect_to_socket()
                         <h5 class="transparent">${data.time_sent}</h5>
                     </div>
                 </div>`);
-                var last_message_text = data.message.split("<br>")[0];
+                var last_message_text = data.message.split("\n")[0];
                 last_message_text = last_message_text.length > 27 ? last_message_text.slice(0, 27) + "..." : last_message_text;
                 last_message.innerHTML = `<h5>${last_message_text}</h5><h5 class="transparent">${data.time_sent}</h5>`;
                 chat_time.innerHTML = `${data.time_sent}`

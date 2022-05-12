@@ -1,3 +1,11 @@
+function putNewLine() {
+    for (post of document.querySelectorAll("div.block.post div.description h4")) {
+        post.innerHTML = post.innerHTML.split("\n").join("<br>");
+    }
+}
+
+putNewLine();
+
 function f()
 {
     let script = document.getElementById('like_script');

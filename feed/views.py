@@ -59,9 +59,9 @@ class Feed(TemplateView):
         except:
             img = False
         if img:
-            publication.create(image=img, text=post["message"].replace("\n", "<br>"), author=user.id, time_created=":".join(str(datetime.now()).split()[1].split(":")[:2]))
+            publication.create(image=img, text=post["message"], author=user.id, time_created=":".join(str(datetime.now()).split()[1].split(":")[:2]))
         else:
-            publication.create(text=post["message"].replace("\n", "<br>"), author=user.id, time_created=":".join(str(datetime.now()).split()[1].split(":")[:2]))
+            publication.create(text=post["message"], author=user.id, time_created=":".join(str(datetime.now()).split()[1].split(":")[:2]))
         return redirect("/feed/")
 
 
