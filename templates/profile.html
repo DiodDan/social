@@ -114,6 +114,9 @@
         <div class="show_email">
           <h4>show your email</h4>
           <input type="checkbox" name="set_email_visibility" value="1" {% if user.is_email_set_to_be_seen_or_not_by_user %}checked{% endif %}>
+          <div class="toggle">
+            <div class="circle"></div>
+          </div>
         </div>
         <div class="login_name">
           <h4>login <span class="transparent" style="font-size:.7rem;">(ex. https://diod.cf/profile/<span style="font-weight:500;">your_login</span>)</span></h4>

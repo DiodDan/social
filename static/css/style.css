@@ -484,7 +484,7 @@ div.change_data form div.photo input {
     margin: 0;
 }
 
-div.change_data form div {
+div.change_data form > div {
     height: 3.5rem;
     margin-top: .5rem;
     display: flex;
@@ -499,6 +499,53 @@ div.change_data form button {
 div.change_data form h3 {
     font-weight: 500;
     text-align: center;
+}
+
+div.change_data form div.show_email {
+    flex-direction: row;
+    width: 50%;
+    align-items: center;
+    height: 2.5rem;
+}
+
+div.change_data form input[type=checkbox] {
+    display: none;
+}
+
+div.toggle {
+    background: transparent;
+    width: 3rem;
+    padding: .25rem .125rem;
+    height: 2rem;
+    border-radius: 1rem;
+    border: #666 solid .1rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: auto;
+    min-width: none;
+    cursor: pointer;
+    transition: .5s;
+}
+
+div.toggle div.circle {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    background: #666;
+    transition: .5s;
+    margin-left: 0;
+}
+
+div.change_data form div.show_email input[type=checkbox]:checked + div.toggle {
+    border-color: #ccc;
+    transition: .5s;
+}
+
+div.change_data form div.show_email input[type=checkbox]:checked + div.toggle div.circle {
+    background: #ccc;
+    margin-left: calc(100% - 1.5rem);
+    transition: .5s;
 }
 
 div.block.messenger {
@@ -935,7 +982,7 @@ div.block.search div.results a {
 }
 
 div.block.search div.results a div.info {
-    height: 2rem;
+    height: 2.2rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -1025,7 +1072,7 @@ div.followers_menu, div.follows_menu {
 }
 
 div.subscriptions {
-    height: calc(90% - 2rem);
+    height: calc(100% - 2rem);
     width: 100%;
     overflow-y: scroll;
     background-color: #2B2E32;
@@ -1056,6 +1103,10 @@ div.subscriptions a div.photo {
 
 div.subscriptions a div.info {
     width: calc(96% - 3rem);
+}
+
+div.subscriptions a div.info h3, div.subscriptions a div.info h4 {
+    color: #ccc;
 }
 
 div.followers_menu > h3, div.follows_menu > h3 {
@@ -1135,6 +1186,9 @@ div.chat div.photo img {
         width: 90%;
         margin: 0;
     }
+    div.change_data form div.show_email {
+        width: 80%;
+    }
     div.container#messenger {
         height: calc(100% - 16rem);
     }
@@ -1182,6 +1236,9 @@ div.chat div.photo img {
     }
     div.email_submit {
         width: 100%;
+    }
+    div.followers_menu, div.follows_menu {
+        width: 80%;
     }
 }
 

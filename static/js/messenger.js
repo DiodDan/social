@@ -233,17 +233,21 @@ function openMenu(event) {
     if (event == "close menu" || event.target.closest("div.search > svg")) {
         menuCheckbox.checked = (menuCheckbox.checked + 1) % 2;
         if (menuCheckbox.checked) {
-            chats_dialogs.style.width = '100%';
-            for (dialog of dialogs) {
-                dialog.style.opacity = 0;
-                dialog.style.pointerEvents = 'none';
+            if (window.innerHeight > window.innerWidth) {
+                chats_dialogs.style.width = '100%';
+                for (dialog of dialogs) {
+                    dialog.style.opacity = 0;
+                    dialog.style.pointerEvents = 'none';
+                }
             }
         }
         else {
-            chats_dialogs.style.width = '0px';
-            for (dialog of dialogs) {
-                dialog.style.opacity = 1;
-                dialog.style.pointerEvents = 'all';
+            if (window.innerHeight > window.innerWidth) {
+                chats_dialogs.style.width = '0px';
+                for (dialog of dialogs) {
+                    dialog.style.opacity = 1;
+                    dialog.style.pointerEvents = 'all';
+                }
             }
         }
     }

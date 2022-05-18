@@ -85,3 +85,9 @@ function openFollows(event) {
         document.querySelector("div.main").setAttribute("class", "main");
     }
 }
+
+document.querySelector("div.change_data div.show_email div.toggle").addEventListener("click", changeToggle);
+
+function changeToggle(event) {
+    document.querySelector("div.change_data div.show_email input[type=checkbox]").checked = (document.querySelector("div.change_data div.show_email input[type=checkbox]").checked + 1) % 2;
+}
