@@ -7,17 +7,16 @@
 
   <body>
     <div class="main">
+      <header>{% include "navigation_bar.html" %}</header>
       <div class="container">
-        <header>
-          {% include "navigation_bar.html" %}</header>
+        
         <div class="block profile head">
           <div class="photo">
             <img src="/media/{{ user.profile_photo }}" alt="Image Not Found">
           </div>
           <div class="info">
             <div class="name">
-              <h2 style="color={{ theme_color }}">{{ user.name }}
-              </h2>
+              <h2 style="color={{ theme_color }}">{{ user.name }}</h2>
               {% if user.flags_found %}
               <svg width="1.5rem" height="1.5rem" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" class="yellow"><path d="M475.3571,413.24a69.9,69.9,0,0,0-39.8845-57.4407l-39.9287-18.7987,21.5791-44.5621a89.4527,89.4527,0,0,0,.0025-77.9684L359.7988,96.0682C317.7933,9.3105,194.2088,9.31,152.2019,96.0666L94.87,214.4745a89.445,89.445,0,0,0,.0049,77.9692l21.581,44.5569L76.5256,355.8a69.898,69.898,0,0,0-39.8831,57.439l-3.612,43.3773a22.5157,22.5157,0,0,0,22.4381,24.3842H456.5337A22.5134,22.5134,0,0,0,478.97,456.6187ZM364,260.1205a107.9746,107.9746,0,0,1-98.1035,107.5V341.1249a9.8965,9.8965,0,0,0-19.793,0v26.4957A107.9746,107.9746,0,0,1,148,260.1205V203.44a28.8192,28.8192,0,0,1,28.8193-28.8193H335.1806A28.8193,28.8193,0,0,1,364,203.44Z"/><path d="M321.8213,275.9979a9.91,9.91,0,0,0-12.3135,6.6709,13.5776,13.5776,0,0,1-26.0156,0,9.9026,9.9026,0,1,0-18.9844,5.6426,33.3877,33.3877,0,0,0,63.9844,0A9.9125,9.9125,0,0,0,321.8213,275.9979Z"/><path d="M240.8213,275.9979a9.8908,9.8908,0,0,0-12.3135,6.6709,13.5776,13.5776,0,0,1-26.0156,0,9.9026,9.9026,0,1,0-18.9844,5.6426,33.3877,33.3877,0,0,0,63.9844,0A9.9125,9.9125,0,0,0,240.8213,275.9979Z"/><path d="M319,227.4384H283a9.8965,9.8965,0,1,0,0,19.7929h36a9.8965,9.8965,0,1,0,0-19.7929Z"/><path d="M193,247.2313h36a9.8965,9.8965,0,1,0,0-19.7929H193a9.8965,9.8965,0,1,0,0,19.7929Z"/></svg>
               {% endif %}
@@ -32,13 +31,15 @@
                 <h5>follows</h5>
               </div>
             </div>
+            {% if user.description %}
             <h4> {{ user.description }} </h4>
+            {% endif %}
             <div class="additional">
-              <h5>e-mail: {{ user.email }}</h5>
-              <h5>website: <a href="https://google.com">google.com</a></h5>
+              <h5>e-mail: <a href="mailto:{{ user.email }}">{{ user.email }}</a></h5>
+              <!-- <h5>website: <a href="https://google.com">google.com</a></h5> -->
             </div>
             {% if is_owner %}
-            <button id="change_data">Изменить описание</button>
+            <button id="change_data">change profile</button>
             {% endif %}
             {% if not is_owner %}
             <button id="subscribe_button">{% if is_subscribed %}Отписаться{% else %}Подписаться{% endif %}</button>
@@ -46,6 +47,7 @@
             <font color="red" id="error_handler"></font>
           </div>
         </div>
+        {% if lenpublications != 0 %}
         <div class="block profile posts">
 
           {% for post in range(lenpublications - 1, -1, -1) %}
@@ -71,21 +73,21 @@
                         <input type="checkbox">
                     {% endif %}
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M18 1l-6 4-6-4-6 5v7l12 10 12-10v-7z"/></svg>
-                        <h4>{{ lenlikes[post] }}</h4>
+                        <h3>{{ lenlikes[post] }}</h3>
                     </div>
                     <div class="comment">
                         <svg xmlns="http://www.w3.org/2000/svg" width="529.668px" height="529.668px" viewBox="0 0 529.668 529.668"><path d="M45.175,529.668l108.887-117.085h330.431V0H45.894L45.175,529.668z M383.896,173.016c20.527,0,37.164,16.64,37.164,37.164c0,20.527-16.641,37.164-37.164,37.164s-37.164-16.641-37.164-37.164C346.731,189.653,363.372,173.016,383.896,173.016zM265.192,173.016c20.526,0,37.165,16.64,37.165,37.164c0,20.527-16.641,37.164-37.165,37.164c-20.523,0-37.164-16.641-37.164-37.164C228.028,189.653,244.668,173.016,265.192,173.016z M146.488,173.016c20.527,0,37.164,16.64,37.164,37.164c0,20.527-16.641,37.164-37.164,37.164c-20.526,0-37.164-16.641-37.164-37.164C109.325,189.653,125.965,173.016,146.488,173.016z"/></svg>
-                        <h4>{{lencomments[post] }}</h4>
+                        <h3>{{lencomments[post] }}</h3>
                     </div>
+                    {% if is_owner %}
+                    <form action="/profile/{{ user.login }}" method="post" enctype="multipart/form-data">
+                        <input type="hidden" value="{{ publications[post].id }}" name="post_id">
+                        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf }}">
+                        <input name="type" value="delete_post" type="hidden">
+                        <button type="submit"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30" height="30" viewBox="0 0 30 30"><path d="M 13 3 A 1.0001 1.0001 0 0 0 11.986328 4 L 6 4 A 1.0001 1.0001 0 1 0 6 6 L 24 6 A 1.0001 1.0001 0 1 0 24 4 L 18.013672 4 A 1.0001 1.0001 0 0 0 17 3 L 13 3 z M 6 8 L 6 24 C 6 25.105 6.895 26 8 26 L 22 26 C 23.105 26 24 25.105 24 24 L 24 8 L 6 8 z"></path></svg></button>
+                    </form>
+                    {% endif %}
                 </div>
-                {% if is_owner %}
-                <form action="/profile/{{ user.login }}" method="post" enctype="multipart/form-data">
-                    <input type="hidden" value="{{ publications[post].id }}" name="post_id">
-                    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf }}">
-                    <input name="type" value="delete_post" type="hidden">
-                    <button type="submit">delete post</button>
-                </form>
-                {% endif %}
             </div>
             <div class="description">
               <h4>{{ publications[post].text }}</h4>
@@ -94,12 +96,9 @@
 
             {% endfor %}
         </div>
-        
+        {% endif %}
         </div>
-
-
-        {% include "footer.html" %}
-      </div>
+      {% include "footer.html" %}
     </div>
     {% if is_owner %}
     <div class="change_data">
@@ -111,15 +110,15 @@
           <input type="text" value="{{ user.email }}" name="email" class="disabled">
         </div>
         <div class="login_name">
-          <h4>login</h4>
+          <h4>login <span class="transparent" style="font-size:.7rem;">(ex. https://diod.cf/profile/<span style="font-weight:500;">your_login</span>)</span></h4>
           <input type="text" value="{{ user.login }}" name="login">
         </div>
         <div class="name">
-          <h4>name</h4>
+          <h4>name <span class="transparent" style="font-size:.7rem;">(it is written on the top of <span style="font-weight:500;">your profile</span> page)</span></h4>
           <input type="text" value="{{ user.name }}" name="name">
         </div>
         <div class="password">
-          <h4>password</h4>
+          <h4>change password</h4>
           <input type="password" value="" name="password">
         </div>
         <div class="photo">
@@ -131,7 +130,7 @@
           <input type="text" value="{{ user.description }}" name="description">
         </div>
         <div class="flag_submit">
-          <h4>secret</h4>
+          <h4>secret flag <span class="transparent" style="font-size:.7rem;">(find flag and enter it <span style="font-weight:500;">here</span> to open some features)</span></h4>
           <input type="text" name="flag_submit">
         </div>
         {% if flags_found %}

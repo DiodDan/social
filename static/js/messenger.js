@@ -50,7 +50,6 @@ function connect_to_socket()
             {
                 let messages = document.getElementById(`messeges_${id}`);
                 let last_message = document.getElementById(`last_message_of_chatid_${id}`);
-                let chat_time = document.getElementById(`last_message_of_chatidu_${id}`);
                 my_class = user_login == data.login ? "message sent" : "message received";
                 messages.insertAdjacentHTML('beforeend', `
                 <div class="${my_class}">
@@ -59,14 +58,12 @@ function connect_to_socket()
                     </div>
                     <div class="message_block">
                         <a href="/profile/${data.login}">${data.chat_users[data.user_id]}</a>
-                        <h4>${data.message}</h4>
+                        <h4>${data.message.split("\n").join("<br>")}</h4>
                         <h5 class="transparent">${data.time_sent}</h5>
                     </div>
                 </div>`);
-                var last_message_text = data.message.split("\n")[0];
-                last_message_text = last_message_text.length > 27 ? last_message_text.slice(0, 27) + "..." : last_message_text;
-                last_message.innerHTML = `<h5>${last_message_text}</h5><h5 class="transparent">${data.time_sent}</h5>`;
-                chat_time.innerHTML = `${data.time_sent}`
+                var last_message_text = data.message;
+                last_message.innerHTML = `<h5 id="msg">${last_message_text}</h5><h5 class="transparent">${data.time_sent}</h5>`;
                 let unread_messages_html = document.getElementById(`unread_messages_${id}`);
                 let unread_messages = data.unread_messages;
                 let ans = 0;
@@ -195,28 +192,26 @@ function putCheckboxes(event) {
 document.addEventListener("click", openAddChat);
 
 function openAddChat(event) {
-    if (event.target.closest("div.add_chat button")) {
+    if (event.target.closest("div.search button")) {
         document.querySelector("div.add_chat_block").style.display = "block";
         document.querySelector("div.main").setAttribute("class", "main disabled")
     }
     else if (!event.target.closest("div.add_chat_block") && document.querySelector("div.add_chat_block").style.display == "block") {
         document.querySelector("div.add_chat_block").style.display = "none";
         document.querySelector("div.main").setAttribute("class", "main")
-        for (checkbox of checkboxes) {
-            checkbox.checked = false;
-        }
+        
         document.querySelector("div.add_chat_block div.info input[type=text]").value = "";
         document.querySelector("div.add_chat_block div.info input[type=file]").value = "";
     }
 }
 
 document.addEventListener("click", openEditChat);
-var editBtns = Array.from(document.querySelectorAll("div.dialog_block div.person button"));
+var editBtns = Array.from(document.querySelectorAll("div.dialog_block div.headline button"));
 var idEditBtn = -1;
 
 function openEditChat(event) {
-    if (event.target.closest("div.dialog_block div.person button")) {
-        idEditBtn = editBtns.indexOf(event.target.closest("div.dialog_block div.person button"));
+    if (event.target.closest("div.dialog_block div.headline button")) {
+        idEditBtn = editBtns.indexOf(event.target.closest("div.dialog_block div.headline button"));
         document.querySelectorAll("div.add_chat_block")[idEditBtn + 1].style.display = "block";
         document.querySelector("div.main").setAttribute("class", "main disabled");
     }
@@ -224,5 +219,31 @@ function openEditChat(event) {
         document.querySelectorAll("div.add_chat_block")[idEditBtn + 1].style.display = "none";
         document.querySelector("div.main").setAttribute("class", "main");
         idEditBtn = -1;
+    }
+}
+
+document.addEventListener("click", openMenu);
+menuCheckbox = document.querySelector("div.search input[type=checkbox]");
+chats_dialogs = document.querySelector("div.block.messenger div.chats");
+dialogs = document.querySelectorAll("div.chats div.chat div.dialog_block")
+
+
+function openMenu(event) {
+    if (event.target.closest("div.search > svg")) {
+        menuCheckbox.checked = (menuCheckbox.checked + 1) % 2;
+        if (menuCheckbox.checked) {
+            chats_dialogs.style.width = '100%';
+            for (dialog of dialogs) {
+                dialog.style.opacity = 0;
+                dialog.style.pointerEvents = 'none';
+            }
+        }
+        else {
+            chats_dialogs.style.width = '0px';
+            for (dialog of dialogs) {
+                dialog.style.opacity = 1;
+                dialog.style.pointerEvents = 'all';
+            }
+        }
     }
 }

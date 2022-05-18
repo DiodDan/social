@@ -2,21 +2,17 @@
   <head>
       <meta charset="UTF-8">
       <link rel="stylesheet" href="../static/css/style.css">
-      <title>diod — your profile</title>
+      <title>diod — search for people</title>
   </head>
 
   <body>
     <div class="main">
+      <header>{% include "navigation_bar.html" %}</header>
       <div class="container">
-        <header>{% include "navigation_bar.html" %}</header>
         <div class="block search">
             <div class="input">
                 <h2>search for people</h2>
-                <form action="/search/" method="post">
-                    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf }}">
-                    <input type="text" name="search_text">
-                    <button class="send" type="submit"><svg class="yellow" xmlns="http://www.w3.org/2000/svg" viewBox="128 0 1024 1024"><polygon points="1024.27 512 933.76 602.51 752.75 783.51 571.73 783.51 843.24 512 571.73 240.49 752.75 240.49 1024.27 512"/><rect x="256" y="448" width="640" height="128"/></svg></button>
-                </form>
+                <input type="text" name="search_text">
             </div>
             <div class="results">
                 {% for user in users_found %}
@@ -27,14 +23,14 @@
                     <div class="info">
                         <h3>{{ user.name }}</h3>
                         <h4 class="transparent">{{ user.login }}</h4>
-                        <h4 class="transparent">{{ user.email }}</h4>
                     </div>
                 </a>
                 {% endfor %}
             </div>
         </div>
-        {% include "footer.html" %}
       </div>
+      {% include "footer.html" %}
     </div>
+    <script src="../static/js/search.js"></script>
   </body>
 </html>

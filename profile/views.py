@@ -84,8 +84,8 @@ class submit_email(TemplateView):
                       profile_photo="photos/profile_photos/default.png",
                       description="")
                 user = users.get(email=request.session["email"])
-                user.login = user.pk
-                user.name = "Диод"
+                user.login = "diod" + hash.md5(str(user.pk).encode()).hexdigest()
+                user.name = "diod"
                 user.save()
                 request.session["logedacc"] = str(user.login)
                 del self.token[login]
@@ -100,7 +100,7 @@ class profile(TemplateView):
     template_name = "profile.html"
     template = Environment(loader=FileSystemLoader('templates'), autoescape=autoescape).get_template(template_name)
     themes = [{"color": "", },
-              {"color": "red", "pic_path": "media/theme_photos/anonymous-cyber-crime-criminal-hack-hacker-svgrepo-com.svg"}]
+              {"color": "red", "pic_path": "media/theme_photos/anonymous.svg"}]
 
     def get(self, request, login):
         try:

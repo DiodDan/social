@@ -64,7 +64,7 @@ class chat(TemplateView):
                                                  messages=chat_messages,
                                                  is_owner=(request.session["logedacc"] == login),
                                                  chats=chats_for_user,
-                                                 last_message=[[i[-1].text.split('\n')[0] if len(i[-1].text.split('\n')[0]) < 27 else i[-1].text[0:27].split('\n')[0] + "...", i[-1].time_sent] if len(i) > 0 else ["", "Нет сообщений"] for i in chat_messages],
+                                                 last_message=[[i[-1].text, i[-1].time_sent] if len(i) > 0 else ["", "Нет сообщений"] for i in chat_messages],
                                                  chats_len=len(chats_for_user),
                                                  chat_users=chat_users,
                                                  logedacc=request.session["logedacc"],

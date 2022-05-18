@@ -8,42 +8,53 @@
 }
 
 html {
-    font-size: 0.8vw;
+    font-size: 24px;
     color: #ccc
 }
 
 body {
     font-size: 1rem;
     background: #202225;
-}
-
-div.main {
-    width: 100%
-}
-
-div.container {
-    width: 80%;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-header {
-    width: fit-content;
-    margin: 0 auto 1.5rem auto;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
     width: 100%;
 }
 
+div.main {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+div.container {
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+header {
+    width: 100%;
+    height: 6rem;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+header#login {
+    height: 9rem;
+    margin: 0;
+    padding: 1.5rem 0 1.5rem 0;
+}
+
 header a {
-    width: inherit;
     padding: 1rem;
     border-radius: 1rem;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 8rem;
+    height: 100%;
+    width: 20%;
 }
 
 header svg {
@@ -60,13 +71,12 @@ header a:hover {
 }
 
 .logo_main {
-    width: 12rem;
-    height: 12rem;
+    height: 100%;
 }
 
 .logo {
-    width: 6rem;
-    height: 6rem;
+    width: 5rem;
+    height: 5rem;
 }
 
 .disabled {
@@ -83,7 +93,7 @@ header a:hover {
 }
 
 div.login {
-    width: 30rem;
+    width: 60%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -102,24 +112,28 @@ button:hover {
 }
 
 div.headbuts {
-    width: 21rem;
+    width: 80%;
 }
 
 div.headbuts button.tab {
     border: 0;
-    padding: .5rem 0 .5rem 0;
+    padding: 0;
+    height: 2rem;
+    width: 6rem;
 }
 
 div.headbuts button.tab.one {
-    margin-left: 3rem;
+    margin-left: 10%;
 }
 
 div.headbuts button.tab.two {
-    margin-left: 6rem;
+    margin-left: calc(80% - 12rem);
 }
 
 div.headbuts label {
-    padding: .5rem;
+    display: inline-block;
+    width: 100%;
+    padding: .5rem 0;
     cursor: pointer;
     color: #F0E68C;
 }
@@ -143,17 +157,24 @@ div.headbuts input[type=radio] {
 
 div.tab {
     display: none;
+    width: 100%;
 }
 
 div.login form {
     width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center
+    margin-top: 2.5rem;
+}
+
+div.login form button {
+    width: 6rem;
+    align-self: center;
+    margin-top: 3rem;
 }
 
 div.login form div.input {
-    margin-top: 1rem;
+    margin-top: .5rem;
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -161,7 +182,7 @@ div.login form div.input {
 }
 
 div.login form div.input input {
-    width: 15rem;
+    width: 50%;
 }
 
 input, textarea {
@@ -177,10 +198,6 @@ input:focus, textarea:focus {
     border: solid .1rem #ccc;
 }
 
-div.login form button {
-    margin-top: 1rem;
-}
-
 a {
     color: #F0E68C;
 }
@@ -193,14 +210,14 @@ div.block.profile.head {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 48rem;
-    margin-bottom: 3rem;
+    width: 85%;
+    margin-bottom: 1.5rem;
 }
 
 div.block.profile.head div.photo {
     width: 12rem;
     height: 12rem;
-    border-radius: 6rem;
+    border-radius: 50%;
     overflow: hidden;
     border: solid .25rem;
 }
@@ -212,26 +229,19 @@ div.block.profile.head div.photo img {
 }
 
 div.block.profile.head div.info {
-    width: 30rem;
+    width: calc(100% - 12rem);
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-
 }
 
 h2 {
     font-size: 1.5rem;
     font-weight: 500;
     font-style: italic;
-    margin-bottom: 1rem;
-    margin-top: 1rem;
-    text-align: center;
 }
 
 h3 {
     font-size: 1.2rem;
-    margin-bottom: .5rem;
-    margin-top: .5rem;
 }
 
 h4 {
@@ -244,19 +254,20 @@ h5 {
 
 div.followers {
     display: flex;
+    align-self: center;
     justify-content: center;
     text-align: center;
+    width: 100%;
 }
 
 div.followers div.number {
-    margin: 0 1rem 0 1rem;
-}
-
-div.followers div.number h2, div.followers div.number h5 {
-    margin: 0;
+    margin: .5rem;
 }
 
 div.block.profile.head div.info div.name {
+    margin-left: .5rem;
+    width: fit-content;
+    align-self: center;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -268,15 +279,12 @@ div.block.profile.head div.info div.name svg {
 
 div.block.profile.head div.info h4 {
     text-align: center;
+    margin: 1rem 0;
 }
 
 div.block.profile.head div.additional {
-    margin: 0 0 .5rem 0;
+    margin-bottom: .5rem;
     align-self: flex-end;
-}
-
-div.block.profile.head div.info h4 {
-    margin: 1rem 0 1rem 0;
 }
 
 div.block.profile.head div.additional h5 {
@@ -290,8 +298,9 @@ div.block.post {
     background: #34373C;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    flex-wrap: wrap;
     margin-top: 2rem;
+    width: 100%;
 }
 
 div.block.post:first-child {
@@ -299,8 +308,9 @@ div.block.post:first-child {
 }
 
 div.block.post div.photo_block {
-    width: 18rem;
+    width: 30%;
     display: flex;
+    flex: 0 0 auto;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
@@ -318,9 +328,25 @@ div.block.post div.photo img {
 
 div.block.post div.photo_block div.action {
     display: flex;
+    align-items: center;
     width: 100%;
-    justify-content: space-around;
     margin-top: 1rem;
+}
+
+div.block.post div.photo_block div.action > * {
+    display: flex;
+    align-items: center;
+    flex: 1 1 0px;
+    font-weight: 500;
+}
+
+div.block.post div.photo_block div.action div > * {
+    flex: 1 1 0px;
+}
+
+div.block.post div.photo_block div.action div > h3 {
+    text-align: left;
+    margin-left: 12%;
 }
 
 div.block.post div.photo_block div.action div.like {
@@ -335,9 +361,8 @@ div.block.post div.photo_block div.action div.like input {
 }
 
 div.block.post div.photo_block div.action div.like svg {
-    height: 1.5rem;
-    width: 1.5rem;
-    margin-right: .25rem;
+    height: 2rem;
+    width: 2rem;
 }
 
 div.block.post div.photo_block div.action div.like svg path {
@@ -360,9 +385,8 @@ div.block.post div.photo_block div.action div.comment {
 }
 
 div.block.post div.photo_block div.action div.comment svg {
-    height: 1.5rem;
-    width: 1.5rem;
-    margin-right: .25rem;
+    height: 2rem;
+    width: 2rem;
 }
 
 div.block.post div.photo_block div.action div.comment svg path {
@@ -379,13 +403,38 @@ div.block.post div.photo_block div.action div.share svg {
     transform: translateY(-.25rem);
     height: 2rem;
     width: 2rem;
-    margin-right: .25rem;
+    margin-right: .5rem;
+}
+
+div.block.post div.photo_block form button {
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    margin-left: auto;
+    width: 2rem;
+    height: 2rem;
+}
+
+div.block.post div.photo_block form button svg {
+    width: 100%;
+    height: 100%;
+}
+
+div.block.post div.photo_block form button svg path {
+    fill: #ccc;
+    transition: .25s;
+}
+
+div.block.post div.photo_block form button:hover > svg path {
+    fill: #D23E3E;
+    transition: .5s;
 }
 
 div.block.post div.description {
-    margin-left: 1.5rem;
-    width: 100%;
-    height: fit-content;
+    width: 67%;
+    display: flex;
+    align-items: center;
 }
 
 div.block.post div.description h4 {
@@ -393,18 +442,109 @@ div.block.post div.description h4 {
 }
 
 footer {
-    margin-top: 3rem;
-    margin-bottom: 1.5rem;
+    margin-top: auto;
+    margin-bottom: 1rem;
     text-align: center;
     line-height: 0.9rem;
 }
 
-div.chat {
-    display: flex;
+div.change_data {
+    background: #202225;
+    width: 50%;
+    padding: 1rem;
+    border-radius: 1rem;
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    transform: translateX(-50%) translateY(-50%);
+    top: 50%;
+    left: 50%;
+    display: none;
+    box-shadow: #34373C 0rem 0rem 1rem .1rem;
 }
 
-div.chat div.dialog_block {
+div.change_data form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+div.change_data form div input, div.change_data form div select {
+    width: 50%;
+}
+
+div.change_data form div select {
+    background: #34373C;
+    color: #ccc;
+}
+
+div.change_data form div.photo input {
+    width: 70%;
+    margin: 0;
+}
+
+div.change_data form div {
+    height: 3.5rem;
+    margin-top: .5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+div.change_data form button {
+    margin-top: .5rem;
+}
+
+div.change_data form h3 {
+    font-weight: 500;
+    text-align: center;
+}
+
+div.block.messenger {
+    height: 100%;
+}
+
+div.container#messenger {
+    height: calc(100% - 8rem);
+    flex: 0 0 auto;
+}
+
+div.block.messenger div.search {
+    width: 30%;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+div.block.messenger div.search input {
+    width: calc(100% - 3rem);
+}
+
+div.block.messenger div.search button {
+    width: 2.5rem;
+    height: 2.5rem;
+    margin-left: 1rem;
+    border-radius: 50%;
+}
+
+div.block.messenger div.search > svg {
+    width: 2rem;
+    height: 2rem;
+    cursor: pointer;
+}
+
+div.block.messenger div.search input[type=checkbox], div.block.messenger div.search > svg {
     display: none;
+}
+
+div.chats {
+    height: calc(100% - 2.5rem);
+    width: 30%;
+    overflow-y: scroll;
+}
+
+div.chat {
+    display: flex;
 }
 
 div.chat input[type=radio] {
@@ -413,7 +553,7 @@ div.chat input[type=radio] {
 
 div.chat button.chat {
     border: none;
-    width: 18rem;
+    width: 96%;
     display: flex;
     justify-content: space-between;
     margin-bottom: .5rem;
@@ -425,7 +565,7 @@ div.chat div.photo {
     border-radius: 1.5rem;
     overflow: hidden;
     display: inline;
-    margin-right: 1rem;
+    flex: 0 0 auto;
 }
 
 div.chat div.photo img {
@@ -435,7 +575,7 @@ div.chat div.photo img {
 }
 
 div.chat button.chat div.name_message {
-    width: 13.5rem;
+    width: calc(90% - 3rem);
     height: 3rem;
     display: flex;
     flex-direction: column;
@@ -444,13 +584,27 @@ div.chat button.chat div.name_message {
 
 div.chat button.chat div.name_message h4 {
     text-align: center;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    height: 1rem;
 }
 
-div.chat button.chat div.name_message h5 {
+div.chat button.chat div.name_message h5.transparent {
+    width: fit-content;
+}
+
+div.chat button.chat div.name_message h5#msg {
+    width: max-content;
     text-align: left;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 div.chat button.chat div.name_message div.message {
+    width: 100%;
+    height: .9rem;
     display: flex;
     justify-content: space-between;
 }
@@ -464,175 +618,50 @@ div.chat input[type=radio]:checked + button.chat + div.dialog_block {
 }
 
 div.chat div.dialog_block {
-    height: 24rem;
-    width: 42rem;
+    height: calc(100% - 11rem);
+    width: calc((80% - 4rem) * 0.7);
     position: absolute;
-    left: 30rem;
-    top: 11.25rem;
+    left: calc(11% + 2rem + 0.3 * (80% - 4rem));
+    top: 8.7rem;
+    display: none;
 }
 
 .transparent {
     opacity: .5;
 }
 
-div.chat div.dialog_block div.person {
+div.chat div.dialog_block div.headline {
     display: flex;
     align-items: center;
-    width: fit-content;
-    margin-bottom: 1rem;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: .7rem;
 }
 
-div.chat div.dialog_block div.person div.name_online {
+div.chat div.dialog_block div.headline div.person {
+    display: flex;
+    align-items: center;
+    line-height: 1rem;
+}
+
+div.chat div.dialog_block div.headline div.person div.name_online {
     margin-left: .5rem;
 }
 
-div.chat div.dialog_block div.person div.users_in_chat {
-    margin-left: 1rem;
-}
-
-div.block.messenger {
-    height: 37.5rem;
-}
-
-div.block.messenger div.search {
-    margin-bottom: 1.5rem;
-}
-
-div.chat div.dialog_block div.dialog {
-    background: #34373C;
-    padding: 1rem;
-    border-radius: 1rem;
-    height: 25.5rem;
-    margin-bottom: 1rem;
-    overflow-y: scroll;
-    display: flex;
-    flex-direction: column;
-}
-
-div.chat div.dialog_block div.input {
-    width: 42rem;
-    height: 3.5rem;
-    display: flex;
-    justify-content: space-around;
-}
-
-div.chat div.dialog_block div.input textarea {
-    resize: none;
-    width: 36rem;
-    height: 100%;
-    padding-left: 1rem;
-}
-
-div.input button.send {
-    border: 0;
-    width: 3.5rem;
-    height: 3.5rem;
-    border-radius: 50%;
-}
-
-div.chats {
-    height: 30rem;
-    width: 19.25rem;
-    overflow-y: scroll;
-}
-
-div.chat {
-    display: flex;
-}
-
-div.chat div.dialog_block {
-    display: none;
-}
-
-div.chat input[type=radio] {
-    display: none;
-}
-
-div.chat button.chat {
-    border: none;
-    width: 18rem;
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: .5rem;
-}
-
-div.chat button.chat div.name_message {
-    width: 13.5rem;
+div.chat div.dialog_block div.headline button {
     height: 3rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
+    width: 3rem;
+    border-radius: 0;
+    background: transparent;
+    border: 0px;
 }
 
-div.chat button.chat div.name_message h4 {
-    text-align: center;
-}
-
-div.chat button.chat div.name_message h5 {
-    text-align: left;
-}
-
-div.chat button.chat div.name_message div.message {
-    display: flex;
-    justify-content: space-between;
-}
-
-div.chat input[type=radio]:checked + button.chat {
-    background: #3E4248;
-}
-
-div.chat input[type=radio]:checked + button.chat + div.dialog_block {
-    display: inline;
-}
-
-div.chat div.dialog_block {
-    height: 27rem;
-    width: 76.5rem;
-    position: absolute;
-    left: 34.5rem;
-    top: 11.25rem;
-}
-
-.transparent {
-    opacity: .5;
-}
-
-div.chat div.dialog_block div.person {
-    display: flex;
-    align-items: center;
-    width: fit-content;
-    margin-bottom: 1rem;
-}
-
-div.chat div.dialog_block div.person div.name_online {
-    margin-left: .5rem;
-}
-
-div.chat div.dialog_block div.person button {
-    margin-left: .5rem;
-}
-
-div.block.messenger {
-    height: 37.5rem;
-}
-
-div.block.messenger div.search {
-    margin-bottom: 1.5rem;
-}
-
-div.chat div.dialog_block div.dialog {
-    background: #34373C;
-    padding: 1rem;
-    border-radius: 1rem;
-    height: 25.5rem;
-    margin-bottom: 1rem;
-    overflow-y: scroll;
-    display: flex;
-    flex-direction: column;
+div.chat div.dialog_block div.headline button:hover {
+    background: transparent;
 }
 
 div.chat div.dialog_block div.input {
-    width: 42rem;
+    width: 80%;
     height: 3.5rem;
 }
 
@@ -640,7 +669,7 @@ div.chat div.dialog_block div.input form {
     width: 100%;
     height: 100%;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
 }
 
 div.chat div.dialog_block div.input textarea {
@@ -657,27 +686,33 @@ div.chat div.dialog_block div.input button.send {
     border-radius: 50%;
 }
 
-div.chats {
-    height: 30rem;
-    width: 19.25rem;
+div.chat div.dialog_block div.dialog {
+    background: #34373C;
+    padding: 1rem;
+    border-radius: 1rem;
+    height: calc(100% - 8.2rem);
+    margin-bottom: 1rem;
     overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
 }
 
 div.chat div.dialog_block div.dialog div.message {
     margin-top: .5rem;
-    align-self: flex-start;
     display: flex;
     align-items: center;
+    width: 100%;
 }
 
 div.chat div.dialog_block div.dialog div.message div.message_block {
     background: #3E4248;
     width: fit-content;
     height: fit-content;
-    overflow-wrap: break-word;
-    max-width: 27rem;
+    word-wrap: break-word;
+    max-width: 80%;
     padding: .5rem;
     border-radius: .5rem;
+    margin-left: .5rem;
 }
 
 div.chat div.dialog_block div.dialog div.message div.message_block h5 {
@@ -685,7 +720,7 @@ div.chat div.dialog_block div.dialog div.message div.message_block h5 {
 }
 
 div.chat div.dialog_block div.dialog div.message.received {
-    align-self: flex-start;
+    justify-content: flex-start;
 }
 
 div.chat div.dialog_block div.dialog div.message.received div.message_block {
@@ -693,56 +728,48 @@ div.chat div.dialog_block div.dialog div.message.received div.message_block {
 }
 
 div.chat div.dialog_block div.dialog div.message.sent {
-    align-self: flex-end;
+    justify-content: flex-end;
 }
 
 div.chat div.dialog_block div.dialog div.message.sent div.message_block {
     background: #3E4248;
 }
 
-div.add_chat {
-    margin-bottom: 1.6rem;
-    margin-left: 6rem;
-}
-
 div.add_chat_block {
     background: #202225;
-    width: 36rem;
-    height: 30rem;
+    width: 50%;
     padding: 1rem;
     border-radius: 1rem;
     position: absolute;
     margin-left: auto;
     margin-right: auto;
-    top: 9rem;
-    left: 48rem;
+    transform: translateX(-50%) translateY(-50%);
+    top: 50%;
+    left: 50%;
     display: none;
+    box-shadow: #34373C 0rem 0rem 1rem .1rem;
 }
 
 div.add_chat_block form {
-    height: 90%;
+    height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
 }
 
 div.add_chat_block form div.info  {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 9rem;
+    height: 8rem;
+    margin-bottom: 1rem;
 }
 
 div.add_chat_block form div.info h4 {
-    margin-bottom: .5rem;
+    margin-bottom: .25rem;
 }
 
-div.add_chat_block form div.info div.name input {
-    width: 24rem;
-}
-
-div.add_chat_block form div.info div.choose_photo input {
-    width: 24rem;
+div.add_chat_block form div.info input {
+    width: 100%;
 }
 
 div.add_chat_block form div.add_users {
@@ -752,6 +779,7 @@ div.add_chat_block form div.add_users {
 
 div.add_chat_block form div.add_users div.user {
     background: #34373C;
+    height: 3rem;
     border-radius: 1.5rem;
     display: flex;
     align-items: center;
@@ -775,76 +803,53 @@ div.add_chat_block form div.add_users div.user div.photo img {
     height: 100%;
 }
 
-div.add_chat_block form div.add_users div.user h4 {
-    display: inline-block;
-    width: 27rem;
-    margin-left: 1rem;
+div.add_chat_block form div.add_users div.user div.name {
+    width: fit-content;
+    max-width: calc(100% - 8rem);
+    margin-left: .5rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
-input[type=checkbox]{
-    width: 1rem;
-    height: 1rem;
-    accent-color: #666;
-}
-
-div.change_data {
-    background: #202225;
-    width: 36rem;
-    height: 39rem;
-    padding: 1rem;
-    border-radius: 1rem;
-    position: absolute;
-    margin-left: auto;
-    margin-right: auto;
-    top: 9rem;
-    left: 45rem;
+div.add_chat_block form div.add_users div.user input[type=checkbox] {
     display: none;
 }
 
-div.change_data form {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+div.add_chat_block form div.add_users div.user h3 {
+    display: none;
+    user-select: none;
+    margin-left: auto;
+    margin-right: 1rem;
 }
 
-div.change_data form div input, div.change_data form div select {
-    width: 18rem;
-}
-
-div.change_data form div select {
-    background: #34373C;
-    color: #ccc;
-}
-
-div.change_data form div.photo input {
-    width: 24rem;
-    margin: 0;
-}
-
-div.change_data form div {
-    height: 3.5rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+div.add_chat_block form div.add_users div.user input[type=checkbox]:checked + h3 {
+    display: inline-block;
 }
 
 div.block.main_page.head {
+    width: 100%;
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
 }
 
 div.block.main_page.head div.input {
-    width: 50%;
-    margin-left: 3rem;
+    width: calc(96% - 6rem);
+}
+
+div.block.main_page.head div.input button {
+    width: 4.5rem;
+    height: 4.5rem;
+    border-radius: 50%;
 }
 
 div.block.main_page.head div.input div.post_info {
-    width: 90%;
+    width: calc(96% - 4.5rem);
 }
 
-div.block.main_page.head div.input textarea, input {
+div.block.main_page.head div.input textarea, div.block.main_page.head div.input input {
     width: 100%;
     margin-top: .5rem;
     margin-bottom: 1rem;
@@ -880,16 +885,6 @@ div.block.post div.photo_block div.user_info div.photo img {
     width: 100%;
     height: 100%;
 }
-div.block.post div.photo_block form button {
-    background: #34373C;
-    color: #D23E3E;
-    margin-top: 1rem;
-}
-
-div.block.post div.photo_block form button:hover {
-    background: #D23E3E;
-    color: #CCC;
-}
 
 div.block.main_page.head div.photo {
     width: 6rem;
@@ -906,7 +901,7 @@ div.block.main_page.head div.photo img {
 }
 
 div.block.search {
-    width: 60%;
+    width: 75%;
 }
 
 div.block.search div.input {
@@ -916,38 +911,38 @@ div.block.search div.input {
     align-items: center;
 }
 
-div.block.search div.input form {
-    width: 60%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-div.block.search div.input form input {
-    width: 24rem;
-    margin-right: 3rem;
+div.block.search div.input input {
+    width: 90%;
+    margin-top: 1rem;
 }
 
 div.block.search div.results {
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 
 div.block.search div.results a {
     display: flex;
     align-items: center;
     background-color: #34373C;
-    margin: 1rem 0 0 0;
+    margin-top: 1rem;
     padding: 1rem;
     color: #ccc;
+    width: 100%;
+    height: fit-content;
 }
 
 div.block.search div.results a div.info {
+    height: 2rem;
     display: flex;
     flex-direction: column;
-    height: 4rem;
     justify-content: space-between;
+    width: calc(96% - 4.5rem);
     margin-left: 1rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 div.block.search div.results a div.info h3 {
@@ -965,73 +960,6 @@ div.block.search div.results a div.photo img {
     object-fit: cover;
     width: 100%;
     height: 100%;
-}
-
-@media (orientation: portrait) {
-    html {
-        font-size: 0.8vh;
-    }
-    h2 {
-        font-size: 2rem
-    }
-    h3 {
-        font-size: 1.5rem
-    }
-    h4 {
-        font-size: 1.2rem
-    }
-    h5 {
-        font-size: .9rem
-    }
-    div.container {
-        width: 90%
-    }
-    div.block.post {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    div.block.post div.photo_block {
-        width: 24rem;
-        margin-bottom: 1rem;
-    }
-    div.block.post div.description {
-        margin-left: 0;
-    }
-    div.block.post div.description h4 {
-        line-height: 1.5rem;
-    }
-    div.change_data {
-        background: #202225;
-        width: 36rem;
-        height: 36rem;
-        padding: 1rem;
-        border-radius: 1rem;
-        position: absolute;
-        margin-left: auto;
-        margin-right: auto;
-        top: 24rem;
-        left: 50vw;
-        transform: translateX(-50%);
-        display: none;
-    }
-    div.chat div.dialog_block {
-        width: calc(90% - 24rem);
-        left: 27rem;
-    }
-    div.chat div.dialog_block div.input {
-        width: 42vw;
-    }
-    div.login {
-        width: 80%;
-        font-size: 2rem;
-    }
-    div.headbuts button.tab.one {
-        margin-left: 0;
-    }
-    div.headbuts button.tab.two {
-        margin-left: 4vw;
-    }
 }
 
 div.email_submit {
@@ -1052,10 +980,164 @@ div.email_submit div.block form {
     align-items: center;
 }
 
+div.email_submit div.block form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+div.email_submit div.block h3, div.email_submit div.block h4 {
+    margin-bottom: .5rem;
+}
+
+div.email_submit div.block h2 {
+    margin-top: .5rem;
+    margin-bottom: .5rem;
+}
+
 div.email_submit div.block form input[type=text] {
     width: 40%;
 }
 
 div.email_submit div.block form input[type=submit] {
     width: 6em;
+    margin-top: .5rem;
+}
+
+.hide {
+    display: none;
+}
+
+@media (orientation: portrait) {
+    div.main {
+        width: 90%;
+    }
+    div.login {
+        width: 100%;
+    }
+    div.login form div.input input {
+        width: 70%;
+    }
+    div.block.profile.head {
+        width: 100%;
+    }
+    div.block.profile.head div.photo {
+        width: 9rem;
+        height: 9rem;
+    }
+    div.block.profile.head div.info {
+        width: calc(100% - 9rem);
+    }
+    div.block.post {
+        justify-content: center;
+    }
+    div.block.post div.description {
+        width: 100%;
+        margin-top: 1rem;
+    }
+    div.block.post div.photo_block {
+        width: 100%;
+        height: fit-content;
+    }
+    div.block.post div.photo {
+        height: fit-content;
+        width: fit-content;
+    }
+    div.block.post div.photo img {
+        max-height: 24rem;
+        max-width: 100%;
+        width: auto;
+        height: auto;
+    }
+    div.block.post div.photo_block div.action div.like svg {
+        height: 3rem;
+        width: 3rem;
+    }
+    div.block.post div.photo_block div.action div.comment svg {
+        height: 3rem;
+        width: 3rem;
+    }
+    div.block.post div.photo_block form button {
+        width: 3rem;
+        height: 3rem;
+    }
+    div.change_data {
+        width: 80%;
+    }
+    div.change_data form div input, div.change_data form div select {
+        width: 80%;
+    }
+    div.change_data form div.photo input {
+        width: 90%;
+        margin: 0;
+    }
+    div.container#messenger {
+        height: calc(100% - 16rem);
+    }
+    div.block.messenger div.search svg.lines {
+        display: inline-block;
+    }
+    div.block.messenger div.search svg.cross {
+        display: none;
+    }
+    div.block.messenger div.search input[type=text] {
+        display: none;
+    }
+    div.block.messenger div.search button {
+        display: none;
+    }
+    div.block.messenger div.chats {
+        width: 100%;
+    }
+    div.chats div.chat div.dialog_block {
+        height: calc(100% - 18rem);
+        width: calc(80% - 4rem);
+        left: calc(5% + 5rem);
+        opacity: 0;
+        pointer-events: none;
+    }
+    div.block.messenger div.search {
+        width: 100%;
+    }
+    div.block.messenger div.search input[type=checkbox]:checked ~ svg.lines {
+        display: none;
+    }
+    div.block.messenger div.search input[type=checkbox]:checked ~ svg.cross {
+        display: inline-block;
+        margin-left: 1rem;
+    }
+    div.block.messenger div.search input[type=checkbox]:checked ~ input[type=text] {
+        display: inline-block;
+    }
+    div.block.messenger div.search input[type=checkbox]:checked ~ button {
+        display: inline-block;
+        flex: 0 0 auto;
+    }
+    div.block.search {
+        width: 100%;
+    }
+    div.email_submit {
+        width: 100%;
+    }
+}
+
+@media screen and (min-height: 2200px) {
+    html {
+        font-size: 36px;
+    }
+}
+
+@media (orientation: portrait) and (min-height: 1500px) {
+    div.chats div.chat div.dialog_block {
+        height: calc(100% - 11rem);
+    }
+    div.block.login * {
+        font-size: 36px;
+    }
+    div.block.login button {
+        height: 3rem;
+        width: fit-content;
+        padding-left: .5rem;
+        padding-right: .5rem;
+    }
 }

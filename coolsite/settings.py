@@ -23,8 +23,8 @@ host2 = "www.diod.cf"
 ip = "195.133.146.115"
 ngr = "a0cb-109-252-146-127.eu.ngrok.io"
 
-ALLOWED_HOSTS = [host1, host2, ip, ngr]
-CSRF_TRUSTED_ORIGINS = [f"https://{ngr}", f"https://{host1}"]
+ALLOWED_HOSTS = [host1, host2, ip, ngr, "diod.pagekite.me"]
+CSRF_TRUSTED_ORIGINS = [f"https://{ngr}", f"https://{host1}", "https://diod.pagekite.me"]
 
 # Application definition
 

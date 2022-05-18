@@ -23,7 +23,7 @@ try
         })
 }catch(err)
 {
-    console.log("Your's profile");
+    // console.log("Your's profile");
 }
 
 websocket.onmessage = function(e)

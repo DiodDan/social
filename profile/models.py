@@ -2,12 +2,12 @@ from django.db import models
 
 
 class User(models.Model):
-    login = models.CharField(max_length=15, verbose_name="Логин")
-    email = models.EmailField(max_length=40, verbose_name="Почта")
+    login = models.CharField(max_length=36, verbose_name="Логин")
+    email = models.EmailField(max_length=64, verbose_name="Почта")
     password = models.CharField(max_length=64, verbose_name="Пароль")
-    name = models.CharField(max_length=30, verbose_name="Имя")
-    description = models.CharField(max_length=300, blank=True, verbose_name="Описание")
-    chat_ids = models.CharField(max_length=300, blank=True)
+    name = models.CharField(max_length=64, verbose_name="Имя")
+    description = models.CharField(max_length=128, blank=True, verbose_name="Описание")
+    chat_ids = models.CharField(max_length=512, blank=True)
     followers = models.TextField(verbose_name="followers", blank=True)
     follows = models.TextField(verbose_name="follows", blank=True)
     profile_photo = models.ImageField(upload_to="photos/profile_photos", verbose_name="Фото аккаунта", blank=True)
@@ -37,11 +37,11 @@ class User(models.Model):
 
 
 class Message(models.Model):
-    time_sent = models.CharField(max_length=10, verbose_name="Время отправки")
+    time_sent = models.CharField(max_length=13, verbose_name="Время отправки")
     autor = models.IntegerField(verbose_name="Автор")
     is_read = models.BooleanField(verbose_name="Прочитано")
-    read_by = models.CharField(max_length=150, verbose_name="Кем прочитано")
-    text = models.CharField(max_length=1000, verbose_name="Сообщение")
+    read_by = models.CharField(max_length=512, verbose_name="Кем прочитано")
+    text = models.CharField(max_length=1024, verbose_name="Сообщение")
     image = models.ImageField(upload_to="photos/chat_images", verbose_name="image", blank=True)
 
     class Meta:
@@ -50,8 +50,8 @@ class Message(models.Model):
 
 
 class Chat(models.Model):
-    name = models.CharField(max_length=40, verbose_name="Название")
-    users = models.CharField(max_length=150, verbose_name="Участники")
+    name = models.CharField(max_length=32, verbose_name="Название")
+    users = models.CharField(max_length=512, verbose_name="Участники")
     image = models.ImageField(upload_to="photos/chat_images",
                               verbose_name="Фото", blank=True)
     message_ids = models.TextField(verbose_name="ID сообщений")
@@ -67,7 +67,7 @@ class Publication(models.Model):
     image = models.ImageField(upload_to="photos/publication_images", blank=True, verbose_name="Фото")
     like_ids = models.TextField(blank=True, verbose_name="ID лайков")
     comment_ids = models.TextField(blank=True, verbose_name="ID сообщений")
-    time_created = models.CharField(max_length=10, verbose_name="Время создания")
+    time_created = models.CharField(max_length=13, verbose_name="Время создания")
 
     class Meta:
 

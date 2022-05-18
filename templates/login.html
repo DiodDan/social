@@ -9,10 +9,10 @@
 
 <body>
     <div class="main">
+        <header id="login">
+            <object data="../../static/diod_main.svg" type="image/svg+xml" class="logo_main"></object>
+        </header>
         <div class="container">
-            <header>
-                <object data="../../static/diod_main.svg" type="image/svg+xml" class="logo_main"></object>
-            </header>
             <div class="block login">
                 <div class="headbuts">
                     <input type="radio" name="tab" id="tab1" checked>
@@ -32,12 +32,9 @@
                                 <span>password</span>
                                 <input type="password" name="password">
                             </div>
-
-                            <div class="submit">
-                                <button type="submit">
-                                    <span>login</span>
-                                </button>
-                            </div>
+                            <button type="submit">
+                                <h3>login</h3>
+                            </button>
                             <span style="color:red">{{ ERR }}</span>
                         </form>
                     </div>
@@ -57,24 +54,24 @@
                                 <span>repeat</span>
                                 <input type="password" name="repit_password">
                             </div>
-
-                            <div class="submit">
-                                <button type="submit">
-                                    <span>login</span>
-                                </button>
-                            </div>
+                            <button type="submit">
+                                <span>sign up</span>
+                            </button>
                             <span style="color:red">{{ ERR }}</span>
                         </form>
                     </div>
                 </div>
             </div>
-            <footer>
-                <h4>contact with <span style="font-weight: 500;font-style: italic;">diod</span>!</h4>
-                <br>
-                <h5><span style="font-weight:500">e-mail: </span>diod@diod.com</h5>
-                <h5><span style="font-weight:500">phone number: </span>8 (800) 555-35-35</h5>
-            </footer>
         </div>
+        <footer>
+            <h4>contact <span style="font-weight: 500;font-style: italic;">diod</span>!</h4>
+            <br>
+            <h5><span style="font-weight:500">e-mail: </span><a href="mailto:help@diod.cf" target="_blank">help@diod.cf</a></h5>
+            <h5><span style="font-weight:500">write</span> in <a href="https://wa.me/79852855801" target="_blank">WhatsApp</a></h5>
+            <h5>visit our <span style="font-weight:500">Instagram</span>: <a href="https://www.instagram.com/diod_official/" target="_blank">@diod_official</a></h5>
+            <br>
+            <h5 class="transparent" style="font-size: 8px;line-height: 8px;">© 2022 diod<br><br>Using or copying any kind of text, media, design, decoration or sources <br>from the website is allowed only with the permission of the copyright holder <br>and only with reference to the source: diod.cf</h5>
+        </footer>
     </div>
 </body>
 </html>

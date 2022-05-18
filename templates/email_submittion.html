@@ -6,21 +6,34 @@
     <title>diod — submit email</title>
 </head>
 <body>
-    <header>
-        <object data="{% static 'diod_main.svg' %}" type="image/svg+xml" class="logo_main"></object>
-    </header>
-    <div class="email_submit">
-        <div class="block">
-            <h3>you were sent an email with code to submit</h3>
-            <h4 class="transparent">check spam</h4>
-            <h2>enter it here</h2>
-            <form method="post" action="/profile/submit_email/{{ email }}">
-                {% csrf_token %}
-                <input type="text" size="40" name="token">
-                <input type="submit" value="send">
-            </form>
-            <font color="red">{{ ERR }}</font>
+    <div class="main">
+        <header>
+            <object data="{% static 'diod_main.svg' %}" type="image/svg+xml" class="logo_main"></object>
+        </header>
+        <div class="container">
+            <div class="email_submit">
+                <div class="block">
+                    <h3>you were sent an email with code to submit</h3>
+                    <h4 class="transparent">check spam</h4>
+                    <h2>enter it here</h2>
+                    <form method="post" action="/profile/submit_email/{{ email }}">
+                        {% csrf_token %}
+                        <input type="text" size="40" name="token">
+                        <input type="submit" value="send">
+                    </form>
+                    <font color="red">{{ ERR }}</font>
+                </div>
+            </div>
         </div>
+        <footer>
+            <h4>contact <span style="font-weight: 500;font-style: italic;">diod</span>!</h4>
+            <br>
+            <h5><span style="font-weight:500">e-mail: </span><a href="mailto:help@diod.cf" target="_blank">help@diod.cf</a></h5>
+            <h5><span style="font-weight:500">write</span> in <a href="https://wa.me/79852855801" target="_blank">WhatsApp</a></h5>
+            <h5>visit our <span style="font-weight:500">Instagram</span>: <a href="https://www.instagram.com/diod_official/" target="_blank">@diod_official</a></h5>
+            <br>
+            <h5 class="transparent" style="font-size: 8px;line-height: 8px;">© 2022 diod<br><br>Using or copying any kind of text, media, design, decoration or sources <br>from the website is allowed only with the permission of the copyright holder <br>and only with reference to the source: diod.cf</h5>
+        </footer>
     </div>
 </body>
 </html>

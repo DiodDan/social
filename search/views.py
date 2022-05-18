@@ -13,21 +13,15 @@ class Search(TemplateView):
     template = Environment(loader=FileSystemLoader('templates'), autoescape=autoescape).get_template(template_name)
 
     def get(self, request):
-        return HttpResponse(self.template.render(users_found=[],
-                                                 logedacc=request.session["logedacc"],
+        login = request.session["logedacc"]
+        users = User.objects
+        users_found = set(users.all())
+        return HttpResponse(self.template.render(users_found=users_found,
+                                                 logedacc=login,
                                                  csrf=request.COOKIES["csrftoken"]))
 
     def post(self, request):
-        post = request.POST
-        login = request.session["logedacc"]
-        users = User.objects
-        users_found = list(users.filter(name__contains=post["search_text"]))
-        users_found += list(users.filter(login__contains=post["search_text"]))
-        users_found += list(users.filter(email__contains=post["search_text"]))
-        users_found = set(users_found)
-        return HttpResponse(self.template.render(users_found=users_found,
-                                                 logedacc=request.session["logedacc"],
-                                                 csrf=request.COOKIES["csrftoken"]))
+        pass
 
 def pagenotfound(reqest, exception):
     return HttpResponse(f"<h1>Либо ты ... либо я ...;(</h1>")
