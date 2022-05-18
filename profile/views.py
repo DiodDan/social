@@ -144,7 +144,8 @@ class profile(TemplateView):
                                                          logedacc=request.session["logedacc"],
                                                          is_subscribed=False,
                                                          theme_color=self.themes[user.used_theme]['color'],
-                                                         self_user_id=self_user_id))
+                                                         self_user_id=self_user_id,
+                                                         email_shown=user.is_email_set_to_be_seen_or_not_by_user))
             else:
                 return HttpResponse(self.template.render(publications=publications,
                                                          user=user,
@@ -160,7 +161,8 @@ class profile(TemplateView):
                                                          logedacc=request.session["logedacc"],
                                                          is_subscribed=(str(user.id) in users.get(login=request.session["logedacc"]).follows.split(",")),
                                                          theme_color=self.themes[user.used_theme]['color'],
-                                                         self_user_id=self_user_id))
+                                                         self_user_id=self_user_id,
+                                                         email_shown=user.is_email_set_to_be_seen_or_not_by_user))
         except:
             return redirect("/profile/login/")
 
@@ -203,6 +205,11 @@ class changedata(TemplateView):
             obj.login = post["login"]
             obj.description = post["description"]
             obj.email = post["email"]
+            if "set_email_visibility" in post.keys():
+                obj.is_email_set_to_be_seen_or_not_by_user = True
+            else:
+                obj.is_email_set_to_be_seen_or_not_by_user = False
+            print(obj.is_email_set_to_be_seen_or_not_by_user)
             if post["password"]:
                 obj.password = hash.sha256(post["password"].encode()).hexdigest()
             if request.FILES.get("profile_photo"):

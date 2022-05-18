@@ -17,11 +17,13 @@ SECRET_KEY = 'django-insecure-58l(*i7b66=mez2(5vb7-e7ku&@xgu@_be#!=%eas^eg1e!=5!
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+DEBUG_toolbar = False
+DEPLOY = False
 
 host1 = "diod.cf"
 host2 = "www.diod.cf"
 ip = "195.133.146.115"
-ngr = "a0cb-109-252-146-127.eu.ngrok.io"
+ngr = "e44b-2a00-1370-8178-2199-8005-e95a-8ab-b0a1.eu.ngrok.io"
 
 ALLOWED_HOSTS = [host1, host2, ip, ngr, "diod.pagekite.me"]
 CSRF_TRUSTED_ORIGINS = [f"https://{ngr}", f"https://{host1}", "https://diod.pagekite.me"]
@@ -40,7 +42,8 @@ INSTALLED_APPS = [
     'messenger.apps.MessengerConfig',
     'api.apps.ApiConfig',
     'feed.apps.FeedConfig',
-    'search.apps.SearchConfig'
+    'search.apps.SearchConfig',
+    'debug_toolbar'
 ]
 
 ASGI_APPLICATION = "coolsite.asgi.application"
@@ -53,6 +56,7 @@ CHANNEL_LAYERS = {
 }
 
 MIDDLEWARE = [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -126,7 +130,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
+if DEPLOY:
+    STATIC_ROOT = os.path.join(BASE_DIR, "static")
+
 STATIC_URL = '/static/'
 
 # Default primary key field type
@@ -144,4 +150,9 @@ EMAIL_HOST_PASSWORD = 'NotAUsualSocialNetwork3!'
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
 
-# STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+if not DEPLOY:
+    STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+
+INTERNAL_IPS = [
+    '127.0.0.1' if DEBUG_toolbar else '0.0.0.1'
+]

@@ -35,7 +35,9 @@
             <h4> {{ user.description }} </h4>
             {% endif %}
             <div class="additional">
+                {% if (((not is_owner) and email_shown) or is_owner)%}
               <h5>e-mail: <a href="mailto:{{ user.email }}">{{ user.email }}</a></h5>
+                {% endif %}
               <!-- <h5>website: <a href="https://google.com">google.com</a></h5> -->
             </div>
             {% if is_owner %}
@@ -108,6 +110,10 @@
         <div class="email" maxlength="64">
           <h4>e-mail</h4>
           <input type="text" value="{{ user.email }}" name="email" class="disabled">
+        </div>
+        <div class="show_email">
+          <h4>show your email</h4>
+          <input type="checkbox" name="set_email_visibility" value="1" {% if user.is_email_set_to_be_seen_or_not_by_user %}checked{% endif %}>
         </div>
         <div class="login_name">
           <h4>login <span class="transparent" style="font-size:.7rem;">(ex. https://diod.cf/profile/<span style="font-weight:500;">your_login</span>)</span></h4>
