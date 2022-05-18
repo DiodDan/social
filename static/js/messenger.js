@@ -165,6 +165,7 @@ function changeRadio(event)
         }
         idBtn = btns.indexOf(event.target.closest("button.chat"));
         radios[idBtn].checked = true;
+        openMenu("close menu");
 
         arr[idBtn].send(JSON.stringify({
         'type': 'messages_read',
@@ -229,7 +230,7 @@ dialogs = document.querySelectorAll("div.chats div.chat div.dialog_block")
 
 
 function openMenu(event) {
-    if (event.target.closest("div.search > svg")) {
+    if (event == "close menu" || event.target.closest("div.search > svg")) {
         menuCheckbox.checked = (menuCheckbox.checked + 1) % 2;
         if (menuCheckbox.checked) {
             chats_dialogs.style.width = '100%';

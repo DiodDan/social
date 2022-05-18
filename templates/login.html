@@ -26,11 +26,11 @@
                             {% csrf_token %}
                             <div class="input">
                                 <span>e-mail</span>
-                                <input type="text" name="username">
+                                <input type="text" name="username" maxlength="64">
                             </div>
                             <div class="input">
                                 <span>password</span>
-                                <input type="password" name="password">
+                                <input type="password" name="password" maxlength="64">
                             </div>
                             <button type="submit">
                                 <h3>login</h3>
@@ -44,15 +44,15 @@
                             {% csrf_token %}
                             <div class="input">
                                 <span>e-mail</span>
-                                <input type="text" name="username">
+                                <input type="text" name="username" maxlength="64">
                             </div>
                             <div class="input">
                                 <span>password</span>
-                                <input type="password" name="password">
+                                <input type="password" name="password" maxlength="64">
                             </div>
                             <div class="input">
                                 <span>repeat</span>
-                                <input type="password" name="repit_password">
+                                <input type="password" name="repit_password" maxlength="64">
                             </div>
                             <button type="submit">
                                 <span>sign up</span>

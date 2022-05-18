@@ -18,7 +18,7 @@
                     <h2>enter it here</h2>
                     <form method="post" action="/profile/submit_email/{{ email }}">
                         {% csrf_token %}
-                        <input type="text" size="40" name="token">
+                        <input type="text" size="40" name="token" maxlength="6">
                         <input type="submit" value="send">
                     </form>
                     <font color="red">{{ ERR }}</font>

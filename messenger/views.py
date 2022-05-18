@@ -45,7 +45,7 @@ class chat(TemplateView):
         users_for_chats = []
         for chat in chats_for_user:
             users_for_chats.append([])
-            users_id_range = chat.users.split(",") + [24] if chat.name == "flags_chat" else chat.users.split(",")
+            users_id_range = chat.users.split(",") + [1] if chat.name == "flags_chat" else chat.users.split(",")
             for u in users_id_range:
                 t = users.get(id=u)
                 chat_users[int(u)] = [t.name, t.login, t.profile_photo]

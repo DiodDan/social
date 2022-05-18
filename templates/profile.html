@@ -105,21 +105,21 @@
       <form action="/profile/changedata/{{ user.login }}" method="post" enctype="multipart/form-data">
         <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf }}">
         <h3>change profile</h3>
-        <div class="email">
+        <div class="email" maxlength="64">
           <h4>e-mail</h4>
           <input type="text" value="{{ user.email }}" name="email" class="disabled">
         </div>
         <div class="login_name">
           <h4>login <span class="transparent" style="font-size:.7rem;">(ex. https://diod.cf/profile/<span style="font-weight:500;">your_login</span>)</span></h4>
-          <input type="text" value="{{ user.login }}" name="login">
+          <input type="text" value="{{ user.login }}" name="login" maxlength="36">
         </div>
         <div class="name">
           <h4>name <span class="transparent" style="font-size:.7rem;">(it is written on the top of <span style="font-weight:500;">your profile</span> page)</span></h4>
-          <input type="text" value="{{ user.name }}" name="name">
+          <input type="text" value="{{ user.name }}" name="name" maxlength="64">
         </div>
         <div class="password">
           <h4>change password</h4>
-          <input type="password" value="" name="password">
+          <input type="password" value="" name="password" maxlength="64">
         </div>
         <div class="photo">
           <h4>photo</h4>
