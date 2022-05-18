@@ -56,3 +56,32 @@ function openChangeProfile(event) {
         document.querySelector("div.main").setAttribute("class", "main");
     }
 }
+
+const followers = document.querySelector("div.followers div.number#followers");
+const follows = document.querySelector("div.followers div.number#follows");
+
+document.addEventListener("click", openFollowers);
+
+function openFollowers(event) {
+    if (event.target.closest("div.followers div.number#followers")) {
+        document.querySelector("div.followers_menu").style.display = "flex";
+        document.querySelector("div.main").setAttribute("class", "main disabled");
+    }
+    else if (!event.target.closest("div.followers div.number#followers") && document.querySelector("div.followers_menu").style.display == "flex") {
+        document.querySelector("div.followers_menu").style.display = "none";
+        document.querySelector("div.main").setAttribute("class", "main");
+    }
+}
+
+document.addEventListener("click", openFollows);
+
+function openFollows(event) {
+    if (event.target.closest("div.followers div.number#follows")) {
+        document.querySelector("div.follows_menu").style.display = "flex";
+        document.querySelector("div.main").setAttribute("class", "main disabled");
+    }
+    else if (!event.target.closest("div.followers div.number#follows") && document.querySelector("div.follows_menu").style.display == "flex") {
+        document.querySelector("div.follows_menu").style.display = "none";
+        document.querySelector("div.main").setAttribute("class", "main");
+    }
+}

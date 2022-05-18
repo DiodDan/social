@@ -106,8 +106,12 @@ class profile(TemplateView):
         try:
             users = User.objects
             user = users.get(login=login)
-            user.followers = len([i for i in user.followers.split(",") if i != ''])
-            user.follows = len([i for i in user.follows.split(",") if i != ''])
+            user.followers = [i for i in user.followers.split(",") if i != '']
+            user.follows = [i for i in user.follows.split(",") if i != '']
+
+            followers = users.filter(id__in=user.followers)
+            follows = users.filter(id__in=user.follows)
+
             publication = Publication.objects
             publications = publication.filter(author=user.id)
             lencomments = []
@@ -127,6 +131,10 @@ class profile(TemplateView):
             if login == request.session["logedacc"]:
                 return HttpResponse(self.template.render(publications=publications,
                                                          user=user,
+                                                         followers=followers,
+                                                         follows=follows,
+                                                         lenfollowers=len(user.followers),
+                                                         lenfollows=len(user.follows),
                                                          lenpublications=len(publications),
                                                          lencomments=lencomments,
                                                          lenlikes=lenlikes,
@@ -140,6 +148,10 @@ class profile(TemplateView):
             else:
                 return HttpResponse(self.template.render(publications=publications,
                                                          user=user,
+                                                         followers=followers,
+                                                         follows=follows,
+                                                         lenfollowers=len(user.followers),
+                                                         lenfollows=len(user.follows),
                                                          lenpublications=len(publications),
                                                          lencomments=lencomments,
                                                          lenlikes=lenlikes,

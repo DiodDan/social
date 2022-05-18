@@ -22,12 +22,12 @@
               {% endif %}
             </div>
             <div class="followers">
-              <div class="number">
-                <h2 id="amount_of_followers">{{ user.followers }}</h2>
+              <div class="number" id="followers">
+                <h2 id="amount_of_followers">{{ lenfollowers }}</h2>
                 <h5>followers</h5>
               </div>
-              <div class="number">
-                <h2>{{ user.follows }}</h2>
+              <div class="number" id="follows">
+                <h2>{{ lenfollows }}</h2>
                 <h5>follows</h5>
               </div>
             </div>
@@ -147,6 +147,46 @@
       </form>
     </div>
     {% endif %}
+    <div class="followers_menu">
+      {% if is_owner %}
+      <h3>your followers</h3>
+      {% else %}
+      <h3>{{ user.name }}'s followers</h3>
+      {% endif %}
+      <div class="subscriptions">
+        {% for user in followers %}
+          <a href="/profile/{{ user.login }}" class="block">
+            <div class="photo">
+              <img src="../media/{{ user.profile_photo }}" alt="Image Not Found">
+            </div>
+            <div class="info">
+              <h3>{{ user.name }}</h3>
+              <h4 class="transparent">{{ user.login }}</h4>
+            </div>
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="follows_menu">
+      {% if is_owner %}
+      <h3>you follow</h3>
+      {% else %}
+      <h3>{{ user.name }} follows</h3>
+      {% endif %}
+      <div class="subscriptions">
+        {% for user in follows %}
+          <a href="/profile/{{ user.login }}" class="block">
+            <div class="photo">
+              <img src="../media/{{ user.profile_photo }}" alt="Image Not Found">
+            </div>
+            <div class="info">
+              <h3>{{ user.name }}</h3>
+              <h4 class="transparent">{{ user.login }}</h4>
+            </div>
+          </a>
+        {% endfor %}
+      </div>
+    </div>
   <script id="profile_script" src="../static/js/profile.js" user_id="{{ user.id }}" user_login="{{ logedacc }}"></script>
   <script id="like_script" src="../static/js/like.js" post_ids="{% for publo in publications %}{{ publo.id }},{% endfor %}" user_login="{{ logedacc }}"></script>
   </body>

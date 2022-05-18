@@ -252,7 +252,7 @@ h5 {
     font-size: .7rem;
 }
 
-div.followers {
+div.info > div.followers {
     display: flex;
     align-self: center;
     justify-content: center;
@@ -260,8 +260,9 @@ div.followers {
     width: 100%;
 }
 
-div.followers div.number {
+div.info > div.followers div.number {
     margin: .5rem;
+    cursor: pointer;
 }
 
 div.block.profile.head div.info div.name {
@@ -1006,6 +1007,69 @@ div.email_submit div.block form input[type=submit] {
 
 .hide {
     display: none;
+}
+
+div.followers_menu, div.follows_menu {
+    background: #202225;
+    box-shadow: #34373C 0rem 0rem 1rem .1rem;
+    border-radius: 1rem;
+    padding: 1rem;
+    position: absolute;
+    flex-direction: column;
+    height: 75%;
+    width: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    display: none;
+}
+
+div.subscriptions {
+    height: calc(90% - 2rem);
+    width: 100%;
+    overflow-y: scroll;
+    background-color: #2B2E32;
+    padding: 1rem;
+    border-radius: 1rem;
+    margin-top: 1rem;
+}
+
+div.subscriptions a {
+    background-color: #34373C;
+    padding: .25rem .5rem .25rem 0;
+    width: 100%;
+    height: 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 1.5rem;
+    margin-bottom: .5rem;
+}
+
+div.subscriptions a div.photo {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    overflow: hidden;
+    flex: 0 0 auto;
+}
+
+div.subscriptions a div.info {
+    width: calc(96% - 3rem);
+}
+
+div.followers_menu > h3, div.follows_menu > h3 {
+    text-align: center;
+}
+
+div.subscriptions a div.info h3, div.subscriptions a div.info h4 {
+    text-align: left;
+}
+
+div.chat div.photo img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
 }
 
 @media (orientation: portrait) {
