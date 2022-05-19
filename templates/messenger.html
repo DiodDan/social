@@ -18,6 +18,47 @@
                 <svg class="lines" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><defs><style>.cls-1{fill:none;stroke:#ccc;stroke-linecap:round;stroke-miterlimit:10;stroke-width:2px;}</style></defs><line class="cls-1" x1="1" y1="1" x2="15" y2="1"/><line class="cls-1" x1="1" y1="8" x2="15" y2="8"/><line class="cls-1" x1="1" y1="15" x2="15" y2="15"/></svg>
                 <svg class="cross" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12"><defs><style>.cls-1{fill:none;stroke:#ccc;stroke-linecap:round;stroke-miterlimit:10;stroke-width:2px;}</style></defs><line class="cls-1" x1="1.05" y1="10.95" x2="10.95" y2="1.05"/><line class="cls-1" x1="1.05" y1="1.05" x2="10.95" y2="10.95"/></svg>
             </div>
+            <div class="dialogs">
+                {% for i in range(chats_len) %}
+                <div class="dialog_block">
+                    <div class="headline">
+                        <div class="person">
+                            <div class="photo">
+                                <img src="../media/{{ chats[i].image }}" alt="Image Not Found">
+                            </div>
+                            <div class="name_online">
+                                <h4>{{ chats[i].name }}</h4>
+                                <h5 class="transparent" id="users_online_{{ chats[i].id }}">{{ len_users_for_chats[i] }} members, {{users_for_chats_online[i]}} online</h5>
+                            </div>
+                        </div>
+                        <button id="edt_chat_{{ chats[i].id }}"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><defs><style>.cls-1{fill:#ccc;}</style></defs><circle class="cls-1" cx="8" cy="8" r="1"/><circle class="cls-1" cx="8" cy="2" r="1"/><circle class="cls-1" cx="8" cy="14" r="1"/></svg></button>
+                    </div>
+                    <div class="dialog" id="messeges_{{ i }}">
+                        {% for message in messages[i] %}
+                            <div class="message {% if message.autor == user.id %}sent{% else %}received{% endif %}">
+                                <div class="photo">
+                                    <a href="/profile/{{ chat_users[message.autor][1] }}" style="width:100%;height:100%">
+                                        <img src="../media/{{ chat_users[message.autor][2] }}" alt="Image Not Found">
+                                    </a>
+                                </div>
+                                <div class="message_block">
+                                    <a href="/profile/{{ chat_users[message.autor][1] }}">{{ chat_users[message.autor][0] }}</a>
+                                    <h4>{{ message.text }}</h4>
+                                    <h5 class="transparent">{{ message.time_sent }}</h5>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="input">
+                        <form id="form_{{ i }}">
+                            <textarea type="text" class="message-input" placeholder="Type message..." name="message" id="textarea" maxlength="1024"></textarea>
+                            <button class="send" type="submit"><svg class="yellow" xmlns="http://www.w3.org/2000/svg" viewBox="128 0 1024 1024"><polygon points="1024.27 512 933.76 602.51 752.75 783.51 571.73 783.51 843.24 512 571.73 240.49 752.75 240.49 1024.27 512"/><rect x="256" y="448" width="640" height="128"/></svg></button>
+                        </form>
+                    </div>
+                </div>
+                {% endfor %}
+                <div class="close"></div>
+            </div>
             <div class="chats">
                 {% for i in range(chats_len) %}
                 <div class="chat" id="chat_{{ i }}">
@@ -37,42 +78,6 @@
                             </div>
                         </div>
                     </button>
-                    <div class="dialog_block">
-                        <div class="headline">
-                            <div class="person">
-                                <div class="photo">
-                                    <img src="../media/{{ chats[i].image }}" alt="Image Not Found">
-                                </div>
-                                <div class="name_online">
-                                    <h4>{{ chats[i].name }}</h4>
-                                    <h5 class="transparent" id="users_online_{{ chats[i].id }}">{{ len_users_for_chats[i] }} members, {{users_for_chats_online[i]}} online</h5>
-                                </div>
-                            </div>
-                            <button id="edt_chat_{{ chats[i].id }}"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><defs><style>.cls-1{fill:#ccc;}</style></defs><circle class="cls-1" cx="8" cy="8" r="1"/><circle class="cls-1" cx="8" cy="2" r="1"/><circle class="cls-1" cx="8" cy="14" r="1"/></svg></button>
-                        </div>
-                        <div class="dialog" id="messeges_{{ i }}">
-                            {% for message in messages[i] %}
-                                <div class="message {% if message.autor == user.id %}sent{% else %}received{% endif %}">
-                                    <div class="photo">
-                                        <a href="/profile/{{ chat_users[message.autor][1] }}" style="width:100%;height:100%">
-                                            <img src="../media/{{ chat_users[message.autor][2] }}" alt="Image Not Found">
-                                        </a>
-                                    </div>
-                                    <div class="message_block">
-                                        <a href="/profile/{{ chat_users[message.autor][1] }}">{{ chat_users[message.autor][0] }}</a>
-                                        <h4>{{ message.text }}</h4>
-                                        <h5 class="transparent">{{ message.time_sent }}</h5>
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        </div>
-                        <div class="input">
-                            <form id="form_{{ i }}">
-                                <textarea type="text" class="message-input" placeholder="Type message..." name="message" id="textarea" maxlength="1024"></textarea>
-                                <button class="send" type="submit"><svg class="yellow" xmlns="http://www.w3.org/2000/svg" viewBox="128 0 1024 1024"><polygon points="1024.27 512 933.76 602.51 752.75 783.51 571.73 783.51 843.24 512 571.73 240.49 752.75 240.49 1024.27 512"/><rect x="256" y="448" width="640" height="128"/></svg></button>
-                            </form>
-                        </div>
-                    </div>
                 </div>
                 {% endfor %}
             </div>
@@ -154,7 +159,6 @@
             </div>
             <button type="submit">apply changes</button>
         </form>
-        <br>
         <form action="/messenger/" method="post" enctype="multipart/form-data">
             <input type="hidden" value="{{ chats[i].id }}" name="chat_id">
             <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf }}">

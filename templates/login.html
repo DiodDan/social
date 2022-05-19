@@ -22,7 +22,7 @@
                     <button class="tab two"><label for="tab2">sign up</label></button>
                 
                     <div class="tab" id="one">
-                        <form method="post" action="{% url 'login_page' %}">
+                        <form method="post" action="/login/">
                             {% csrf_token %}
                             <div class="input">
                                 <span>e-mail</span>
@@ -40,7 +40,7 @@
                     </div>
                     
                     <div class="tab" id="two">
-                        <form method="post" action="{% url 'signup_page' %}">
+                        <form method="post" action="/signup/">
                             {% csrf_token %}
                             <div class="input">
                                 <span>e-mail</span>

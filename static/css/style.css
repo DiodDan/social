@@ -661,11 +661,7 @@ div.chat input[type=radio]:checked + button.chat {
     background: #3E4248;
 }
 
-div.chat input[type=radio]:checked + button.chat + div.dialog_block {
-    display: inline;
-}
-
-div.chat div.dialog_block {
+div.dialogs div.dialog_block {
     height: calc(100% - 11rem);
     width: calc((80% - 4rem) * 0.7);
     position: absolute;
@@ -674,11 +670,26 @@ div.chat div.dialog_block {
     display: none;
 }
 
+div.dialogs div.photo {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 1.5rem;
+    overflow: hidden;
+    display: inline;
+    flex: 0 0 auto;
+}
+
+div.dialogs div.photo img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
 .transparent {
     opacity: .5;
 }
 
-div.chat div.dialog_block div.headline {
+div.dialogs div.dialog_block div.headline {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -686,17 +697,17 @@ div.chat div.dialog_block div.headline {
     margin-bottom: .7rem;
 }
 
-div.chat div.dialog_block div.headline div.person {
+div.dialogs div.dialog_block div.headline div.person {
     display: flex;
     align-items: center;
     line-height: 1rem;
 }
 
-div.chat div.dialog_block div.headline div.person div.name_online {
+div.dialogs div.dialog_block div.headline div.person div.name_online {
     margin-left: .5rem;
 }
 
-div.chat div.dialog_block div.headline button {
+div.dialogs div.dialog_block div.headline button {
     height: 3rem;
     width: 3rem;
     border-radius: 0;
@@ -704,37 +715,37 @@ div.chat div.dialog_block div.headline button {
     border: 0px;
 }
 
-div.chat div.dialog_block div.headline button:hover {
+div.dialogs div.dialog_block div.headline button:hover {
     background: transparent;
 }
 
-div.chat div.dialog_block div.input {
+div.dialogs div.dialog_block div.input {
     width: 80%;
     height: 3.5rem;
 }
 
-div.chat div.dialog_block div.input form {
+div.dialogs div.dialog_block div.input form {
     width: 100%;
     height: 100%;
     display: flex;
     justify-content: space-between;
 }
 
-div.chat div.dialog_block div.input textarea {
+div.dialogs div.dialog_block div.input textarea {
     resize: none;
     width: 80%;
     height: 100%;
     padding-left: 1rem;
 }
 
-div.chat div.dialog_block div.input button.send {
+div.dialogs div.dialog_block div.input button.send {
     border: 0;
     width: 3.5rem;
     height: 3.5rem;
     border-radius: 50%;
 }
 
-div.chat div.dialog_block div.dialog {
+div.dialogs div.dialog_block div.dialog {
     background: #34373C;
     padding: 1rem;
     border-radius: 1rem;
@@ -745,14 +756,14 @@ div.chat div.dialog_block div.dialog {
     flex-direction: column;
 }
 
-div.chat div.dialog_block div.dialog div.message {
+div.dialogs div.dialog_block div.dialog div.message {
     margin-top: .5rem;
     display: flex;
     align-items: center;
     width: 100%;
 }
 
-div.chat div.dialog_block div.dialog div.message div.message_block {
+div.dialogs div.dialog_block div.dialog div.message div.message_block {
     background: #3E4248;
     width: fit-content;
     height: fit-content;
@@ -763,23 +774,23 @@ div.chat div.dialog_block div.dialog div.message div.message_block {
     margin-left: .5rem;
 }
 
-div.chat div.dialog_block div.dialog div.message div.message_block h5 {
+div.dialogs div.dialog_block div.dialog div.message div.message_block h5 {
     text-align: end;
 }
 
-div.chat div.dialog_block div.dialog div.message.received {
+div.dialogs div.dialog_block div.dialog div.message.received {
     justify-content: flex-start;
 }
 
-div.chat div.dialog_block div.dialog div.message.received div.message_block {
+div.dialogs div.dialog_block div.dialog div.message.received div.message_block {
     background: #2B2E32;
 }
 
-div.chat div.dialog_block div.dialog div.message.sent {
+div.dialogs div.dialog_block div.dialog div.message.sent {
     justify-content: flex-end;
 }
 
-div.chat div.dialog_block div.dialog div.message.sent div.message_block {
+div.dialogs div.dialog_block div.dialog div.message.sent div.message_block {
     background: #3E4248;
 }
 
@@ -802,6 +813,10 @@ div.add_chat_block form {
     height: 100%;
     display: flex;
     flex-direction: column;
+}
+
+div.add_chat_block button {
+    margin-top: .5rem;
 }
 
 div.add_chat_block form div.info  {
@@ -995,6 +1010,10 @@ div.block.search div.results a div.info {
 
 div.block.search div.results a div.info h3 {
     margin-top: 0;
+}
+
+div.block.search div.results a div.info h4 {
+    height: 1rem;
 }
 
 div.block.search div.results a div.photo {
@@ -1205,17 +1224,36 @@ div.chat div.photo img {
         display: none;
     }
     div.block.messenger div.chats {
-        width: 100%;
+        width: 60%;
+        position: relative;
+        z-index: 2;
     }
-    div.chats div.chat div.dialog_block {
+    div.dialogs {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        z-index: 1;
+    }
+    div.dialogs div.dialog_block {
         height: calc(100% - 18rem);
         width: calc(80% - 4rem);
         left: calc(5% + 5rem);
-        opacity: 0;
         pointer-events: none;
     }
+    div.dialogs div.close {
+        height: calc(100% - 18rem);
+        width: calc((80% - 4rem) * 0.6);
+        position: absolute;
+        left: calc(5% + 5rem);
+        top: 8.7rem;
+        background: #2B2E32;
+    }
     div.block.messenger div.search {
-        width: 100%;
+        width: 60%;
+        position: relative;
+        z-index: 3;
     }
     div.block.messenger div.search input[type=checkbox]:checked ~ svg.lines {
         display: none;
@@ -1249,7 +1287,7 @@ div.chat div.photo img {
 }
 
 @media (orientation: portrait) and (min-height: 1500px) {
-    div.chats div.chat div.dialog_block {
+    div.dialogs div.dialog_block, div.dialogs div.close {
         height: calc(100% - 11rem);
     }
     div.block.login * {

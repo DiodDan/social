@@ -12,9 +12,3 @@ class get_info(TemplateView):
         users = User.objects
         user = users.get(login=login)
         return JsonResponse(user.json_data(), safe=False)
-
-
-
-
-def pagenotfound(reqest, exception):
-    return HttpResponse(f"<h1>Либо ты ... либо я ...;(</h1>")

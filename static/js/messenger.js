@@ -154,17 +154,24 @@ load_data();
 connect_to_socket();
 var radios = Array.from(document.querySelectorAll("input[type=radio][name=chat]"));
 var btns = Array.from(document.querySelectorAll("button.chat"));
+var dialogs = Array.from(document.querySelectorAll("div.dialogs div.dialog_block"))
+
 document.addEventListener("click", changeRadio);
 function changeRadio(event)
 {
     if (event.target.closest("button.chat"))
     {
-        for (radio of radios)
-        {
+        for (radio of radios) {
             radio.checked = false;
         }
+
+        for (dialog of dialogs) {
+            dialog.style.display = 'none';
+        }
+
         idBtn = btns.indexOf(event.target.closest("button.chat"));
         radios[idBtn].checked = true;
+        dialogs[idBtn].style.display = 'block';
         openMenu("close menu");
 
         arr[idBtn].send(JSON.stringify({
@@ -226,7 +233,6 @@ function openEditChat(event) {
 document.addEventListener("click", openMenu);
 menuCheckbox = document.querySelector("div.search input[type=checkbox]");
 chats_dialogs = document.querySelector("div.block.messenger div.chats");
-dialogs = document.querySelectorAll("div.chats div.chat div.dialog_block")
 
 
 function openMenu(event) {
@@ -234,18 +240,18 @@ function openMenu(event) {
         menuCheckbox.checked = (menuCheckbox.checked + 1) % 2;
         if (menuCheckbox.checked) {
             if (window.innerHeight > window.innerWidth) {
-                chats_dialogs.style.width = '100%';
+                chats_dialogs.style.width = '60%';
+                document.querySelector("div.dialogs div.close").style.display = 'block';
                 for (dialog of dialogs) {
-                    dialog.style.opacity = 0;
                     dialog.style.pointerEvents = 'none';
                 }
             }
         }
         else {
             if (window.innerHeight > window.innerWidth) {
+                document.querySelector("div.dialogs div.close").style.display = 'none';
                 chats_dialogs.style.width = '0px';
                 for (dialog of dialogs) {
-                    dialog.style.opacity = 1;
                     dialog.style.pointerEvents = 'all';
                 }
             }

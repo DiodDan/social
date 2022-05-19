@@ -16,9 +16,9 @@ CSRF_COOKIE_SECURE = True
 SECRET_KEY = 'django-insecure-58l(*i7b66=mez2(5vb7-e7ku&@xgu@_be#!=%eas^eg1e!=5!'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 DEBUG_toolbar = False
-DEPLOY = False
+DEPLOY = True
 
 host1 = "diod.cf"
 host2 = "www.diod.cf"

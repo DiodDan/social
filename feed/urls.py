@@ -6,4 +6,3 @@ urlpatterns = [
     path("", Feed.as_view(), name="feed"),
 ]
 
-handler404 = pagenotfound

@@ -6,14 +6,14 @@ from profile.models import User, Message, Chat, Publication
 from .email_sender import send_submit_email
 from django.core.exceptions import ObjectDoesNotExist
 from jinja2 import Environment, FileSystemLoader, select_autoescape
-import hashlib  as hash
+import hashlib as hash
 
 FLAG = "1h2j45jlk?>gb;3445m5_+3"
 
 autoescape = select_autoescape(enabled_extensions=('html', 'htm', 'xml'),
-                             disabled_extensions=(),
-                             default_for_string=True,
-                             default=False)
+                               disabled_extensions=(),
+                               default_for_string=True,
+                               default=False)
 class login(TemplateView):
     template_name = "login.html"
 
@@ -127,7 +127,10 @@ class profile(TemplateView):
                 else:
                     lenlikes.append(len(publications[publo].like_ids.split(",")))
             user.id = str(user.id)
-            self_user_id = str(users.get(login=request.session["logedacc"]).id)
+            try:
+                self_user_id = str(users.get(login=request.session["logedacc"]).id)
+            except ObjectDoesNotExist:
+                return redirect("/login/")
             if login == request.session["logedacc"]:
                 return HttpResponse(self.template.render(publications=publications,
                                                          user=user,
@@ -163,8 +166,11 @@ class profile(TemplateView):
                                                          theme_color=self.themes[user.used_theme]['color'],
                                                          self_user_id=self_user_id,
                                                          email_shown=user.is_email_set_to_be_seen_or_not_by_user))
-        except:
-            return redirect("/profile/login/")
+        except KeyError:
+            return redirect("/login/")
+
+        except ObjectDoesNotExist as e:
+            return HttpResponse("This user does not exist!!!")
 
     def post(self, request, login):
         publications = Publication.objects
@@ -221,7 +227,12 @@ class changedata(TemplateView):
 
 class redir(TemplateView):
     def get(self, request):
-        return redirect("/profile/login/")
+        try:
+            if request.session["logedacc"] == "":
+                raise KeyError
+            return redirect(f"/profile/{request.session['logedacc']}")
+        except KeyError:
+            return redirect("/login/")
 
 
 def pagenotfound(reqest, exception):
