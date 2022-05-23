@@ -941,6 +941,7 @@ div.block.post div.photo_block div.user_info div.photo {
     overflow: hidden;
     display: block;
     margin-right: .5rem;
+    flex: 0 0 auto;
 }
 
 div.block.post div.photo_block div.user_info div.photo img {
@@ -1142,6 +1143,37 @@ div.chat div.photo img {
     height: 100%;
 }
 
+div.block.page_not_found {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+div.block.page_not_found h1 {
+    font-size: 6rem;
+    width: fit-content;
+}
+
+div.block.page_not_found div.text {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+div.block.page_not_found div.text h3 {
+    width: calc((100% - 12rem)/2);
+    margin-bottom: 4.5rem;
+    text-align: center;
+}
+
+div.block.page_not_found div.text svg {
+    height: 12rem;
+    width: 12rem;
+    transform: translateY(-4.5rem) translateX(-.25rem);
+    flex: 0 0 auto;
+}
+
 @media (orientation: portrait) {
     div.main {
         width: 90%;
@@ -1235,6 +1267,7 @@ div.chat div.photo img {
         left: 0;
         top: 0;
         z-index: 1;
+        pointer-events: none;
     }
     div.dialogs div.dialog_block {
         height: calc(100% - 18rem);

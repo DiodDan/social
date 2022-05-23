@@ -1,0 +1,67 @@
+<html lang="en" dir="ltr">
+  <head>
+      <meta charset="UTF-8">
+      <link rel="stylesheet" href="../../../static/css/style.css">
+      <title>diod — user not found</title>
+  </head>
+
+  <body>
+    <div class="main">
+      <header>{% include "navigation_bar.html" %}</header>
+      <div class="container">
+        
+        <div class="block profile head">
+          <div class="photo">
+            <img src="/media/photos/profile_photos/user_not_found.png" alt="Image Not Found">
+          </div>
+          <div class="info">
+            <div class="name">
+              <h2>user not found</h2>
+            </div>
+            <div class="followers">
+              <div class="number" id="followers">
+                <h2 id="amount_of_followers">X</h2>
+                <h5>followers</h5>
+              </div>
+              <div class="number" id="follows">
+                <h2>X</h2>
+                <h5>follows</h5>
+              </div>
+            </div>
+            <h4>this user does not exist! try another link...</h4>
+          </div>
+        </div>
+        <div class="block profile posts">
+          <div class="block post">
+            <div class="photo_block">
+                <div class="user_info">
+                    <div class="photo">
+                        <img src="/media/photos/profile_photos/user_not_found.png" alt="Image Not Found">
+                    </div>
+                    <a href="#"><h2>user not found</h2></a>
+                </div>
+                <div class="photo">
+                    <img src="/media/photos/profile_photos/x.png" alt="Image Not Found">
+                </div>
+                <div class="action">
+                    <div class="like normal">
+                        <input type="checkbox">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M18 1l-6 4-6-4-6 5v7l12 10 12-10v-7z"/></svg>
+                        <h3>X</h3>
+                    </div>
+                    <div class="comment">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="529.668px" height="529.668px" viewBox="0 0 529.668 529.668"><path d="M45.175,529.668l108.887-117.085h330.431V0H45.894L45.175,529.668z M383.896,173.016c20.527,0,37.164,16.64,37.164,37.164c0,20.527-16.641,37.164-37.164,37.164s-37.164-16.641-37.164-37.164C346.731,189.653,363.372,173.016,383.896,173.016zM265.192,173.016c20.526,0,37.165,16.64,37.165,37.164c0,20.527-16.641,37.164-37.165,37.164c-20.523,0-37.164-16.641-37.164-37.164C228.028,189.653,244.668,173.016,265.192,173.016z M146.488,173.016c20.527,0,37.164,16.64,37.164,37.164c0,20.527-16.641,37.164-37.164,37.164c-20.526,0-37.164-16.641-37.164-37.164C109.325,189.653,125.965,173.016,146.488,173.016z"/></svg>
+                        <h3>X</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="description">
+              <h4>check if you are on the correct page! you are definitely not on the page you need...</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% include "footer.html" %}
+    </div>
+  </body>
+</html>

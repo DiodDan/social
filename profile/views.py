@@ -99,6 +99,10 @@ class submit_email(TemplateView):
 class profile(TemplateView):
     template_name = "profile.html"
     template = Environment(loader=FileSystemLoader('templates'), autoescape=autoescape).get_template(template_name)
+
+    user_not_found_template_name = "user_not_found.html"
+    user_not_found_template = Environment(loader=FileSystemLoader('templates'), autoescape=autoescape).get_template(user_not_found_template_name)
+
     themes = [{"color": "", },
               {"color": "red", "pic_path": "media/theme_photos/anonymous.svg"}]
 
@@ -170,7 +174,7 @@ class profile(TemplateView):
             return redirect("/login/")
 
         except ObjectDoesNotExist as e:
-            return HttpResponse("This user does not exist!!!")
+            return HttpResponse(self.user_not_found_template.render())
 
     def post(self, request, login):
         publications = Publication.objects
@@ -236,4 +240,6 @@ class redir(TemplateView):
 
 
 def pagenotfound(reqest, exception):
-    return HttpResponse(f"<h1>Либо ты ... либо я ...;(</h1>")
+    template_name = "page_not_found.html"
+    template = Environment(loader=FileSystemLoader('templates'), autoescape=autoescape).get_template(template_name)
+    return HttpResponse(template.render())
