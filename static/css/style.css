@@ -66,6 +66,16 @@ header svg {
     fill: #F0E68C;
 }
 
+.err {
+    color: #D23E3E;
+    margin-top: .5rem;
+    text-align: center;
+}
+
+h4.err {
+    height: .9rem;
+}
+
 header a:hover {
     background: #34373C;
 }
@@ -181,8 +191,65 @@ div.login form div.input {
     align-items: center;
 }
 
-div.login form div.input input {
-    width: 50%;
+div.login form div.input div.input input[type=text], div.login form div.input div.input input[type=password] {
+    width: calc(100% - 2rem);
+}
+
+div.login form > div.input > input {
+    width: calc(100% - 6rem);
+}
+
+div.login form div.input div.input {
+    width: calc(100% - 9rem);
+    margin-top: 0;
+}
+
+div.login h5.err {
+    margin-top: 0;
+}
+
+div.addition {
+    width: 1.5rem;
+    height: 1.5rem;
+    position: relative;
+}
+
+div.addition input[type=checkbox] {
+    position: absolute;
+    width: 1.5rem;
+    height: 1.5rem;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+div.addition input[type=checkbox]:checked + div.addition_block {
+    visibility: visible;
+    opacity: 1;
+    transition: visibility 0s, opacity .5s;
+}
+
+div.addition_block {
+    position: absolute;
+    width: 12rem;
+    background-color: #3E4248;
+    top: -.125rem;
+    left: 2rem;
+    padding: .5rem;
+    border-radius: .5rem;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 1s, opacity .5s;
+    z-index: 1;
+}
+
+div.addition_block h5 {
+    margin-top: .25rem;
+}
+
+div.addition_block h5:first-child {
+    margin-top: 0;
 }
 
 input, textarea {
@@ -267,11 +334,17 @@ div.info > div.followers div.number {
 
 div.block.profile.head div.info div.name {
     margin-left: .5rem;
-    width: fit-content;
+    width: calc(100% - .5rem);
     align-self: center;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+div.block.profile.head div.info div.name h2 {
+    width: 100%;
+    overflow-wrap: break-word;
+    text-align: center;
 }
 
 div.block.profile.head div.info div.name svg {
@@ -474,6 +547,15 @@ div.change_data form div input, div.change_data form div select {
     width: 50%;
 }
 
+div.change_data div.input {
+    display: flex;
+    align-items: center;
+}
+
+div.change_data div.input div.addition {
+    margin-left: .5rem;
+}
+
 div.change_data form div select {
     background: #34373C;
     color: #ccc;
@@ -508,7 +590,7 @@ div.change_data form div.show_email {
     height: 2.5rem;
 }
 
-div.change_data form input[type=checkbox] {
+div.change_data form div.show_email input[type=checkbox] {
     display: none;
 }
 
@@ -797,6 +879,7 @@ div.dialogs div.dialog_block div.dialog div.message.sent div.message_block {
 div.add_chat_block {
     background: #202225;
     width: 50%;
+    height: 70%;
     padding: 1rem;
     border-radius: 1rem;
     position: absolute;
@@ -815,6 +898,10 @@ div.add_chat_block form {
     flex-direction: column;
 }
 
+div.add_chat_block#edit form {
+    height: calc(100% - 2rem);
+}
+
 div.add_chat_block button {
     margin-top: .5rem;
 }
@@ -831,12 +918,23 @@ div.add_chat_block form div.info h4 {
     margin-bottom: .25rem;
 }
 
-div.add_chat_block form div.info input {
+div.add_chat_block form div.info input[type=text] {
     width: 100%;
 }
 
+div.add_chat_block form div.info div.choose_photo div.photo_choose {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+div.add_chat_block form div.info div.choose_photo div.photo_choose input[type=file] {
+    width: calc(100% - 4rem);
+}
+
 div.add_chat_block form div.add_users {
-    height: 9rem;
+    height: calc(100% - 12rem);
     overflow-y: scroll;
 }
 
@@ -912,8 +1010,21 @@ div.block.main_page.head div.input div.post_info {
     width: calc(96% - 4.5rem);
 }
 
-div.block.main_page.head div.input textarea, div.block.main_page.head div.input input {
+div.block.main_page.head div.input textarea {
     width: 100%;
+    margin-top: .5rem;
+    margin-bottom: 1rem;
+}
+
+div.block.main_page.head div.input input[type=file] {
+    width: calc(100% - 2rem);
+}
+
+div.block.main_page.head div.input div.choose_photo {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-top: .5rem;
     margin-bottom: 1rem;
 }
@@ -1184,6 +1295,11 @@ div.block.page_not_found div.text svg {
     div.login form div.input input {
         width: 70%;
     }
+    div.addition_block {
+        top: 2rem;
+        left: -16.5rem;
+        width: 18rem;
+    }
     div.block.profile.head {
         width: 100%;
     }
@@ -1301,6 +1417,9 @@ div.block.page_not_found div.text svg {
     div.block.messenger div.search input[type=checkbox]:checked ~ button {
         display: inline-block;
         flex: 0 0 auto;
+    }
+    div.add_chat_block {
+        width: 80%;
     }
     div.block.search {
         width: 100%;

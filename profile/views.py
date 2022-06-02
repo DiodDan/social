@@ -26,13 +26,13 @@ class login(TemplateView):
         post = request.POST
         db = User.objects
         form = login_form(request.POST)
-        user_data = db.filter(email=post["username"])
+        user_data = list(db.filter(email=post["username"])) + list(db.filter(login=post["username"]))
 
         if len(user_data) != 0 and str(user_data[0].password) == str(hash.sha256(post["password"].encode()).hexdigest()):
             request.session["logedacc"] = str(user_data[0].login)
             return redirect(f"/profile/{user_data[0].login}")
         else:
-            return render(request, self.template_name, context={"form": form, "ERR": "Неверный пароль или логин"})
+            return render(request, self.template_name, context={"form": form, "ERR": "incorrect login or password!"})
 
 
 class signup(TemplateView):
@@ -50,20 +50,15 @@ class signup(TemplateView):
         form = register_form(request.POST)
         if len(db.filter(email=post["username"])) == 0:
 
-            if post["password"] == post["repit_password"]:
-                request.session["password"] = post["password"]
-                request.session["repit_password"] = post["repit_password"]
-                request.session["email"] = post["username"]
+            request.session["password"] = post["password"]
+            request.session["repit_password"] = post["repit_password"]
+            request.session["email"] = post["username"]
 
-                return redirect(
-                    f"/profile/submit_email/{post['username']}")
-            else:
-                return render(request, self.template_name,
-                                  context={"form": form,
-                                           "ERR": "Не совпадают пароли"})
+            return redirect(
+                f"/profile/submit_email/{post['username']}")
         else:
             return render(request, self.template_name,
-                          context={"form": form, "ERR": "Пользователь с такой почтой уже существует!!!"})
+                          context={"form": form, "ERR": "the user with this e-mail already exists!"})
 
 
 class submit_email(TemplateView):
@@ -91,9 +86,9 @@ class submit_email(TemplateView):
                 del self.token[login]
                 return redirect(f"/profile/{str(user.login)}")
             else:
-                return render(request, self.template_name, context={"ERR": "Пароли не совпадают", "email": login})
+                return render(request, self.template_name, context={"ERR": "token is incorrect", "email": login})
         except:
-            return "Ошибка"
+            return redirect("/")
 
 
 class profile(TemplateView):
@@ -108,6 +103,7 @@ class profile(TemplateView):
 
     def get(self, request, login):
         try:
+            ERR = "user with this login already exists!" if request.GET.get("ERR", "") else ""
             users = User.objects
             user = users.get(login=login)
             user.followers = [i for i in user.followers.split(",") if i != '']
@@ -152,7 +148,8 @@ class profile(TemplateView):
                                                          is_subscribed=False,
                                                          theme_color=self.themes[user.used_theme]['color'],
                                                          self_user_id=self_user_id,
-                                                         email_shown=user.is_email_set_to_be_seen_or_not_by_user))
+                                                         email_shown=user.is_email_set_to_be_seen_or_not_by_user,
+                                                         ERR=ERR))
             else:
                 return HttpResponse(self.template.render(publications=publications,
                                                          user=user,
@@ -169,64 +166,49 @@ class profile(TemplateView):
                                                          is_subscribed=(str(user.id) in users.get(login=request.session["logedacc"]).follows.split(",")),
                                                          theme_color=self.themes[user.used_theme]['color'],
                                                          self_user_id=self_user_id,
-                                                         email_shown=user.is_email_set_to_be_seen_or_not_by_user))
+                                                         email_shown=user.is_email_set_to_be_seen_or_not_by_user,
+                                                         ERR=ERR))
         except KeyError:
             return redirect("/login/")
 
-        except ObjectDoesNotExist as e:
+        except ObjectDoesNotExist:
             return HttpResponse(self.user_not_found_template.render())
 
     def post(self, request, login):
         publications = Publication.objects
         post = request.POST
+        ERR = 0
         if post["type"] == "delete_post":
             publications.get(id=post["post_id"]).delete()
-        return redirect(f"/profile/{login}")
-
-class changedata(TemplateView):
-    template_name = "changedata.html"
-
-    def get(self, request, login):
-
-        obj = User.objects.get(login=login)
-        form = change_data_form(
-            {"login": obj.login, "name": obj.name,
-             "description": obj.description, "photo": obj.profile_photo,
-             "email": obj.email, "password": obj.password,
-             "profile_photo": obj.profile_photo})
-        return render(request, self.template_name,
-                      context={"form": form, "obj": obj, "ERR": ""})
-
-    def post(self, request, login):
-        post = request.POST
-        obj = User.objects.get(login=login)
-        form = change_data_form(request.POST, request.FILES)
-        if FLAG == post["flag_submit"]:
-            obj.flags_found = "1"
-            obj.save()
-        if len(User.objects.filter(
-                login=post["login"])) >= 1 and User.objects.get(
-                login=post["login"]) != obj:
-            return render(request, self.template_name,
-                          context={"form": form, "obj": obj,
-                                   "ERR": "Не уникальный логин"})
-        else:
-            obj.name = post["name"]
-            obj.login = post["login"]
-            obj.description = post["description"]
-            obj.email = post["email"]
-            if "set_email_visibility" in post.keys():
-                obj.is_email_set_to_be_seen_or_not_by_user = True
+        if post["type"] == "change_data":
+            obj = User.objects.get(login=login)
+            if FLAG == post["flag_submit"]:
+                obj.flags_found = "1"
+                obj.save()
+            if len(User.objects.filter(login=post["login"])) >= 1 and User.objects.get(login=post["login"]) != obj:
+                ERR = 1
             else:
-                obj.is_email_set_to_be_seen_or_not_by_user = False
-            print(obj.is_email_set_to_be_seen_or_not_by_user)
-            if post["password"]:
-                obj.password = hash.sha256(post["password"].encode()).hexdigest()
-            if request.FILES.get("profile_photo"):
-                obj.profile_photo = request.FILES["profile_photo"]
-            obj.save()
-            request.session["logedacc"] = str(obj.login)
-            return redirect(f"/profile/{obj.login}")
+                ERR = 0
+                obj.name = post["name"]
+                obj.login = post["login"]
+                obj.description = post["description"]
+                obj.email = post["email"]
+                if "set_email_visibility" in post.keys():
+                    obj.is_email_set_to_be_seen_or_not_by_user = True
+                else:
+                    obj.is_email_set_to_be_seen_or_not_by_user = False
+                if post["password"]:
+                    obj.password = hash.sha256(post["password"].encode()).hexdigest()
+                if request.FILES.get("profile_photo"):
+                    obj.profile_photo = request.FILES["profile_photo"]
+                obj.save()
+                request.session["logedacc"] = str(obj.login)
+                login = request.session["logedacc"]
+
+        if ERR:
+            return redirect(f"/profile/{login}?ERR={ERR}")
+        else:
+            return redirect(f"/profile/{login}")
 
 
 class redir(TemplateView):

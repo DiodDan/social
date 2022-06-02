@@ -258,3 +258,51 @@ function openMenu(event) {
         }
     }
 }
+
+const editChatPhotoDivs = Array.from(document.querySelectorAll("div.add_chat_block form div.info div.choose_photo div.photo_choose"));
+document.addEventListener("input", checkPhotoEdit);
+function checkPhotoEdit(event, param=false) {
+    if (event == "check") {
+        for (div of editChatPhotoDivs) {
+            checkPhotoEdit({"target": div.children[0]}, param=true);
+        }
+    }
+    else if (param || event.target.closest("div.add_chat_block form div.info div.choose_photo div.photo_choose input[type=file]")) {
+        let idEditChat = -1
+        for (div of editChatPhotoDivs) {
+            idEditChat += 1
+            if (div.children[0] == event.target) {
+                break;
+            }
+        }
+        let name_format = editChatPhotoDivs[idEditChat].children[0].value.split(".");
+        let format = name_format[name_format.length - 1];
+        if ((format == "jpg" || format == "jpeg" || format == "png" || format == "gif") && (name_format.length > 1) || editChatPhotoDivs[idEditChat].children[0].value == "") {
+            editChatPhotoDivs[idEditChat].children[1].children[0].children[1].children[0].style.fill = "#3ED252";
+            editChatPhotoDivs[idEditChat].children[1].children[2].innerHTML = "<h5>your photo satisfies the requirements!</h5>";
+        }
+        else {
+            editChatPhotoDivs[idEditChat].children[1].children[0].children[1].children[0].style.fill = "#D23E3E";
+            editChatPhotoDivs[idEditChat].children[1].children[2].innerHTML = `<h5>your photo extension should be <span style="font-weight: 500;">jpg, jpeg, png or gif</span>!</h5>`;
+        }
+    }
+}
+checkPhotoEdit("check");
+
+const forms = Array.from(document.querySelectorAll("div.add_chat_block form#apply"));
+forms.push(document.querySelector("div.add_chat_block form"))
+document.addEventListener("submit", submitForm);
+function submitForm(event) {
+    if (forms.includes(event.target)) {
+        event.preventDefault();
+        let photoInput = event.target.querySelector("input[type=file]");
+        let name_format = photoInput.value.split(".");
+        let format = name_format[name_format.length - 1];
+        if ((format == "jpg" || format == "jpeg" || format == "png" || format == "gif") && (name_format.length > 1) || photoInput.value == "") {
+            event.target.submit();
+        }
+        else {
+            event.target.querySelector("h4.err").innerHTML = "make sure you chose the correct photo!";
+        }
+    }
+}
