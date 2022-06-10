@@ -65,7 +65,7 @@ class Chat(models.Model):
 class Publication(models.Model):
     author = models.IntegerField(verbose_name="Автор")
     text = models.TextField(verbose_name="Текст")
-    image = models.ImageField(upload_to="photos/publication_images", blank=True, verbose_name="Фото")
+    image = models.FileField(upload_to="photos/publication_images", blank=True, verbose_name="Фото")
     like_ids = models.TextField(blank=True, verbose_name="ID лайков")
     comment_ids = models.TextField(blank=True, verbose_name="ID сообщений")
     time_created = models.CharField(max_length=13, verbose_name="Время создания")

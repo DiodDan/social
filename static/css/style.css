@@ -396,7 +396,7 @@ div.block.post div.photo {
     overflow: hidden;
 }
 
-div.block.post div.photo img {
+div.block.post div.photo img, div.block.post div.photo video {
     width: 100%;
 }
 
@@ -1325,7 +1325,7 @@ div.block.page_not_found div.text svg {
         height: fit-content;
         width: fit-content;
     }
-    div.block.post div.photo img {
+    div.block.post div.photo img, div.block.post div.photo video {
         max-height: 24rem;
         max-width: 100%;
         width: auto;

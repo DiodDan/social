@@ -1,3 +1,13 @@
+const imgs = Array.from(document.querySelectorAll("div.block.post div.photo_block div.photo img"));
+for (img of imgs) {
+    console.log(img.src);
+    let splImg = img.src.split(".");
+    let type = splImg[splImg.length - 1];
+    if (type == "mp4") {
+        img.outerHTML = `<video preload="auto" controls src="${img.src}"></video>`;
+    }
+}
+
 const photoInput = document.querySelector("div.main_page.head div.input div.choose_photo input[type=file]");
 const photoMark = document.querySelector("div.main_page.head div.input div.choose_photo div.addition");
 
